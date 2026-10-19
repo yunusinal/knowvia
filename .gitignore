@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Sanal ortam (uv sync ile yeniden oluşturulur)
+.venv/
+
+# Sırlar: yalnızca .env.example commit edilir
+.env
+
+# Çalışma zamanı verisi: SQLite, Qdrant, yüklenen dosyalar
+data/runtime/
+
+# Yerel tutulan ajan, bağlam ve öğrenme dosyaları (GitHub'a gönderilmez)
+CLAUDE.md
+AGENTS.md
+context/
+.claude/
+.agents/
+.mcp.json
+ogrenme/
+*.code-workspace
+.vscode/
