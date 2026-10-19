@@ -14,7 +14,7 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     yield
 
 
-app = FastAPI(title="SecureKnowledge AI", lifespan=lifespan)
+app = FastAPI(title="Knowvia", lifespan=lifespan)
 app.include_router(auth.router)
 
 
