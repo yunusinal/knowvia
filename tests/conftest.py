@@ -8,15 +8,19 @@ from pathlib import Path  # noqa: E402
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
+from qdrant_client import QdrantClient  # noqa: E402
 from sqlalchemy import Engine, create_engine  # noqa: E402
 from sqlalchemy.orm import Session  # noqa: E402
 from sqlalchemy.pool import StaticPool  # noqa: E402
 
 from app.core.config import get_settings  # noqa: E402
-from app.db.models import Base  # noqa: E402
+from app.core.security import hash_password  # noqa: E402
+from app.db.models import Base, Department, Role, User  # noqa: E402
 from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
-from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder  # noqa: E402
+from app.repositories.vector_store import VectorStore, get_vector_store  # noqa: E402
+from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder, get_embedder  # noqa: E402
+from tests.fakes import FakeEmbedder  # noqa: E402
 
 
 @pytest.fixture(scope="session")
@@ -52,13 +56,48 @@ def session(engine: Engine) -> Iterator[Session]:
 
 
 @pytest.fixture
-def client(engine: Engine) -> Iterator[TestClient]:
-    """API istemcisi; gerçek DB yerine testin bellek-içi veritabanını kullanır."""
+def fake_embedder() -> FakeEmbedder:
+    return FakeEmbedder()
+
+
+@pytest.fixture
+def vector_store(fake_embedder: FakeEmbedder) -> Iterator[VectorStore]:
+    """Gerçek Qdrant istemcisi, bellekte (master plan §11.1: Qdrant taklit edilmez)."""
+    store = VectorStore(QdrantClient(":memory:"), "test_chunks", fake_embedder.dimension)
+    store.ensure_collection()
+    yield store
+    store.close()
+
+
+@pytest.fixture
+def client(engine: Engine, vector_store: VectorStore, fake_embedder: FakeEmbedder) -> Iterator[TestClient]:
+    """API istemcisi: bellek içi veritabanı, bellek içi Qdrant ve sahte embedder kullanır.
+
+    Hiçbir API testi gerçek modeli yüklemez veya data/runtime klasörüne yazmaz.
+    """
 
     def override_get_db() -> Iterator[Session]:
         with Session(engine) as db:
             yield db
 
     app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_vector_store] = lambda: vector_store
+    app.dependency_overrides[get_embedder] = lambda: fake_embedder
     yield TestClient(app)
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def users(session: Session) -> dict[str, User]:
+    """Yetki matrisindeki dört demo rolü: admin, it, hr, finance."""
+    accounts = {
+        "admin": User(email="admin@test.local", role=Role.ADMIN, department=None),
+        "it": User(email="it@test.local", role=Role.MEMBER, department=Department.IT),
+        "hr": User(email="hr@test.local", role=Role.MEMBER, department=Department.HR),
+        "finance": User(email="finance@test.local", role=Role.MEMBER, department=Department.FINANCE),
+    }
+    for account in accounts.values():
+        account.password_hash = hash_password("unused-in-these-tests")
+        session.add(account)
+    session.commit()
+    return accounts

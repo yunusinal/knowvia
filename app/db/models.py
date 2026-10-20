@@ -2,8 +2,11 @@ import enum
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, Enum, String
+from sqlalchemy import DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+# MVP'de tek demo organizasyonu vardır (master plan §6.1).
+DEMO_TENANT = "demo-org"
 
 
 class Base(DeclarativeBase):
@@ -19,6 +22,20 @@ class Department(enum.StrEnum):
     IT = "IT"
     HR = "HR"
     FINANCE = "FINANCE"
+
+
+class Visibility(enum.StrEnum):
+    COMPANY = "company"  # tüm çalışanlar
+    DEPARTMENT = "department"  # yalnızca belgenin departmanı (ve admin)
+
+
+class DocumentStatus(enum.StrEnum):
+    PROCESSING = "processing"
+    ACTIVE = "active"  # yalnızca bu durumdaki belgeler aranabilir
+    FAILED = "failed"
+    DELETING = "deleting"
+    DELETED = "deleted"
+    CLEANUP_PENDING = "cleanup_pending"
 
 
 def _enum_type(enum_class: type[enum.Enum], name: str) -> Enum:
@@ -52,3 +69,28 @@ class User(Base):
     )
     is_active: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)
+
+
+class Document(Base):
+    """Belgenin yetki ve durum bilgisi; tek doğru kaynak burasıdır (Qdrant'ta tutulmaz)."""
+
+    __tablename__ = "documents"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_new_id)
+    tenant_id: Mapped[str] = mapped_column(String(64), default=DEMO_TENANT)
+    # Yalnızca gösterim için normalize edilmiş ad; dosya yolu olarak kullanılmaz.
+    filename_original: Mapped[str] = mapped_column(String(255))
+    content_sha256: Mapped[str] = mapped_column(String(64), index=True)
+    uploaded_by: Mapped[str] = mapped_column(ForeignKey("users.id"))
+    department: Mapped[Department] = mapped_column(_enum_type(Department, "document_department"))
+    visibility: Mapped[Visibility] = mapped_column(_enum_type(Visibility, "document_visibility"))
+    status: Mapped[DocumentStatus] = mapped_column(
+        _enum_type(DocumentStatus, "document_status"), default=DocumentStatus.PROCESSING
+    )
+    chunk_count: Mapped[int] = mapped_column(default=0)
+    # Kullanıcıya gösterilebilecek genel mesaj; iç hata ayrıntısı yazılmaz.
+    error_message: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utc_now, onupdate=_utc_now
+    )
