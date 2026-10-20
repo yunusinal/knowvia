@@ -1,0 +1,236 @@
+{
+  "model": "e5-base",
+  "dim": 768,
+  "hit@1": 0.7142857142857143,
+  "hit@3": 0.9047619047619048,
+  "mrr": 0.828,
+  "min_correct_top1_score": 0.809,
+  "max_no_answer_score": 0.8276,
+  "disk_mb": 1127.0,
+  "ram_model_mb": 1388.0,
+  "ram_peak_process_mb": 1971.0,
+  "load_s": 2.9,
+  "index_ms_per_passage": 42.5,
+  "query_ms_avg": 15.8,
+  "avg_tokens_per_passage": 58.3,
+  "max_tokens_per_passage": 73,
+  "avg_chars_per_passage": 226.6,
+  "questions": [
+    {
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "kind": "farklı kelime",
+      "expected": "leave-1",
+      "rank": 1,
+      "top1": "leave-1",
+      "top1_score": 0.8524,
+      "expected_score": 0.8524
+    },
+    {
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "kind": "farklı kelime",
+      "expected": "leave-2",
+      "rank": 1,
+      "top1": "leave-2",
+      "top1_score": 0.8543,
+      "expected_score": 0.8543
+    },
+    {
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "kind": "farklı kelime",
+      "expected": "vpn-1",
+      "rank": 1,
+      "top1": "vpn-1",
+      "top1_score": 0.8471,
+      "expected_score": 0.8471
+    },
+    {
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "pw-1",
+      "rank": 1,
+      "top1": "pw-1",
+      "top1_score": 0.8248,
+      "expected_score": 0.8248
+    },
+    {
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "kind": "farklı kelime",
+      "expected": "pw-2",
+      "rank": 1,
+      "top1": "pw-2",
+      "top1_score": 0.8427,
+      "expected_score": 0.8427
+    },
+    {
+      "question": "Seyahatte akşam yemeğine en fazla ne kadar harcayabilirim?",
+      "kind": "farklı kelime",
+      "expected": "expense-1",
+      "rank": 1,
+      "top1": "expense-1",
+      "top1_score": 0.8303,
+      "expected_score": 0.8303
+    },
+    {
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "kind": "farklı kelime",
+      "expected": "expense-2",
+      "rank": 2,
+      "top1": "vendor-1",
+      "top1_score": 0.8203,
+      "expected_score": 0.817
+    },
+    {
+      "question": "Ofise saat kaçta gelmem gerekiyor?",
+      "kind": "farklı kelime",
+      "expected": "handbook-1",
+      "rank": 1,
+      "top1": "handbook-1",
+      "top1_score": 0.8431,
+      "expected_score": 0.8431
+    },
+    {
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "kind": "farklı kelime",
+      "expected": "handbook-2",
+      "rank": 1,
+      "top1": "handbook-2",
+      "top1_score": 0.8454,
+      "expected_score": 0.8454
+    },
+    {
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "kind": "farklı kelime",
+      "expected": "vpntr-2",
+      "rank": 1,
+      "top1": "vpntr-2",
+      "top1_score": 0.8692,
+      "expected_score": 0.8692
+    },
+    {
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "vpn-2",
+      "rank": 1,
+      "top1": "vpn-2",
+      "top1_score": 0.8233,
+      "expected_score": 0.8233
+    },
+    {
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "incident-1",
+      "rank": 2,
+      "top1": "pw-1",
+      "top1_score": 0.8295,
+      "expected_score": 0.818
+    },
+    {
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "kind": "farklı kelime",
+      "expected": "vendor-1",
+      "rank": 1,
+      "top1": "vendor-1",
+      "top1_score": 0.8822,
+      "expected_score": 0.8822
+    },
+    {
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "kind": "farklı kelime",
+      "expected": "budget-1",
+      "rank": 1,
+      "top1": "budget-1",
+      "top1_score": 0.8579,
+      "expected_score": 0.8579
+    },
+    {
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "kind": "farklı kelime",
+      "expected": "hiring-1",
+      "rank": 2,
+      "top1": "incident-1",
+      "top1_score": 0.8001,
+      "expected_score": 0.7958
+    },
+    {
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "remote2026-1",
+      "rank": 2,
+      "top1": "remote2024-1",
+      "top1_score": 0.8719,
+      "expected_score": 0.8663
+    },
+    {
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "remote2026-2",
+      "rank": 1,
+      "top1": "remote2026-2",
+      "top1_score": 0.8535,
+      "expected_score": 0.8535
+    },
+    {
+      "question": "How many days of annual leave do I get?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "leave-1",
+      "rank": 1,
+      "top1": "leave-1",
+      "top1_score": 0.809,
+      "expected_score": 0.809
+    },
+    {
+      "question": "How do I connect to the company network from home?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "vpn-1",
+      "rank": 1,
+      "top1": "vpn-1",
+      "top1_score": 0.8185,
+      "expected_score": 0.8185
+    },
+    {
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "laptop-en",
+      "rank": 4,
+      "top1": "incident-1",
+      "top1_score": 0.808,
+      "expected_score": 0.7966
+    },
+    {
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "laptop-en",
+      "rank": 7,
+      "top1": "pw-2",
+      "top1_score": 0.8131,
+      "expected_score": 0.7682
+    }
+  ],
+  "no_answer": [
+    {
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "top1": "expense-1",
+      "top1_score": 0.7904
+    },
+    {
+      "question": "Doğum izni kaç hafta?",
+      "top1": "leave-1",
+      "top1_score": 0.8276
+    },
+    {
+      "question": "Yemekhanede bugün ne var?",
+      "top1": "handbook-2",
+      "top1_score": 0.7739
+    },
+    {
+      "question": "What is the dress code for the New Year party?",
+      "top1": "handbook-2",
+      "top1_score": 0.7641
+    },
+    {
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "top1": "incident-1",
+      "top1_score": 0.7877
+    }
+  ]
+}

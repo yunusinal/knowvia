@@ -1,0 +1,916 @@
+{
+  "model": "e5-base",
+  "dim": 768,
+  "hit@1": 0.7912087912087912,
+  "hit@3": 0.9340659340659341,
+  "mrr": 0.862,
+  "min_correct_top1_score": 0.782,
+  "max_no_answer_score": 0.8117,
+  "disk_mb": 1127.0,
+  "ram_model_mb": 1388.0,
+  "ram_peak_process_mb": 1971.0,
+  "load_s": 2.2,
+  "index_ms_per_passage": 53.6,
+  "query_ms_avg": 16.9,
+  "avg_tokens_per_passage": 60.1,
+  "max_tokens_per_passage": 88,
+  "avg_chars_per_passage": 239.6,
+  "questions": [
+    {
+      "question": "Sabah en geç kaçta işe başlamış olmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "hb-hours",
+      "rank": 2,
+      "top1": "ob-first",
+      "top1_score": 0.8317,
+      "expected_score": 0.8278
+    },
+    {
+      "question": "Öğle arası saat kaçta?",
+      "kind": "doğrudan",
+      "expected": "hb-hours",
+      "rank": 1,
+      "top1": "hb-hours",
+      "top1_score": 0.8102,
+      "expected_score": 0.8102
+    },
+    {
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "kind": "farklı kelime",
+      "expected": "hb-dress",
+      "rank": 1,
+      "top1": "hb-dress",
+      "top1_score": 0.8454,
+      "expected_score": 0.8454
+    },
+    {
+      "question": "Ofise misafir getireceğim, ne yapmam lazım?",
+      "kind": "farklı kelime",
+      "expected": "hb-dress",
+      "rank": 1,
+      "top1": "hb-dress",
+      "top1_score": 0.8444,
+      "expected_score": 0.8444
+    },
+    {
+      "question": "Bir meslektaşım bana sürekli kötü davranıyor, nereye şikâyet edebilirim?",
+      "kind": "farklı kelime",
+      "expected": "hb-conduct",
+      "rank": 1,
+      "top1": "hb-conduct",
+      "top1_score": 0.8216,
+      "expected_score": 0.8216
+    },
+    {
+      "question": "İsmimi vermeden etik ihlal bildirebilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "hb-conduct",
+      "rank": 1,
+      "top1": "hb-conduct",
+      "top1_score": 0.8182,
+      "expected_score": 0.8182
+    },
+    {
+      "question": "Bir tedarikçi bana pahalı bir saat hediye etmek istiyor, kabul edebilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "hb-gifts",
+      "rank": 1,
+      "top1": "hb-gifts",
+      "top1_score": 0.837,
+      "expected_score": 0.837
+    },
+    {
+      "question": "Can I accept a gift card from a client?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "hb-gifts",
+      "rank": 1,
+      "top1": "hb-gifts",
+      "top1_score": 0.8088,
+      "expected_score": 0.8088
+    },
+    {
+      "question": "Bayram arifesinde çalışıyor muyuz?",
+      "kind": "farklı kelime",
+      "expected": "hb-holidays",
+      "rank": 1,
+      "top1": "hb-holidays",
+      "top1_score": 0.8285,
+      "expected_score": 0.8285
+    },
+    {
+      "question": "Resmî tatilde nöbet tutarsam karşılığında ne alırım?",
+      "kind": "benzer belge tuzağı",
+      "expected": "hb-holidays",
+      "rank": 1,
+      "top1": "hb-holidays",
+      "top1_score": 0.8577,
+      "expected_score": 0.8577
+    },
+    {
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "r26-days",
+      "rank": 2,
+      "top1": "r24-days",
+      "top1_score": 0.8719,
+      "expected_score": 0.8663
+    },
+    {
+      "question": "Hangi günler ofiste bulunmak zorunlu?",
+      "kind": "farklı kelime",
+      "expected": "r26-days",
+      "rank": 1,
+      "top1": "r26-days",
+      "top1_score": 0.8354,
+      "expected_score": 0.8354
+    },
+    {
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "r26-equip",
+      "rank": 1,
+      "top1": "r26-equip",
+      "top1_score": 0.8535,
+      "expected_score": 0.8535
+    },
+    {
+      "question": "Yazın bir ay İspanya'dan çalışabilir miyim?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "r26-abroad",
+      "rank": 1,
+      "top1": "r26-abroad",
+      "top1_score": 0.8333,
+      "expected_score": 0.8333
+    },
+    {
+      "question": "Can I work remotely from another country?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "r26-abroad",
+      "rank": 1,
+      "top1": "r26-abroad",
+      "top1_score": 0.8151,
+      "expected_score": 0.8151
+    },
+    {
+      "question": "Evden çalışırken internet faturama katkı yapılıyor mu?",
+      "kind": "eski sürüm tuzağı",
+      "expected": "r26-internet",
+      "rank": 2,
+      "top1": "r24-internet",
+      "top1_score": 0.8337,
+      "expected_score": 0.8269
+    },
+    {
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "kind": "farklı kelime",
+      "expected": "lv-annual",
+      "rank": 1,
+      "top1": "lv-annual",
+      "top1_score": 0.8524,
+      "expected_score": 0.8524
+    },
+    {
+      "question": "How many days of annual leave do I get?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "lv-annual",
+      "rank": 1,
+      "top1": "lv-annual",
+      "top1_score": 0.809,
+      "expected_score": 0.809
+    },
+    {
+      "question": "16 yıllık bir çalışanın kaç gün yıllık izni var?",
+      "kind": "doğrudan",
+      "expected": "lv-annual",
+      "rank": 1,
+      "top1": "lv-annual",
+      "top1_score": 0.8902,
+      "expected_score": 0.8902
+    },
+    {
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "kind": "farklı kelime",
+      "expected": "lv-apply",
+      "rank": 1,
+      "top1": "lv-apply",
+      "top1_score": 0.8543,
+      "expected_score": 0.8543
+    },
+    {
+      "question": "İzin talebimi kaç gün önceden girmeliyim?",
+      "kind": "doğrudan",
+      "expected": "lv-apply",
+      "rank": 1,
+      "top1": "lv-apply",
+      "top1_score": 0.8652,
+      "expected_score": 0.8652
+    },
+    {
+      "question": "Grip oldum, bugün işe gidemeyeceğim; kime ne zamana kadar haber vermeliyim?",
+      "kind": "farklı kelime",
+      "expected": "lv-sick",
+      "rank": 1,
+      "top1": "lv-sick",
+      "top1_score": 0.8484,
+      "expected_score": 0.8484
+    },
+    {
+      "question": "Raporlu olduğum günler yıllık iznimden düşülür mü?",
+      "kind": "benzer belge tuzağı",
+      "expected": "lv-sick",
+      "rank": 1,
+      "top1": "lv-sick",
+      "top1_score": 0.8406,
+      "expected_score": 0.8406
+    },
+    {
+      "question": "Evleniyorum, kaç gün izin alabilirim?",
+      "kind": "farklı kelime",
+      "expected": "lv-excuse",
+      "rank": 1,
+      "top1": "lv-excuse",
+      "top1_score": 0.8762,
+      "expected_score": 0.8762
+    },
+    {
+      "question": "Babamı kaybettim, kaç gün izin hakkım var?",
+      "kind": "farklı kelime",
+      "expected": "lv-excuse",
+      "rank": 1,
+      "top1": "lv-excuse",
+      "top1_score": 0.8568,
+      "expected_score": 0.8568
+    },
+    {
+      "question": "Eşim doğum yaptı, kaç gün izin kullanabilirim?",
+      "kind": "benzer belge tuzağı",
+      "expected": "lv-excuse",
+      "rank": 1,
+      "top1": "lv-excuse",
+      "top1_score": 0.8886,
+      "expected_score": 0.8886
+    },
+    {
+      "question": "Maaş almadan bir ay izne çıkabilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "lv-unpaid",
+      "rank": 1,
+      "top1": "lv-unpaid",
+      "top1_score": 0.8393,
+      "expected_score": 0.8393
+    },
+    {
+      "question": "Çocuğumu sağlık sigortasına ekleyebilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "bn-health",
+      "rank": 1,
+      "top1": "bn-health",
+      "top1_score": 0.8257,
+      "expected_score": 0.8257
+    },
+    {
+      "question": "Diş tedavisi sigortadan karşılanıyor mu?",
+      "kind": "doğrudan",
+      "expected": "bn-health",
+      "rank": 1,
+      "top1": "bn-health",
+      "top1_score": 0.8708,
+      "expected_score": 0.8708
+    },
+    {
+      "question": "Evden çalıştığım gün yemek kartıma para yükleniyor mu?",
+      "kind": "benzer belge tuzağı",
+      "expected": "bn-meal",
+      "rank": 1,
+      "top1": "bn-meal",
+      "top1_score": 0.8713,
+      "expected_score": 0.8713
+    },
+    {
+      "question": "Yemek kartındaki para ay sonunda siliniyor mu?",
+      "kind": "farklı kelime",
+      "expected": "bn-meal",
+      "rank": 1,
+      "top1": "bn-meal",
+      "top1_score": 0.8526,
+      "expected_score": 0.8526
+    },
+    {
+      "question": "Bir AWS sertifika sınavına girmek istiyorum, ücretini şirket öder mi?",
+      "kind": "farklı kelime",
+      "expected": "bn-training",
+      "rank": 1,
+      "top1": "bn-training",
+      "top1_score": 0.8015,
+      "expected_score": 0.8015
+    },
+    {
+      "question": "Is there a budget for attending conferences?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "bn-training",
+      "rank": 2,
+      "top1": "en-rooms",
+      "top1_score": 0.7995,
+      "expected_score": 0.7823
+    },
+    {
+      "question": "Yeni başlayan arkadaşın bilgisayarı ne zaman teslim edilir?",
+      "kind": "farklı kelime",
+      "expected": "ob-first",
+      "rank": 1,
+      "top1": "ob-first",
+      "top1_score": 0.8683,
+      "expected_score": 0.8683
+    },
+    {
+      "question": "İlk haftamda bana yol gösterecek biri olacak mı?",
+      "kind": "farklı kelime",
+      "expected": "ob-first",
+      "rank": 1,
+      "top1": "ob-first",
+      "top1_score": 0.8269,
+      "expected_score": 0.8269
+    },
+    {
+      "question": "Deneme süresi ne kadar?",
+      "kind": "doğrudan",
+      "expected": "ob-probation",
+      "rank": 1,
+      "top1": "ob-probation",
+      "top1_score": 0.8855,
+      "expected_score": 0.8855
+    },
+    {
+      "question": "Deneme süresindeyken tatile çıkabilir miyim?",
+      "kind": "benzer belge tuzağı",
+      "expected": "ob-probation",
+      "rank": 1,
+      "top1": "ob-probation",
+      "top1_score": 0.8433,
+      "expected_score": 0.8433
+    },
+    {
+      "question": "Performans değerlendirmeleri hangi aylarda yapılıyor?",
+      "kind": "doğrudan",
+      "expected": "pf-cycle",
+      "rank": 1,
+      "top1": "pf-cycle",
+      "top1_score": 0.9051,
+      "expected_score": 0.9051
+    },
+    {
+      "question": "Kendimi değerlendirdiğim formu ne zaman doldururum?",
+      "kind": "farklı kelime",
+      "expected": "pf-cycle",
+      "rank": 1,
+      "top1": "pf-cycle",
+      "top1_score": 0.8203,
+      "expected_score": 0.8203
+    },
+    {
+      "question": "Bir üst pozisyona geçmek için ne gerekiyor?",
+      "kind": "farklı kelime",
+      "expected": "pf-promo",
+      "rank": 2,
+      "top1": "hr-process",
+      "top1_score": 0.789,
+      "expected_score": 0.7827
+    },
+    {
+      "question": "When are promotion decisions made?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "pf-promo",
+      "rank": 1,
+      "top1": "pf-promo",
+      "top1_score": 0.782,
+      "expected_score": 0.782
+    },
+    {
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "kind": "farklı kelime",
+      "expected": "hr-process",
+      "rank": 3,
+      "top1": "inc-severity",
+      "top1_score": 0.8027,
+      "expected_score": 0.7958
+    },
+    {
+      "question": "Adaya bandın üstünde teklif vermek istiyoruz, kimin onayı gerekir?",
+      "kind": "farklı kelime",
+      "expected": "hr-salary",
+      "rank": 1,
+      "top1": "hr-salary",
+      "top1_score": 0.8313,
+      "expected_score": 0.8313
+    },
+    {
+      "question": "Bir arkadaşımı işe önerirsem prim alır mıyım?",
+      "kind": "farklı kelime",
+      "expected": "hr-referral",
+      "rank": 1,
+      "top1": "hr-referral",
+      "top1_score": 0.877,
+      "expected_score": 0.877
+    },
+    {
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "kind": "farklı kelime",
+      "expected": "vpn-setup",
+      "rank": 1,
+      "top1": "vpn-setup",
+      "top1_score": 0.8471,
+      "expected_score": 0.8471
+    },
+    {
+      "question": "How do I connect to the company network from home?",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "vpn-setup",
+      "rank": 1,
+      "top1": "vpn-setup",
+      "top1_score": 0.8185,
+      "expected_score": 0.8185
+    },
+    {
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "vpn-maclinux",
+      "rank": 1,
+      "top1": "vpn-maclinux",
+      "top1_score": 0.8233,
+      "expected_score": 0.8233
+    },
+    {
+      "question": "Mac'e VPN programını nereden indiririm?",
+      "kind": "doğrudan",
+      "expected": "vpn-maclinux",
+      "rank": 1,
+      "top1": "vpn-maclinux",
+      "top1_score": 0.8734,
+      "expected_score": 0.8734
+    },
+    {
+      "question": "Telefonumdan iç portala nasıl girerim?",
+      "kind": "farklı kelime",
+      "expected": "vpn-mobile",
+      "rank": 1,
+      "top1": "vpn-mobile",
+      "top1_score": 0.8356,
+      "expected_score": 0.8356
+    },
+    {
+      "question": "VPN 'sertifika doğrulanamadı' hatası veriyor.",
+      "kind": "doğrudan",
+      "expected": "vpntr-cert",
+      "rank": 1,
+      "top1": "vpntr-cert",
+      "top1_score": 0.8651,
+      "expected_score": 0.8651
+    },
+    {
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "kind": "farklı kelime",
+      "expected": "vpntr-drop",
+      "rank": 1,
+      "top1": "vpntr-drop",
+      "top1_score": 0.8692,
+      "expected_score": 0.8692
+    },
+    {
+      "question": "VPN açıkken Zoom görüşmelerimde görüntü donuyor.",
+      "kind": "farklı kelime",
+      "expected": "vpntr-slow",
+      "rank": 1,
+      "top1": "vpntr-slow",
+      "top1_score": 0.8663,
+      "expected_score": 0.8663
+    },
+    {
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "pw-reset",
+      "rank": 1,
+      "top1": "pw-reset",
+      "top1_score": 0.8248,
+      "expected_score": 0.8248
+    },
+    {
+      "question": "Yeni parolam en az kaç karakter olmalı?",
+      "kind": "doğrudan",
+      "expected": "pw-reset",
+      "rank": 1,
+      "top1": "pw-reset",
+      "top1_score": 0.8437,
+      "expected_score": 0.8437
+    },
+    {
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "kind": "farklı kelime",
+      "expected": "pw-lock",
+      "rank": 1,
+      "top1": "pw-lock",
+      "top1_score": 0.8427,
+      "expected_score": 0.8427
+    },
+    {
+      "question": "Telefonumu değiştirdim, giriş için doğrulama kodları artık gelmiyor.",
+      "kind": "farklı kelime",
+      "expected": "pw-mfa",
+      "rank": 2,
+      "top1": "pw-reset",
+      "top1_score": 0.847,
+      "expected_score": 0.8453
+    },
+    {
+      "question": "I lost my phone and can't receive login codes.",
+      "kind": "İngilizce soru → Türkçe belge",
+      "expected": "pw-mfa",
+      "rank": 3,
+      "top1": "en-laptop",
+      "top1_score": 0.7862,
+      "expected_score": 0.768
+    },
+    {
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "inc-phish",
+      "rank": 2,
+      "top1": "pw-reset",
+      "top1_score": 0.8295,
+      "expected_score": 0.818
+    },
+    {
+      "question": "Müşteri verisi sızarsa kriz ekibi ne kadar sürede toplanır?",
+      "kind": "farklı kelime",
+      "expected": "inc-severity",
+      "rank": 1,
+      "top1": "inc-severity",
+      "top1_score": 0.8544,
+      "expected_score": 0.8544
+    },
+    {
+      "question": "Büyük bir güvenlik olayından sonra rapor ne zamana kadar yazılmalı?",
+      "kind": "farklı kelime",
+      "expected": "inc-report",
+      "rank": 1,
+      "top1": "inc-report",
+      "top1_score": 0.853,
+      "expected_score": 0.853
+    },
+    {
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-laptop",
+      "rank": 8,
+      "top1": "pw-mfa",
+      "top1_score": 0.8151,
+      "expected_score": 0.7966
+    },
+    {
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-laptop",
+      "rank": 12,
+      "top1": "pw-lock",
+      "top1_score": 0.8131,
+      "expected_score": 0.7682
+    },
+    {
+      "question": "Can I turn off disk encryption on my laptop?",
+      "kind": "İngilizce soru → İngilizce belge",
+      "expected": "en-laptop",
+      "rank": 1,
+      "top1": "en-laptop",
+      "top1_score": 0.8408,
+      "expected_score": 0.8408
+    },
+    {
+      "question": "Yazılım Merkezi'nde olmayan bir programı kurmak istiyorum, ne yapmalıyım?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-software",
+      "rank": 24,
+      "top1": "hr-process",
+      "top1_score": 0.8126,
+      "expected_score": 0.7713
+    },
+    {
+      "question": "How long does software approval take?",
+      "kind": "İngilizce soru → İngilizce belge",
+      "expected": "en-software",
+      "rank": 1,
+      "top1": "en-software",
+      "top1_score": 0.8714,
+      "expected_score": 0.8714
+    },
+    {
+      "question": "Oltalama olduğunu düşündüğüm bir maili nasıl bildiririm?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-email",
+      "rank": 16,
+      "top1": "pw-reset",
+      "top1_score": 0.8251,
+      "expected_score": 0.7807
+    },
+    {
+      "question": "Konu satırındaki [EXTERNAL] etiketi ne anlama geliyor?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-email",
+      "rank": 26,
+      "top1": "inc-phish",
+      "top1_score": 0.7956,
+      "expected_score": 0.7514
+    },
+    {
+      "question": "Ayda kaç sayfa renkli çıktı alabilirim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-printing",
+      "rank": 1,
+      "top1": "en-printing",
+      "top1_score": 0.8023,
+      "expected_score": 0.8023
+    },
+    {
+      "question": "How do I print a confidential document?",
+      "kind": "İngilizce soru → İngilizce belge",
+      "expected": "en-printing",
+      "rank": 1,
+      "top1": "en-printing",
+      "top1_score": 0.8534,
+      "expected_score": 0.8534
+    },
+    {
+      "question": "Toplantı odasını en fazla kaç saatliğine ayırabilirim?",
+      "kind": "Türkçe soru → İngilizce belge",
+      "expected": "en-rooms",
+      "rank": 4,
+      "top1": "r26-days",
+      "top1_score": 0.8119,
+      "expected_score": 0.8022
+    },
+    {
+      "question": "What happens if I don't show up for my room booking?",
+      "kind": "İngilizce soru → İngilizce belge",
+      "expected": "en-rooms",
+      "rank": 1,
+      "top1": "en-rooms",
+      "top1_score": 0.8463,
+      "expected_score": 0.8463
+    },
+    {
+      "question": "Ankara'ya iş seyahatine gidiyorum, yemeğe günlük ne kadar harcayabilirim?",
+      "kind": "benzer belge tuzağı",
+      "expected": "ex-meal",
+      "rank": 1,
+      "top1": "ex-meal",
+      "top1_score": 0.8643,
+      "expected_score": 0.8643
+    },
+    {
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "kind": "farklı kelime",
+      "expected": "ex-claim",
+      "rank": 3,
+      "top1": "pw-mfa",
+      "top1_score": 0.8276,
+      "expected_score": 0.817
+    },
+    {
+      "question": "Harcadığım masraflar bana ne zaman geri ödenir?",
+      "kind": "farklı kelime",
+      "expected": "ex-claim",
+      "rank": 1,
+      "top1": "ex-claim",
+      "top1_score": 0.8558,
+      "expected_score": 0.8558
+    },
+    {
+      "question": "Almanya'daki konferansta günlük yemek limitim ne kadar?",
+      "kind": "benzer belge tuzağı",
+      "expected": "ex-abroad",
+      "rank": 2,
+      "top1": "ex-meal",
+      "top1_score": 0.8557,
+      "expected_score": 0.8535
+    },
+    {
+      "question": "Uzun uçuşlarda business class kullanabilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "ex-abroad",
+      "rank": 1,
+      "top1": "ex-abroad",
+      "top1_score": 0.8256,
+      "expected_score": 0.8256
+    },
+    {
+      "question": "Şirket kartıyla yanlışlıkla kendi alışverişimi yaptım.",
+      "kind": "farklı kelime",
+      "expected": "ex-card",
+      "rank": 1,
+      "top1": "ex-card",
+      "top1_score": 0.8188,
+      "expected_score": 0.8188
+    },
+    {
+      "question": "Kimlere şirket kredi kartı veriliyor?",
+      "kind": "doğrudan",
+      "expected": "ex-card",
+      "rank": 1,
+      "top1": "ex-card",
+      "top1_score": 0.8492,
+      "expected_score": 0.8492
+    },
+    {
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "kind": "farklı kelime",
+      "expected": "bud-total",
+      "rank": 1,
+      "top1": "bud-total",
+      "top1_score": 0.8579,
+      "expected_score": 0.8579
+    },
+    {
+      "question": "2026 pazarlama bütçesinde ne değişiyor?",
+      "kind": "doğrudan",
+      "expected": "bud-total",
+      "rank": 1,
+      "top1": "bud-total",
+      "top1_score": 0.8772,
+      "expected_score": 0.8772
+    },
+    {
+      "question": "Önümüzdeki yıl kaç kişi işe alınacak?",
+      "kind": "farklı kelime",
+      "expected": "bud-hiring",
+      "rank": 1,
+      "top1": "bud-hiring",
+      "top1_score": 0.8282,
+      "expected_score": 0.8282
+    },
+    {
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "kind": "farklı kelime",
+      "expected": "vendor-terms",
+      "rank": 1,
+      "top1": "vendor-terms",
+      "top1_score": 0.8822,
+      "expected_score": 0.8822
+    },
+    {
+      "question": "Sözleşmeyi sonlandırmak için kaç gün önceden haber vermek gerekir?",
+      "kind": "farklı kelime",
+      "expected": "vendor-terms",
+      "rank": 1,
+      "top1": "vendor-terms",
+      "top1_score": 0.8238,
+      "expected_score": 0.8238
+    },
+    {
+      "question": "Tedarikçi taahhüt ettiği hizmet seviyesini tutturamazsa ne olur?",
+      "kind": "farklı kelime",
+      "expected": "vendor-penalty",
+      "rank": 1,
+      "top1": "vendor-penalty",
+      "top1_score": 0.8496,
+      "expected_score": 0.8496
+    },
+    {
+      "question": "40 bin TL'lik bir alım için kaç teklif almalıyım?",
+      "kind": "farklı kelime",
+      "expected": "pur-limits",
+      "rank": 1,
+      "top1": "pur-limits",
+      "top1_score": 0.8591,
+      "expected_score": 0.8591
+    },
+    {
+      "question": "Hangi tutarın üzerindeki alımlar kurul onayı gerektirir?",
+      "kind": "doğrudan",
+      "expected": "pur-limits",
+      "rank": 1,
+      "top1": "pur-limits",
+      "top1_score": 0.8314,
+      "expected_score": 0.8314
+    },
+    {
+      "question": "Yeni bir firmayla çalışmaya başlamak için hangi belgeler gerekiyor?",
+      "kind": "farklı kelime",
+      "expected": "pur-newvendor",
+      "rank": 2,
+      "top1": "ob-first",
+      "top1_score": 0.8376,
+      "expected_score": 0.8268
+    },
+    {
+      "question": "Maaşlar ayın kaçında yatıyor?",
+      "kind": "farklı kelime",
+      "expected": "pay-date",
+      "rank": 1,
+      "top1": "pay-date",
+      "top1_score": 0.8148,
+      "expected_score": 0.8148
+    },
+    {
+      "question": "Maaşımda eksik var, kime yazmalıyım?",
+      "kind": "farklı kelime",
+      "expected": "pay-date",
+      "rank": 3,
+      "top1": "pw-reset",
+      "top1_score": 0.7939,
+      "expected_score": 0.7698
+    },
+    {
+      "question": "Acil paraya ihtiyacım var, maaşımdan önceden alabilir miyim?",
+      "kind": "farklı kelime",
+      "expected": "pay-advance",
+      "rank": 1,
+      "top1": "pay-advance",
+      "top1_score": 0.8186,
+      "expected_score": 0.8186
+    },
+    {
+      "question": "Avans nasıl geri ödeniyor?",
+      "kind": "doğrudan",
+      "expected": "pay-advance",
+      "rank": 1,
+      "top1": "pay-advance",
+      "top1_score": 0.8386,
+      "expected_score": 0.8386
+    }
+  ],
+  "no_answer": [
+    {
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "top1": "bn-training",
+      "top1_score": 0.7952
+    },
+    {
+      "question": "Yemekhanede bugün ne var?",
+      "top1": "bn-meal",
+      "top1_score": 0.8102
+    },
+    {
+      "question": "What is the dress code for the New Year party?",
+      "top1": "hb-dress",
+      "top1_score": 0.7641
+    },
+    {
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "top1": "inc-severity",
+      "top1_score": 0.7947
+    },
+    {
+      "question": "Şirketin spor salonu üyeliği desteği var mı?",
+      "top1": "r26-equip",
+      "top1_score": 0.8071
+    },
+    {
+      "question": "Emeklilik planına şirket ne kadar katkı yapıyor?",
+      "top1": "r26-equip",
+      "top1_score": 0.8085
+    },
+    {
+      "question": "Ofisteki kahve makinesi bozuldu, kime haber vermeliyim?",
+      "top1": "ob-first",
+      "top1_score": 0.7919
+    },
+    {
+      "question": "Şirket servisi hangi güzergâhlardan geçiyor?",
+      "top1": "hr-process",
+      "top1_score": 0.7821
+    },
+    {
+      "question": "How do I request a standing desk for the office?",
+      "top1": "en-rooms",
+      "top1_score": 0.7981
+    },
+    {
+      "question": "Evcil hayvanımı ofise getirebilir miyim?",
+      "top1": "hb-dress",
+      "top1_score": 0.8073
+    },
+    {
+      "question": "Yıl sonu partisi ne zaman yapılacak?",
+      "top1": "pf-promo",
+      "top1_score": 0.7835
+    },
+    {
+      "question": "Şirketin hisseleri borsada işlem görüyor mu?",
+      "top1": "pf-promo",
+      "top1_score": 0.7719
+    },
+    {
+      "question": "Kreş yardımı var mı?",
+      "top1": "bn-health",
+      "top1_score": 0.7915
+    },
+    {
+      "question": "Can I get reimbursed for my gym membership?",
+      "top1": "en-rooms",
+      "top1_score": 0.7778
+    },
+    {
+      "question": "Askerlik izni ne kadar?",
+      "top1": "lv-annual",
+      "top1_score": 0.8117
+    }
+  ]
+}
