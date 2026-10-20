@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     jwt_secret_key: str = Field(min_length=32)
     jwt_expire_minutes: int = 60
     max_upload_mb: int = Field(default=10, gt=0)
+    embedding_model: str = "intfloat/multilingual-e5-large"
+    # Model dosyaları (~2,3 GB) ilk kullanımda buraya indirilir; klasör git dışında.
+    model_cache_dir: str = "data/runtime/models"
 
 
 @lru_cache
