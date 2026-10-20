@@ -1,0 +1,69 @@
+{
+  "documents": [
+    {
+      "filename": "employee-handbook.md",
+      "department": "HR",
+      "visibility": "company"
+    },
+    {
+      "filename": "remote-work-policy-2026.md",
+      "department": "HR",
+      "visibility": "company"
+    },
+    {
+      "filename": "remote-work-policy-2024-archived.md",
+      "department": "HR",
+      "visibility": "company"
+    },
+    {
+      "filename": "annual-leave-policy.md",
+      "department": "HR",
+      "visibility": "company"
+    },
+    {
+      "filename": "hiring-guide-confidential.md",
+      "department": "HR",
+      "visibility": "department"
+    },
+    {
+      "filename": "vpn-setup.md",
+      "department": "IT",
+      "visibility": "company"
+    },
+    {
+      "filename": "vpn-troubleshooting.md",
+      "department": "IT",
+      "visibility": "department"
+    },
+    {
+      "filename": "password-reset.md",
+      "department": "IT",
+      "visibility": "company"
+    },
+    {
+      "filename": "incident-response-internal.md",
+      "department": "IT",
+      "visibility": "department"
+    },
+    {
+      "filename": "office-and-it-guidelines-en.md",
+      "department": "IT",
+      "visibility": "company"
+    },
+    {
+      "filename": "expense-policy.md",
+      "department": "FINANCE",
+      "visibility": "company"
+    },
+    {
+      "filename": "budget-plan-2026-confidential.md",
+      "department": "FINANCE",
+      "visibility": "department"
+    },
+    {
+      "filename": "vendor-contract-terms-internal.md",
+      "department": "FINANCE",
+      "visibility": "department"
+    }
+  ]
+}
