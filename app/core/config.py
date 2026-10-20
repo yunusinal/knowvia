@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     embedding_model: str = "intfloat/multilingual-e5-large"
     # Model dosyaları (~2,3 GB) ilk kullanımda buraya indirilir; klasör git dışında.
     model_cache_dir: str = "data/runtime/models"
+    # Qdrant local mode: vektörler bu klasörde, ayrı sunucu gerekmez (yalnızca yerel demo).
+    qdrant_path: str = "data/runtime/qdrant"
+    qdrant_collection: str = "knowledge_chunks_v1"
 
 
 @lru_cache
