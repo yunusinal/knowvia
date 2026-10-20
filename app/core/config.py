@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     # Zorunlu ve varsayılanı yok: ayarlanmamışsa uygulama başlamaz (fail closed).
     jwt_secret_key: str = Field(min_length=32)
     jwt_expire_minutes: int = 60
+    max_upload_mb: int = Field(default=10, gt=0)
 
 
 @lru_cache
