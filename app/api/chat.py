@@ -72,5 +72,6 @@ def chat(
         question,
         top_k=settings.retrieval_top_k,
         min_score=settings.retrieval_min_score,
+        history=request.history,
     )
     return ChatResponse.model_validate(result)

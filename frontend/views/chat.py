@@ -44,13 +44,18 @@ def render_message(message: dict[str, Any]) -> None:
 
 
 def ask(question: str) -> None:
+    history = [
+        message["content"]
+        for message in st.session_state[session.MESSAGES]
+        if message["role"] == "user"
+    ][-4:]
     user_message = {"role": "user", "content": question}
     st.session_state[session.MESSAGES].append(user_message)
     render_message(user_message)
 
     try:
         with st.spinner("Cevap hazırlanıyor…"):
-            result = session.client().chat(question)
+            result = session.client().chat(question, history)
         answer = {
             "role": "assistant",
             "content": result["answer"],
@@ -71,7 +76,7 @@ def ask(question: str) -> None:
 
 st.title("Knowvia", icon=":material/menu_book:")
 st.caption("Yalnızca erişim yetkiniz olan belgelerden, kaynak göstererek cevap verilir.")
-st.caption("Her soru bağımsız yanıtlanır; önceki mesajlar yeni sorunun bağlamına eklenmez.")
+st.caption("Takip soruları, bu oturumdaki son dört sorunuzu bağlam olarak kullanır.")
 
 messages = st.session_state[session.MESSAGES]
 for previous in messages:

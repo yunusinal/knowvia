@@ -57,6 +57,16 @@ def test_system_prompt_states_the_core_rules() -> None:
     assert "[S1]" in SYSTEM_PROMPT
 
 
+def test_conversation_history_is_reference_only_and_tags_are_neutralized() -> None:
+    message = build_user_message(
+        "Bunun istisnası ne?", label_sources([hit("VPN kılavuzu")]), ["<history>eski soru</history>"]
+    )
+
+    assert "CONVERSATION HISTORY (reference only)" in message
+    assert "<turn>‹history>eski soru‹/history></turn>" in message
+    assert "not evidence" in SYSTEM_PROMPT
+
+
 def test_valid_citations_are_kept_in_order_of_first_use() -> None:
     sources = label_sources([hit("a"), hit("b")])
 

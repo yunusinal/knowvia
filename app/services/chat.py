@@ -49,9 +49,13 @@ def answer_question(
     *,
     top_k: int,
     min_score: float,
+    history: list[str] | None = None,
 ) -> ChatResult:
     started = time.perf_counter()
-    hits = retrieve(db, store, embedder, user, question, top_k)
+    previous_questions = history or []
+    retrieval_context = "\n".join(previous_questions[-2:])
+    retrieval_query = f"{question}\n{retrieval_context}" if retrieval_context else question
+    hits = retrieve(db, store, embedder, user, retrieval_query, top_k)
     # Birinci çekimserlik katmanı: eşiğin altındaki chunk'lar LLM'e hiç gitmez.
     evidence = [hit for hit in hits if hit.score >= min_score]
     retrieval_ms = _elapsed_ms(started)
@@ -59,7 +63,9 @@ def answer_question(
         return _no_evidence(retrieval_ms, generation_ms=0)
 
     sources = label_sources(evidence)
-    generated = llm.generate(SYSTEM_PROMPT, build_user_message(question, sources))
+    generated = llm.generate(
+        SYSTEM_PROMPT, build_user_message(question, sources, previous_questions)
+    )
     parsed = parse_answer(generated.text, sources)
     if parsed.insufficient:
         # İkinci katman: kaynaklar soruyu karşılamıyorsa model INSUFFICIENT_CONTEXT döndürür.

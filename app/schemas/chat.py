@@ -1,12 +1,13 @@
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class ChatRequest(BaseModel):
-    """Yalnızca soru alınır; istekle gelen rol/departman gibi alanlar yok sayılır (yetki SQLite'tan)."""
+    """Soru ve sınırlı konuşma bağlamı; yetki bilgisi istekten alınmaz."""
 
     question: str = Field(min_length=1, max_length=1000)
+    history: list[Annotated[str, Field(max_length=1000)]] = Field(default_factory=list, max_length=4)
 
 
 class SourceOut(BaseModel):

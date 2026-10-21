@@ -139,6 +139,35 @@ def test_only_chunks_above_threshold_are_sent_to_llm(
     assert HANDBOOK not in context  # benzerliği düşük chunk bağlama girmez
 
 
+def test_follow_up_uses_previous_user_question_for_retrieval_and_prompt(
+    client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM
+) -> None:
+    fake_llm.answers = ["Cihaz saatini kontrol edin. [S1]"]
+
+    response = ask(
+        client, users["it"], "Peki bunun istisnası ne?", history=["VPN sertifika hatası veriyor"]
+    )
+
+    assert response.status_code == 200
+    assert response.json()["sources"][0]["document_id"] == documents["vpn"].id
+    assert "VPN sertifika hatası veriyor" in llm_context(fake_llm)
+    assert "Peki bunun istisnası ne?" in llm_context(fake_llm)
+
+
+def test_history_cannot_expand_current_users_document_access(
+    client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM
+) -> None:
+    fake_llm.answers = [INSUFFICIENT_CONTEXT]
+
+    response = ask(
+        client, users["it"], "Peki bunun oranı ne?", history=["2026 bütçe planındaki artış oranı"]
+    )
+
+    assert response.status_code == 200
+    assert BUDGET not in llm_sources(fake_llm)
+    assert documents["budget"].id not in response.text
+
+
 def test_no_documents_at_all_returns_the_same_refusal(client: TestClient, users: dict[str, User], fake_llm: FakeLLM) -> None:
     body = ask(client, users["it"], "VPN nasıl kurulur?").json()
 
@@ -208,6 +237,11 @@ def test_instructions_inside_a_document_cannot_widen_access(
 def test_question_must_not_be_blank_or_too_long(client: TestClient, users: dict[str, User]) -> None:
     assert ask(client, users["it"], "   ").status_code == 422
     assert ask(client, users["it"], "x" * 1001).status_code == 422
+
+
+def test_history_is_bounded(client: TestClient, users: dict[str, User]) -> None:
+    assert ask(client, users["it"], "Soru?", history=["önceki"] * 5).status_code == 422
+    assert ask(client, users["it"], "Soru?", history=["x" * 1001]).status_code == 422
 
 
 def test_chat_requires_authentication(client: TestClient) -> None:

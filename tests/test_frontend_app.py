@@ -41,6 +41,7 @@ class FakeBackend:
     documents: list[dict[str, Any]] = field(default_factory=lambda: [DOCUMENT.copy()])
     deleted: list[str] = field(default_factory=list)
     uploads: list[tuple[str, str, str]] = field(default_factory=list)
+    chat_requests: list[tuple[str, list[str]]] = field(default_factory=list)
 
 
 backend = FakeBackend()
@@ -64,9 +65,10 @@ class FakeKnowviaClient:
             raise backend.documents_error
         return backend.documents
 
-    def chat(self, question: str) -> dict[str, Any]:
+    def chat(self, question: str, history: list[str] | None = None) -> dict[str, Any]:
         if backend.chat_error is not None:
             raise backend.chat_error
+        backend.chat_requests.append((question, history or []))
         return backend.chat_result
 
     def delete_document(self, document_id: str) -> dict[str, Any]:
@@ -182,6 +184,17 @@ def test_answer_shows_response_time() -> None:
     at.chat_input[0].set_value("VPN sertifika hatası").run()
 
     assert "0.0 sn · arama 1 ms · dil modeli 1 ms" in texts(at)
+
+
+def test_follow_up_sends_recent_user_questions_as_context() -> None:
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+    at.chat_input[0].set_value("Peki bunun istisnası ne?").run()
+
+    assert backend.chat_requests == [
+        ("VPN sertifika hatası", []),
+        ("Peki bunun istisnası ne?", ["VPN sertifika hatası"]),
+    ]
 
 
 def test_canned_reply_has_no_source_card_or_search_timing_even_after_rerun() -> None:
