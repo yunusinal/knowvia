@@ -124,7 +124,7 @@ def test_below_threshold_means_no_llm_call(
     body = ask(client, users["admin"], "tamamen alakasız bir soru").json()
 
     assert fake_llm.calls == []
-    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0}
+    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0, "response_type": "rag"}
 
 
 def test_only_chunks_above_threshold_are_sent_to_llm(
@@ -212,6 +212,48 @@ def test_question_must_not_be_blank_or_too_long(client: TestClient, users: dict[
 
 def test_chat_requires_authentication(client: TestClient) -> None:
     assert client.post("/chat", json={"question": "VPN?"}).status_code == 401
+
+
+def test_canned_reply_needs_authentication(client: TestClient) -> None:
+    assert client.post("/chat", json={"question": "selam"}).status_code == 401
+
+
+def test_canned_reply_skips_all_rag_resources_without_llm_key(
+    client: TestClient, users: dict[str, User], monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from app.api import chat as chat_module
+
+    for dependency in (chat_module.store_dependency, chat_module.embedder_dependency, llm_dependency):
+        del app.dependency_overrides[dependency]
+    monkeypatch.setattr(get_settings(), "llm_api_key", None)
+
+    def forbidden() -> None:
+        pytest.fail("Hazır cevap Qdrant, embedding veya LLM hazırlamamalı.")
+
+    monkeypatch.setattr(chat_module, "get_vector_store", forbidden)
+    monkeypatch.setattr(chat_module, "get_embedder", forbidden)
+    monkeypatch.setattr(chat_module, "get_llm", forbidden)
+
+    response = ask(client, users["it"], "selam kanka nasılsın?")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "answer": "Teşekkürler, iyiyim! Size nasıl yardımcı olabilirim? Belgeleriniz hakkında bir soru sorabilirsiniz.",
+        "sources": [], "no_evidence": False, "retrieval_ms": 0, "generation_ms": 0,
+        "response_type": "canned",
+    }
+
+
+def test_greeting_with_document_question_still_uses_authorized_rag(
+    client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM,
+) -> None:
+    fake_llm.answers = ["Cihaz saatini kontrol edin. [S1]"]
+    response = ask(client, users["it"], "Selam, VPN sertifika doğrulanamadı hatası")
+
+    assert response.status_code == 200
+    assert response.json()["response_type"] == "rag"
+    assert response.json()["sources"][0]["document_id"] == documents["vpn"].id
+    assert fake_llm.calls
 
 
 def test_missing_llm_key_returns_503_with_setup_help(

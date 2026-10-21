@@ -20,7 +20,7 @@ from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
 from app.repositories.vector_store import VectorStore, get_vector_store  # noqa: E402
 from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder, get_embedder  # noqa: E402
-from app.api.chat import llm_dependency  # noqa: E402
+from app.api.chat import embedder_dependency, llm_dependency, store_dependency  # noqa: E402
 from tests.fakes import FakeEmbedder, FakeLLM  # noqa: E402
 
 
@@ -92,6 +92,8 @@ def client(
     app.dependency_overrides[get_vector_store] = lambda: vector_store
     app.dependency_overrides[get_embedder] = lambda: fake_embedder
     app.dependency_overrides[llm_dependency] = lambda: fake_llm
+    app.dependency_overrides[store_dependency] = lambda: vector_store
+    app.dependency_overrides[embedder_dependency] = lambda: fake_embedder
     yield TestClient(app)
     app.dependency_overrides.clear()
 

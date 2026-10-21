@@ -12,12 +12,30 @@ from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.chat import answer_question
 from app.services.embeddings import Embedder, get_embedder
 from app.services.llm import LLMClient, LLMNotConfiguredError, get_llm
+from app.services.smalltalk import canned_reply
 
 router = APIRouter(tags=["chat"])
 
 
-def llm_dependency() -> LLMClient:
+def canned_dependency(request: ChatRequest) -> str | None:
+    return canned_reply(request.question)
+
+
+CannedReply = Annotated[str | None, Depends(canned_dependency)]
+
+
+def store_dependency(reply: CannedReply) -> VectorStore | None:
+    return None if reply is not None else get_vector_store()
+
+
+def embedder_dependency(reply: CannedReply) -> Embedder | None:
+    return None if reply is not None else get_embedder()
+
+
+def llm_dependency(reply: CannedReply) -> LLMClient | None:
     """LLM ayarlanmamışsa istek 503 ve kurulum yönergesiyle reddedilir (anahtar yokken uygulama yine açılır)."""
+    if reply is not None:
+        return None
     try:
         return get_llm()
     except LLMNotConfiguredError as error:
@@ -29,14 +47,21 @@ def chat(
     request: ChatRequest,
     user: Annotated[User, Depends(get_current_user)],
     db: Annotated[Session, Depends(get_db)],
-    store: Annotated[VectorStore, Depends(get_vector_store)],
-    embedder: Annotated[Embedder, Depends(get_embedder)],
-    llm: Annotated[LLMClient, Depends(llm_dependency)],
+    reply: CannedReply,
+    store: Annotated[VectorStore | None, Depends(store_dependency)],
+    embedder: Annotated[Embedder | None, Depends(embedder_dependency)],
+    llm: Annotated[LLMClient | None, Depends(llm_dependency)],
 ) -> ChatResponse:
     """Kullanıcının yetkili olduğu belgelerden kaynaklı cevap; kanıt yoksa sabit ret cevabı."""
     question = request.question.strip()
     if not question:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Soru boş olamaz.")
+    if reply is not None:
+        return ChatResponse(
+            answer=reply, sources=[], no_evidence=False, retrieval_ms=0, generation_ms=0,
+            response_type="canned",
+        )
+    assert store is not None and embedder is not None and llm is not None
     settings = get_settings()
     result = answer_question(
         db,

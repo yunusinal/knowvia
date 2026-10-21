@@ -1,0 +1,36 @@
+# Knowvia arayüz teması: Streamlit'in resmi "shadcn" tema şablonu, vurgu rengi çivit (indigo).
+# `uv run streamlit run frontend/streamlit_app.py` repo kökünden çalıştırıldığında okunur.
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#4F46E5"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC"
+codeBackgroundColor = "#F1F5F9"
+textColor = "#0F172A"
+linkColor = "#4F46E5"
+borderColor = "#E2E8F0"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "8px"
+buttonRadius = "8px"
+font = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+baseFontSize = 14
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+grayColor = "#64748B"
+blueColor = "#2563EB"
+greenColor = "#16A34A"
+redColor = "#DC2626"
+orangeColor = "#EA580C"
+violetColor = "#7C3AED"
+dataframeBorderColor = "#E2E8F0"
+dataframeHeaderBackgroundColor = "#F8FAFC"
+
+[theme.sidebar]
+backgroundColor = "#F8FAFC"
+secondaryBackgroundColor = "#F1F5F9"
+borderColor = "#E2E8F0"

@@ -37,6 +37,8 @@ class FakeBackend:
         "no_evidence": False, "retrieval_ms": 1, "generation_ms": 1,
     })
     chat_error: ApiError | None = None
+    documents_error: ApiError | None = None
+    documents: list[dict[str, Any]] = field(default_factory=lambda: [DOCUMENT.copy()])
     deleted: list[str] = field(default_factory=list)
     uploads: list[tuple[str, str, str]] = field(default_factory=list)
 
@@ -58,7 +60,9 @@ class FakeKnowviaClient:
         return USERS[self.token.removeprefix("token:")]
 
     def list_documents(self) -> list[dict[str, Any]]:
-        return [DOCUMENT]
+        if backend.documents_error is not None:
+            raise backend.documents_error
+        return backend.documents
 
     def chat(self, question: str) -> dict[str, Any]:
         if backend.chat_error is not None:
@@ -100,13 +104,17 @@ def texts(at: AppTest) -> str:
     return "\n".join(str(p) for p in parts)
 
 
-def test_login_screen_is_shown_first() -> None:
+def test_landing_page_with_login_is_shown_first() -> None:
     at = app()
 
     assert not at.exception
     assert at.title[0].value == "Knowvia"
     assert [t.label for t in at.text_input] == ["E-posta", "Parola"]
     assert len(at.chat_input) == 0  # giriş yapmadan sohbet yok
+    assert [h.value for h in at.header] == ["Neden Knowvia?", "Nasıl çalışır?"]
+    assert "Sızıntısız ret" in texts(at)
+    github = at.get("link_button")[0]
+    assert github.proto.url == "https://github.com/yunusinal/knowvia"  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def test_wrong_password_shows_error_and_stays_on_login() -> None:
@@ -124,8 +132,73 @@ def test_login_opens_chat_with_user_in_sidebar() -> None:
 
     assert not at.exception
     assert len(at.chat_input) == 1
-    sidebar = texts(at)
-    assert "it@demo.local" in sidebar and "Rol: member" in sidebar and "Departman: IT" in sidebar
+    sidebar = "\n".join(m.value for m in at.sidebar.markdown)
+    assert "it@demo.local" in sidebar
+    assert ":blue-badge[:material/person: Üye]" in sidebar  # rol rozeti
+    assert ":gray-badge[:material/apartment: IT]" in sidebar  # departman rozeti
+
+
+def test_empty_chat_offers_example_questions_that_disappear_after_asking() -> None:
+    at = logged_in("it@demo.local")
+    assert len(at.get("button_group")) == 1  # örnek soru düğmeleri (st.pills)
+
+    at.get("button_group")[0].set_value(":violet[:material/vpn_key:] VPN hatası").run()  # pyright: ignore[reportAttributeAccessIssue]
+
+    assert "Cihaz saatini kontrol edin. [S1]" in texts(at)
+    assert at.session_state["messages"][0]["content"].startswith("VPN 'sertifika doğrulanamadı'")
+    assert len(at.get("button_group")) == 0  # sohbet başlayınca örnekler kaybolur
+
+
+def test_sidebar_counts_only_active_documents() -> None:
+    backend.documents.append({**DOCUMENT, "id": "d2", "status": "failed"})
+    at = logged_in("admin@demo.local")
+
+    assert not at.exception
+    assert "1 aktif belge erişiminize açık." in texts(at)
+
+
+def test_document_count_failure_keeps_chat_available_without_showing_zero() -> None:
+    backend.documents_error = ApiError("API'ye bağlanılamadı.")
+    at = logged_in("it@demo.local")
+
+    assert not at.exception
+    assert len(at.chat_input) == 1
+    assert "Belge sayısı alınamadı: API'ye bağlanılamadı." in texts(at)
+    assert "0 aktif belge" not in texts(at)
+
+
+def test_expired_session_during_document_count_returns_to_login() -> None:
+    backend.documents_error = SessionExpiredError("Oturumunuzun süresi doldu; lütfen tekrar giriş yapın.", 401)
+    at = logged_in("it@demo.local")
+
+    assert not at.exception
+    assert "token" not in at.session_state
+    assert "messages" not in at.session_state
+    assert at.info[0].value == "Oturumunuzun süresi doldu; lütfen tekrar giriş yapın."
+
+
+def test_answer_shows_response_time() -> None:
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+
+    assert "0.0 sn · arama 1 ms · dil modeli 1 ms" in texts(at)
+
+
+def test_canned_reply_has_no_source_card_or_search_timing_even_after_rerun() -> None:
+    backend.chat_result = {
+        "answer": "Merhaba! Nasıl yardımcı olabilirim?", "sources": [], "no_evidence": False,
+        "retrieval_ms": 0, "generation_ms": 0, "response_type": "canned",
+    }
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("selam").run()
+    at.run()
+
+    assert not at.exception
+    assert "Merhaba! Nasıl yardımcı olabilirim?" in texts(at)
+    assert not at.info
+    assert not at.expander
+    assert " ms" not in texts(at)
+    assert at.session_state["messages"][-1]["response_type"] == "canned"
 
 
 def test_chat_answer_shows_source_cards() -> None:

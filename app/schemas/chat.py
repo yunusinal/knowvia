@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -26,3 +28,4 @@ class ChatResponse(BaseModel):
     no_evidence: bool
     retrieval_ms: int
     generation_ms: int
+    response_type: Literal["rag", "canned"] = "rag"
