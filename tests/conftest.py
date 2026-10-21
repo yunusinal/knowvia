@@ -20,7 +20,8 @@ from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
 from app.repositories.vector_store import VectorStore, get_vector_store  # noqa: E402
 from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder, get_embedder  # noqa: E402
-from tests.fakes import FakeEmbedder  # noqa: E402
+from app.api.chat import llm_dependency  # noqa: E402
+from tests.fakes import FakeEmbedder, FakeLLM  # noqa: E402
 
 
 @pytest.fixture(scope="session")
@@ -70,10 +71,17 @@ def vector_store(fake_embedder: FakeEmbedder) -> Iterator[VectorStore]:
 
 
 @pytest.fixture
-def client(engine: Engine, vector_store: VectorStore, fake_embedder: FakeEmbedder) -> Iterator[TestClient]:
-    """API istemcisi: bellek içi veritabanı, bellek içi Qdrant ve sahte embedder kullanır.
+def fake_llm() -> FakeLLM:
+    return FakeLLM()
 
-    Hiçbir API testi gerçek modeli yüklemez veya data/runtime klasörüne yazmaz.
+
+@pytest.fixture
+def client(
+    engine: Engine, vector_store: VectorStore, fake_embedder: FakeEmbedder, fake_llm: FakeLLM
+) -> Iterator[TestClient]:
+    """API istemcisi: bellek içi veritabanı, bellek içi Qdrant, sahte embedder ve sahte LLM kullanır.
+
+    Hiçbir API testi gerçek modeli yüklemez, data/runtime klasörüne yazmaz veya LLM sağlayıcısına gitmez.
     """
 
     def override_get_db() -> Iterator[Session]:
@@ -83,6 +91,7 @@ def client(engine: Engine, vector_store: VectorStore, fake_embedder: FakeEmbedde
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_vector_store] = lambda: vector_store
     app.dependency_overrides[get_embedder] = lambda: fake_embedder
+    app.dependency_overrides[llm_dependency] = lambda: fake_llm
     yield TestClient(app)
     app.dependency_overrides.clear()
 

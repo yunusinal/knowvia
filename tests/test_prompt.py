@@ -67,6 +67,23 @@ def test_valid_citations_are_kept_in_order_of_first_use() -> None:
     assert not parsed.insufficient
 
 
+def test_citation_variants_are_normalized() -> None:
+    # Gerçek modelde görüldü: gpt-oss-120b kaynağı 【S2】 biçiminde yazdı.
+    sources = label_sources([hit("a"), hit("b"), hit("c")])
+
+    parsed = parse_answer("İzin 14 gündür【S2】. Devir kuralı [S1, S3]; başvuru [S1; S2].", sources)
+
+    assert parsed.text == "İzin 14 gündür[S2]. Devir kuralı [S1][S3]; başvuru [S1][S2]."
+    assert parsed.cited_labels == ["S2", "S1", "S3"]
+
+
+def test_invented_label_inside_a_list_is_removed() -> None:
+    parsed = parse_answer("Bilgi [S1, S9].", label_sources([hit("a")]))
+
+    assert parsed.text == "Bilgi [S1]."
+    assert parsed.cited_labels == ["S1"]
+
+
 def test_invented_citation_labels_are_removed() -> None:
     sources = label_sources([hit("a")])
 

@@ -23,6 +23,8 @@ Rules:
 6. Answer concisely in the same language as the question (Turkish or English)."""
 
 _LABEL = re.compile(r"\[S(\d+)\]")
+# Modellerin kullandığı farklı atıf yazımları: 【S2】 (OpenAI modelleri), [S1, S3], [S1; S3].
+_LABEL_VARIANTS = re.compile(r"[\[【]\s*(S\d+(?:\s*[,;]\s*S\d+)*)\s*[\]】]")
 
 
 @dataclass(frozen=True)
@@ -71,9 +73,16 @@ def parse_answer(raw: str, sources: Sequence[LabeledSource]) -> ParsedAnswer:
             cited.append(label)
         return match.group(0)
 
-    text = _LABEL.sub(keep_if_valid, raw)
+    text = _LABEL.sub(keep_if_valid, _normalize_labels(raw))
     text = re.sub(r"[ \t]{2,}", " ", text).strip()
     return ParsedAnswer(text=text, cited_labels=cited, insufficient=not text)
+
+
+def _normalize_labels(text: str) -> str:
+    """Farklı atıf yazımlarını tek biçime çevirir: 【S2】 → [S2], [S1, S3] → [S1][S3]."""
+    return _LABEL_VARIANTS.sub(
+        lambda match: "".join(f"[{label}]" for label in re.findall(r"S\d+", match.group(1))), text
+    )
 
 
 def _neutralize_tags(text: str) -> str:
