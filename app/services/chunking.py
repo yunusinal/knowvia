@@ -1,13 +1,21 @@
-"""Sayfa metnini token bütçesine sığan, örtüşmeli chunk'lara böler."""
+"""Sayfa metnini paragraf sınırlarını koruyarak token bütçesine sığan chunk'lara böler.
+
+Her paragraf kendi chunk'ıdır; farklı paragraflar birleştirilmez, çünkü ilgisiz konuları aynı
+chunk'ta toplamak aramayı bozar (ölçüm: docs/adr/07-paragraph-chunking-and-threshold.md).
+Çok kısa paragraflar (başlık, not satırı) bir sonrakiyle birleşir; bütçeyi aşan paragraf
+cümle ve kelime sınırlarından, örtüşmeli olarak bölünür.
+"""
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 from app.services.extraction import ExtractedPage
 
-# Önce büyük, anlamlı sınırlardan bölünür. Cümle sonu tek satır sonundan önce gelir:
-# PDF metni görsel satırlarda bölündüğü için "\n" çoğu zaman cümlenin ortasındadır.
-SEPARATORS: tuple[str, ...] = ("\n\n", ". ", "? ", "! ", "\n", "; ", ", ", " ")
+PARAGRAPH_SEPARATOR = "\n\n"
+
+# Bütçeyi aşan paragraf içinde sırayla denenen ayırıcılar. Cümle sonu tek satır sonundan önce
+# gelir: PDF metni görsel satırlarda bölündüğü için "\n" çoğu zaman cümlenin ortasındadır.
+SEPARATORS: tuple[str, ...] = (". ", "? ", "! ", "\n", "; ", ", ", " ")
 
 TokenCounter = Callable[[str], int]
 
@@ -26,30 +34,58 @@ def chunk_pages(
     count_tokens: TokenCounter,
     chunk_tokens: int = 350,
     overlap_tokens: int = 50,
+    min_tokens: int = 50,
 ) -> list[Chunk]:
     """Sayfaları chunk'lara böler; bir chunk asla iki sayfaya yayılmaz (sayfa numarası kesin kalır).
 
     `count_tokens` modelin gördüğü metni saymalıdır (önek ve özel token'lar dahil);
     her chunk için `count_tokens(chunk.text) <= chunk_tokens` garanti edilir.
+    `min_tokens` altındaki paragraflar bir sonraki paragrafla birleştirilir.
     """
     if not 0 <= overlap_tokens < chunk_tokens:
         raise ValueError("overlap_tokens 0 ile chunk_tokens arasında olmalı.")
+    if not 0 <= min_tokens <= chunk_tokens:
+        raise ValueError("min_tokens 0 ile chunk_tokens arasında olmalı.")
 
     chunks: list[Chunk] = []
     for page in pages:
-        pieces = _atomize(page.text, count_tokens, chunk_tokens, SEPARATORS)
-        for text in _merge(pieces, count_tokens, chunk_tokens, overlap_tokens):
-            stripped = text.strip()
-            if stripped:
-                chunks.append(
-                    Chunk(
-                        chunk_index=len(chunks),
-                        page_number=page.page_number,
-                        text=stripped,
-                        token_count=count_tokens(stripped),
+        for paragraph in _paragraph_units(page.text, count_tokens, min_tokens):
+            pieces = _atomize(paragraph, count_tokens, chunk_tokens, SEPARATORS)
+            for text in _merge(pieces, count_tokens, chunk_tokens, overlap_tokens):
+                stripped = text.strip()
+                if stripped:
+                    chunks.append(
+                        Chunk(
+                            chunk_index=len(chunks),
+                            page_number=page.page_number,
+                            text=stripped,
+                            token_count=count_tokens(stripped),
+                        )
                     )
-                )
     return chunks
+
+
+def _paragraph_units(text: str, count_tokens: TokenCounter, min_tokens: int) -> list[str]:
+    """Metni paragraflara ayırır; `min_tokens` altındaki paragrafı sonrakine katar.
+
+    Başlık gibi kısa satırlar böylece altındaki içerikle aynı chunk'ta kalır. Sayfanın sonunda
+    kısa bir parça kalırsa önceki paragrafa eklenir.
+    """
+    units: list[str] = []
+    pending = ""
+    for paragraph in (p.strip() for p in text.split(PARAGRAPH_SEPARATOR)):
+        if not paragraph:
+            continue
+        pending = f"{pending}{PARAGRAPH_SEPARATOR}{paragraph}" if pending else paragraph
+        if count_tokens(pending) >= min_tokens:
+            units.append(pending)
+            pending = ""
+    if pending:
+        if units:
+            units[-1] = f"{units[-1]}{PARAGRAPH_SEPARATOR}{pending}"
+        else:
+            units.append(pending)
+    return units
 
 
 def _atomize(
@@ -92,7 +128,7 @@ def _split_by_characters(text: str, count_tokens: TokenCounter, limit: int) -> l
 def _merge(
     pieces: Sequence[str], count_tokens: TokenCounter, limit: int, overlap: int
 ) -> list[str]:
-    """Parçaları bütçe dolana kadar birleştirir; yeni chunk öncekinin son parçalarıyla başlar."""
+    """Bir paragrafın parçalarını bütçe dolana kadar birleştirir; yeni chunk öncekinin son parçalarıyla başlar."""
     chunks: list[str] = []
     current: list[str] = []
     for piece in pieces:

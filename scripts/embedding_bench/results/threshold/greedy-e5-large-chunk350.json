@@ -1,0 +1,3111 @@
+{
+  "model": "intfloat/multilingual-e5-large",
+  "chunk_tokens": 350,
+  "chunk_count": 16,
+  "top_k": 5,
+  "expected_first": 0.6829268292682927,
+  "expected_in_top_k": 0.9390243902439024,
+  "group_sizes": {
+    "cevaplanmalı": 328,
+    "reddedilmeli: cevap yetkisiz belgede": 36,
+    "reddedilmeli: cevap hiçbir belgede yok": 60
+  },
+  "sweep": [
+    {
+      "threshold": 0.7,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.71,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.72,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.73,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.74,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.75,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.76,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 1.0
+    },
+    {
+      "threshold": 0.77,
+      "cevaplanmalı": 1.0,
+      "reddedilmeli: cevap yetkisiz belgede": 1.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.9333333333333333
+    },
+    {
+      "threshold": 0.78,
+      "cevaplanmalı": 0.975609756097561,
+      "reddedilmeli: cevap yetkisiz belgede": 0.8888888888888888,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.8
+    },
+    {
+      "threshold": 0.79,
+      "cevaplanmalı": 0.926829268292683,
+      "reddedilmeli: cevap yetkisiz belgede": 0.6666666666666666,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.6666666666666666
+    },
+    {
+      "threshold": 0.8,
+      "cevaplanmalı": 0.850609756097561,
+      "reddedilmeli: cevap yetkisiz belgede": 0.6111111111111112,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.4
+    },
+    {
+      "threshold": 0.81,
+      "cevaplanmalı": 0.6189024390243902,
+      "reddedilmeli: cevap yetkisiz belgede": 0.4166666666666667,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.3333333333333333
+    },
+    {
+      "threshold": 0.82,
+      "cevaplanmalı": 0.4603658536585366,
+      "reddedilmeli: cevap yetkisiz belgede": 0.25,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.06666666666666667
+    },
+    {
+      "threshold": 0.83,
+      "cevaplanmalı": 0.3780487804878049,
+      "reddedilmeli: cevap yetkisiz belgede": 0.05555555555555555,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.06666666666666667
+    },
+    {
+      "threshold": 0.84,
+      "cevaplanmalı": 0.2621951219512195,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.85,
+      "cevaplanmalı": 0.10975609756097561,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.86,
+      "cevaplanmalı": 0.04878048780487805,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.87,
+      "cevaplanmalı": 0.012195121951219513,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.88,
+      "cevaplanmalı": 0.012195121951219513,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.89,
+      "cevaplanmalı": 0.012195121951219513,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    },
+    {
+      "threshold": 0.9,
+      "cevaplanmalı": 0.0,
+      "reddedilmeli: cevap yetkisiz belgede": 0.0,
+      "reddedilmeli: cevap hiçbir belgede yok": 0.0
+    }
+  ],
+  "observations": [
+    {
+      "user": "admin",
+      "question": "Sabah en geç kaçta işe başlamış olmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8313438195170149,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Öğle arası saat kaçta?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7911819668598346,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.811938129188304,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Ofise misafir getireceğim, ne yapmam lazım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8234371787226742,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bir meslektaşım bana sürekli kötü davranıyor, nereye şikâyet edebilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8054980048423722,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "İsmimi vermeden etik ihlal bildirebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8044566802178745,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bir tedarikçi bana pahalı bir saat hediye etmek istiyor, kabul edebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8295014324241341,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Can I accept a gift card from a client?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7761459952755835,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bayram arifesinde çalışıyor muyuz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8114086853718007,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Resmî tatilde nöbet tutarsam karşılığında ne alırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.818654123728678,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8600665246641177,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Hangi günler ofiste bulunmak zorunlu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8196759972432962,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8309317571771704,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Yazın bir ay İspanya'dan çalışabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084446553514298,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Can I work remotely from another country?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7819080933211291,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Evden çalışırken internet faturama katkı yapılıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8501142902614884,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8508496093395447,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "How many days of annual leave do I get?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990650649995911,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "16 yıllık bir çalışanın kaç gün yıllık izni var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8642136760986577,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8439796049057973,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "İzin talebimi kaç gün önceden girmeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421373817161308,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Grip oldum, bugün işe gidemeyeceğim; kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815481620667156,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Raporlu olduğum günler yıllık iznimden düşülür mü?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8372580366114473,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Evleniyorum, kaç gün izin alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420667271265379,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Babamı kaybettim, kaç gün izin hakkım var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8438319953126323,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Eşim doğum yaptı, kaç gün izin kullanabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8483588086023083,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Maaş almadan bir ay izne çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8327611398416703,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Çocuğumu sağlık sigortasına ekleyebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8037854726837295,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Diş tedavisi sigortadan karşılanıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.80970191510356,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Evden çalıştığım gün yemek kartıma para yükleniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.835366280585801,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Yemek kartındaki para ay sonunda siliniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8219500564754114,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Bir AWS sertifika sınavına girmek istiyorum, ücretini şirket öder mi?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815692279870655,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Is there a budget for attending conferences?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7730274110624754,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Yeni başlayan arkadaşın bilgisayarı ne zaman teslim edilir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8220477090302793,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "İlk haftamda bana yol gösterecek biri olacak mı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990802315670715,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Deneme süresi ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8138733072257747,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Deneme süresindeyken tatile çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8059360771167792,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Performans değerlendirmeleri hangi aylarda yapılıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.899856054264329,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Kendimi değerlendirdiğim formu ne zaman doldururum?",
+      "group": "cevaplanmalı",
+      "top_score": 0.839579466336774,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bir üst pozisyona geçmek için ne gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787899010177092,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "When are promotion decisions made?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7863885717559994,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8126273591868192,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Adaya bandın üstünde teklif vermek istiyoruz, kimin onayı gerekir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041520605773533,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bir arkadaşımı işe önerirsem prim alır mıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8305526792100885,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8376810302133815,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "How do I connect to the company network from home?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8076382799008006,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8213561985921184,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Mac'e VPN programını nereden indiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8510978532153808,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Telefonumdan iç portala nasıl girerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8157092620030721,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "VPN 'sertifika doğrulanamadı' hatası veriyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8494454717301093,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.862650717888265,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "VPN açıkken Zoom görüşmelerimde görüntü donuyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8511095408694739,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8417463527492022,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Yeni parolam en az kaç karakter olmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8428918369720477,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8521072218698529,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Telefonumu değiştirdim, giriş için doğrulama kodları artık gelmiyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421035411202921,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "I lost my phone and can't receive login codes.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8082985509549887,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8193998782429412,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Müşteri verisi sızarsa kriz ekibi ne kadar sürede toplanır?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8380146211452515,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Büyük bir güvenlik olayından sonra rapor ne zamana kadar yazılmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8455724597277916,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8105763874890732,
+      "expected_rank": 3
+    },
+    {
+      "user": "admin",
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084128687998029,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Can I turn off disk encryption on my laptop?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8226841158785624,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Yazılım Merkezi'nde olmayan bir programı kurmak istiyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8048794911742685,
+      "expected_rank": 5
+    },
+    {
+      "user": "admin",
+      "question": "How long does software approval take?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8095517322759648,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Oltalama olduğunu düşündüğüm bir maili nasıl bildiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8046754493492422,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Konu satırındaki [EXTERNAL] etiketi ne anlama geliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8070039587945107,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Ayda kaç sayfa renkli çıktı alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7986389178579241,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "How do I print a confidential document?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041607809751846,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Toplantı odasını en fazla kaç saatliğine ayırabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8050912807909382,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "What happens if I don't show up for my room booking?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787399554945566,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Ankara'ya iş seyahatine gidiyorum, yemeğe günlük ne kadar harcayabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420455454731597,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8154489946272496,
+      "expected_rank": 3
+    },
+    {
+      "user": "admin",
+      "question": "Harcadığım masraflar bana ne zaman geri ödenir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8338722362708706,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Almanya'daki konferansta günlük yemek limitim ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.81885643201989,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Uzun uçuşlarda business class kullanabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7962082022817533,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Şirket kartıyla yanlışlıkla kendi alışverişimi yaptım.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8045465452786271,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Kimlere şirket kredi kartı veriliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8117729737775353,
+      "expected_rank": 3
+    },
+    {
+      "user": "admin",
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8408004062331431,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "2026 pazarlama bütçesinde ne değişiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.869965727824731,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Önümüzdeki yıl kaç kişi işe alınacak?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8103313238911822,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8527489105331689,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Sözleşmeyi sonlandırmak için kaç gün önceden haber vermek gerekir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8132297549543501,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Tedarikçi taahhüt ettiği hizmet seviyesini tutturamazsa ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8297730184806855,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "40 bin TL'lik bir alım için kaç teklif almalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8234816463012242,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Hangi tutarın üzerindeki alımlar kurul onayı gerektirir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8097890444505962,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Yeni bir firmayla çalışmaya başlamak için hangi belgeler gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8343566531283915,
+      "expected_rank": 4
+    },
+    {
+      "user": "admin",
+      "question": "Maaşlar ayın kaçında yatıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8073333388179096,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Maaşımda eksik var, kime yazmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8085454276655448,
+      "expected_rank": 2
+    },
+    {
+      "user": "admin",
+      "question": "Acil paraya ihtiyacım var, maaşımdan önceden alabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.842727684579057,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Avans nasıl geri ödeniyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8460124902458341,
+      "expected_rank": 1
+    },
+    {
+      "user": "admin",
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8110423940988067,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Yemekhanede bugün ne var?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7891057365208771,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "What is the dress code for the New Year party?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7653247244681967,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7912842860264876,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Şirketin spor salonu üyeliği desteği var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8111326348511885,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Emeklilik planına şirket ne kadar katkı yapıyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8130433661598208,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Ofisteki kahve makinesi bozuldu, kime haber vermeliyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7995471102822731,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Şirket servisi hangi güzergâhlardan geçiyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7795447611743316,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "How do I request a standing desk for the office?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8011813900324645,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Evcil hayvanımı ofise getirebilir miyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8119625391412949,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Yıl sonu partisi ne zaman yapılacak?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7760932669058638,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Şirketin hisseleri borsada işlem görüyor mu?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7969950574397294,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Kreş yardımı var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7940996835360022,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Can I get reimbursed for my gym membership?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7856328758741972,
+      "expected_rank": null
+    },
+    {
+      "user": "admin",
+      "question": "Askerlik izni ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8343279456655092,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Sabah en geç kaçta işe başlamış olmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8313438195170149,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Öğle arası saat kaçta?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7911819668598346,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.811938129188304,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Ofise misafir getireceğim, ne yapmam lazım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8234371787226742,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bir meslektaşım bana sürekli kötü davranıyor, nereye şikâyet edebilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8054980048423722,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "İsmimi vermeden etik ihlal bildirebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8044566802178745,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bir tedarikçi bana pahalı bir saat hediye etmek istiyor, kabul edebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8277503387564422,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Can I accept a gift card from a client?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7761459952755835,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bayram arifesinde çalışıyor muyuz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8114086853718007,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Resmî tatilde nöbet tutarsam karşılığında ne alırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.818654123728678,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8600665246641177,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Hangi günler ofiste bulunmak zorunlu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8196759972432962,
+      "expected_rank": 4
+    },
+    {
+      "user": "it",
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8309317571771704,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Yazın bir ay İspanya'dan çalışabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084446553514298,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Can I work remotely from another country?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7819080933211291,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Evden çalışırken internet faturama katkı yapılıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8501142902614884,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8508496093395447,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "How many days of annual leave do I get?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990650649995911,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "16 yıllık bir çalışanın kaç gün yıllık izni var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8642136760986577,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8439796049057973,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "İzin talebimi kaç gün önceden girmeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421373817161308,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Grip oldum, bugün işe gidemeyeceğim; kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815481620667156,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Raporlu olduğum günler yıllık iznimden düşülür mü?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8372580366114473,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Evleniyorum, kaç gün izin alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420667271265379,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Babamı kaybettim, kaç gün izin hakkım var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8438319953126323,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Eşim doğum yaptı, kaç gün izin kullanabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8483588086023083,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Maaş almadan bir ay izne çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8327611398416703,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Çocuğumu sağlık sigortasına ekleyebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8037854726837295,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Diş tedavisi sigortadan karşılanıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.80970191510356,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Evden çalıştığım gün yemek kartıma para yükleniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.835366280585801,
+      "expected_rank": 4
+    },
+    {
+      "user": "it",
+      "question": "Yemek kartındaki para ay sonunda siliniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8219500564754114,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Bir AWS sertifika sınavına girmek istiyorum, ücretini şirket öder mi?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815692279870655,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Is there a budget for attending conferences?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7730274110624754,
+      "expected_rank": 3
+    },
+    {
+      "user": "it",
+      "question": "Yeni başlayan arkadaşın bilgisayarı ne zaman teslim edilir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8220477090302793,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "İlk haftamda bana yol gösterecek biri olacak mı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990802315670715,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Deneme süresi ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8013430063850472,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Deneme süresindeyken tatile çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8059360771167792,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Performans değerlendirmeleri hangi aylarda yapılıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.899856054264329,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Kendimi değerlendirdiğim formu ne zaman doldururum?",
+      "group": "cevaplanmalı",
+      "top_score": 0.839579466336774,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bir üst pozisyona geçmek için ne gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787899010177092,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "When are promotion decisions made?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7863885717559994,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7726988263246086,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Adaya bandın üstünde teklif vermek istiyoruz, kimin onayı gerekir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7710507287844524,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Bir arkadaşımı işe önerirsem prim alır mıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.812017437882548,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8376810302133815,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "How do I connect to the company network from home?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8076382799008006,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8213561985921184,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Mac'e VPN programını nereden indiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8510978532153808,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Telefonumdan iç portala nasıl girerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8157092620030721,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "VPN 'sertifika doğrulanamadı' hatası veriyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8494454717301093,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.862650717888265,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "VPN açıkken Zoom görüşmelerimde görüntü donuyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8511095408694739,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8417463527492022,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Yeni parolam en az kaç karakter olmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8428918369720477,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8521072218698529,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Telefonumu değiştirdim, giriş için doğrulama kodları artık gelmiyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421035411202921,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "I lost my phone and can't receive login codes.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8082985509549887,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8193998782429412,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Müşteri verisi sızarsa kriz ekibi ne kadar sürede toplanır?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8380146211452515,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Büyük bir güvenlik olayından sonra rapor ne zamana kadar yazılmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8455724597277916,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8105763874890732,
+      "expected_rank": 3
+    },
+    {
+      "user": "it",
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084128687998029,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Can I turn off disk encryption on my laptop?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8226841158785624,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Yazılım Merkezi'nde olmayan bir programı kurmak istiyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7910878780185902,
+      "expected_rank": 4
+    },
+    {
+      "user": "it",
+      "question": "How long does software approval take?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8095517322759648,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Oltalama olduğunu düşündüğüm bir maili nasıl bildiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8046754493492422,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Konu satırındaki [EXTERNAL] etiketi ne anlama geliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8070039587945107,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Ayda kaç sayfa renkli çıktı alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7986389178579241,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "How do I print a confidential document?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041607809751846,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Toplantı odasını en fazla kaç saatliğine ayırabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8050912807909382,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "What happens if I don't show up for my room booking?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787399554945566,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Ankara'ya iş seyahatine gidiyorum, yemeğe günlük ne kadar harcayabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420455454731597,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8043564063940548,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Harcadığım masraflar bana ne zaman geri ödenir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8338722362708706,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Almanya'daki konferansta günlük yemek limitim ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.81885643201989,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Uzun uçuşlarda business class kullanabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7962082022817533,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Şirket kartıyla yanlışlıkla kendi alışverişimi yaptım.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8045465452786271,
+      "expected_rank": 4
+    },
+    {
+      "user": "it",
+      "question": "Kimlere şirket kredi kartı veriliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8117729737775353,
+      "expected_rank": 3
+    },
+    {
+      "user": "it",
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8009263256595043,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "2026 pazarlama bütçesinde ne değişiyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8139138957708819,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Önümüzdeki yıl kaç kişi işe alınacak?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7922505480101008,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8095185087246075,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Sözleşmeyi sonlandırmak için kaç gün önceden haber vermek gerekir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7896360425834427,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Tedarikçi taahhüt ettiği hizmet seviyesini tutturamazsa ne olur?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7879323466805079,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "40 bin TL'lik bir alım için kaç teklif almalıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7819044594465315,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Hangi tutarın üzerindeki alımlar kurul onayı gerektirir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.780541560551643,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Yeni bir firmayla çalışmaya başlamak için hangi belgeler gerekiyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8343566531283915,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Maaşlar ayın kaçında yatıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8073333388179096,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Maaşımda eksik var, kime yazmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8085454276655448,
+      "expected_rank": 2
+    },
+    {
+      "user": "it",
+      "question": "Acil paraya ihtiyacım var, maaşımdan önceden alabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.842727684579057,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Avans nasıl geri ödeniyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8460124902458341,
+      "expected_rank": 1
+    },
+    {
+      "user": "it",
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8110423940988067,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Yemekhanede bugün ne var?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7891057365208771,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "What is the dress code for the New Year party?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7653247244681967,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7912842860264876,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Şirketin spor salonu üyeliği desteği var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8111326348511885,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Emeklilik planına şirket ne kadar katkı yapıyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8130433661598208,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Ofisteki kahve makinesi bozuldu, kime haber vermeliyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7995471102822731,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Şirket servisi hangi güzergâhlardan geçiyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7795447611743316,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "How do I request a standing desk for the office?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8011813900324645,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Evcil hayvanımı ofise getirebilir miyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8119625391412949,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Yıl sonu partisi ne zaman yapılacak?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7760932669058638,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Şirketin hisseleri borsada işlem görüyor mu?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7969950574397294,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Kreş yardımı var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7940996835360022,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Can I get reimbursed for my gym membership?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7856328758741972,
+      "expected_rank": null
+    },
+    {
+      "user": "it",
+      "question": "Askerlik izni ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8343279456655092,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Sabah en geç kaçta işe başlamış olmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8313438195170149,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Öğle arası saat kaçta?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7911819668598346,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.811938129188304,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Ofise misafir getireceğim, ne yapmam lazım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8234371787226742,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bir meslektaşım bana sürekli kötü davranıyor, nereye şikâyet edebilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8054980048423722,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "İsmimi vermeden etik ihlal bildirebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8044566802178745,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bir tedarikçi bana pahalı bir saat hediye etmek istiyor, kabul edebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8277503387564422,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Can I accept a gift card from a client?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7761459952755835,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bayram arifesinde çalışıyor muyuz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8114086853718007,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Resmî tatilde nöbet tutarsam karşılığında ne alırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.818654123728678,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8600665246641177,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Hangi günler ofiste bulunmak zorunlu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8196759972432962,
+      "expected_rank": 4
+    },
+    {
+      "user": "hr",
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8309317571771704,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Yazın bir ay İspanya'dan çalışabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084446553514298,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Can I work remotely from another country?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7819080933211291,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Evden çalışırken internet faturama katkı yapılıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8501142902614884,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8508496093395447,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "How many days of annual leave do I get?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990650649995911,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "16 yıllık bir çalışanın kaç gün yıllık izni var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8642136760986577,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8439796049057973,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "İzin talebimi kaç gün önceden girmeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421373817161308,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Grip oldum, bugün işe gidemeyeceğim; kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815481620667156,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Raporlu olduğum günler yıllık iznimden düşülür mü?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8372580366114473,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Evleniyorum, kaç gün izin alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420667271265379,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Babamı kaybettim, kaç gün izin hakkım var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8438319953126323,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Eşim doğum yaptı, kaç gün izin kullanabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8483588086023083,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Maaş almadan bir ay izne çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8327611398416703,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Çocuğumu sağlık sigortasına ekleyebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8037854726837295,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Diş tedavisi sigortadan karşılanıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.80970191510356,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Evden çalıştığım gün yemek kartıma para yükleniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.835366280585801,
+      "expected_rank": 4
+    },
+    {
+      "user": "hr",
+      "question": "Yemek kartındaki para ay sonunda siliniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8219500564754114,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Bir AWS sertifika sınavına girmek istiyorum, ücretini şirket öder mi?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815692279870655,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Is there a budget for attending conferences?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7730274110624754,
+      "expected_rank": 3
+    },
+    {
+      "user": "hr",
+      "question": "Yeni başlayan arkadaşın bilgisayarı ne zaman teslim edilir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8220477090302793,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "İlk haftamda bana yol gösterecek biri olacak mı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990802315670715,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Deneme süresi ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8040119570320432,
+      "expected_rank": 3
+    },
+    {
+      "user": "hr",
+      "question": "Deneme süresindeyken tatile çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8059360771167792,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Performans değerlendirmeleri hangi aylarda yapılıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.899856054264329,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Kendimi değerlendirdiğim formu ne zaman doldururum?",
+      "group": "cevaplanmalı",
+      "top_score": 0.839579466336774,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bir üst pozisyona geçmek için ne gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787899010177092,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "When are promotion decisions made?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7863885717559994,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8126273591868192,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Adaya bandın üstünde teklif vermek istiyoruz, kimin onayı gerekir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041520605773533,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Bir arkadaşımı işe önerirsem prim alır mıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8305526792100885,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8376810302133815,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "How do I connect to the company network from home?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8076382799008006,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8213561985921184,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Mac'e VPN programını nereden indiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8510978532153808,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Telefonumdan iç portala nasıl girerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8157092620030721,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "VPN 'sertifika doğrulanamadı' hatası veriyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8279894257535738,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8298681993657762,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "VPN açıkken Zoom görüşmelerimde görüntü donuyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8257271424807759,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8417463527492022,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Yeni parolam en az kaç karakter olmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8428918369720477,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8521072218698529,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Telefonumu değiştirdim, giriş için doğrulama kodları artık gelmiyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421035411202921,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "I lost my phone and can't receive login codes.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8082985509549887,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8193998782429412,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Müşteri verisi sızarsa kriz ekibi ne kadar sürede toplanır?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8010763285528951,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Büyük bir güvenlik olayından sonra rapor ne zamana kadar yazılmalı?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7855007124920024,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8101769855766148,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084128687998029,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Can I turn off disk encryption on my laptop?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8226841158785624,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Yazılım Merkezi'nde olmayan bir programı kurmak istiyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8048794911742685,
+      "expected_rank": 4
+    },
+    {
+      "user": "hr",
+      "question": "How long does software approval take?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8095517322759648,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Oltalama olduğunu düşündüğüm bir maili nasıl bildiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7958141326704946,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Konu satırındaki [EXTERNAL] etiketi ne anlama geliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8070039587945107,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Ayda kaç sayfa renkli çıktı alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7986389178579241,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "How do I print a confidential document?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041607809751846,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Toplantı odasını en fazla kaç saatliğine ayırabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8050912807909382,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "What happens if I don't show up for my room booking?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787399554945566,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Ankara'ya iş seyahatine gidiyorum, yemeğe günlük ne kadar harcayabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420455454731597,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8043564063940548,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Harcadığım masraflar bana ne zaman geri ödenir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8338722362708706,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Almanya'daki konferansta günlük yemek limitim ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.81885643201989,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Uzun uçuşlarda business class kullanabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7962082022817533,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Şirket kartıyla yanlışlıkla kendi alışverişimi yaptım.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8045465452786271,
+      "expected_rank": 4
+    },
+    {
+      "user": "hr",
+      "question": "Kimlere şirket kredi kartı veriliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8117729737775353,
+      "expected_rank": 3
+    },
+    {
+      "user": "hr",
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8009263256595043,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "2026 pazarlama bütçesinde ne değişiyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8139138957708819,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Önümüzdeki yıl kaç kişi işe alınacak?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7922505480101008,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8095185087246075,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Sözleşmeyi sonlandırmak için kaç gün önceden haber vermek gerekir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7896360425834427,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Tedarikçi taahhüt ettiği hizmet seviyesini tutturamazsa ne olur?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7879323466805079,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "40 bin TL'lik bir alım için kaç teklif almalıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8234816463012242,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Hangi tutarın üzerindeki alımlar kurul onayı gerektirir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8097890444505962,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Yeni bir firmayla çalışmaya başlamak için hangi belgeler gerekiyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8343566531283915,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Maaşlar ayın kaçında yatıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8073333388179096,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Maaşımda eksik var, kime yazmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8085454276655448,
+      "expected_rank": 2
+    },
+    {
+      "user": "hr",
+      "question": "Acil paraya ihtiyacım var, maaşımdan önceden alabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.842727684579057,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Avans nasıl geri ödeniyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8460124902458341,
+      "expected_rank": 1
+    },
+    {
+      "user": "hr",
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8110423940988067,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Yemekhanede bugün ne var?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7891057365208771,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "What is the dress code for the New Year party?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7653247244681967,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7901714145110759,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Şirketin spor salonu üyeliği desteği var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8111326348511885,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Emeklilik planına şirket ne kadar katkı yapıyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8130433661598208,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Ofisteki kahve makinesi bozuldu, kime haber vermeliyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7995471102822731,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Şirket servisi hangi güzergâhlardan geçiyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7795447611743316,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "How do I request a standing desk for the office?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8011813900324645,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Evcil hayvanımı ofise getirebilir miyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8119625391412949,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Yıl sonu partisi ne zaman yapılacak?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7760932669058638,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Şirketin hisseleri borsada işlem görüyor mu?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7969950574397294,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Kreş yardımı var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7940996835360022,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Can I get reimbursed for my gym membership?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7856328758741972,
+      "expected_rank": null
+    },
+    {
+      "user": "hr",
+      "question": "Askerlik izni ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8343279456655092,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Sabah en geç kaçta işe başlamış olmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8313438195170149,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Öğle arası saat kaçta?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7911819668598346,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Müşteri görüşmesine ne giymeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.811938129188304,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Ofise misafir getireceğim, ne yapmam lazım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8234371787226742,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Bir meslektaşım bana sürekli kötü davranıyor, nereye şikâyet edebilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8054980048423722,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "İsmimi vermeden etik ihlal bildirebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8044566802178745,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Bir tedarikçi bana pahalı bir saat hediye etmek istiyor, kabul edebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8295014324241341,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Can I accept a gift card from a client?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7761459952755835,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Bayram arifesinde çalışıyor muyuz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8114086853718007,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Resmî tatilde nöbet tutarsam karşılığında ne alırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.818654123728678,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Haftada kaç gün evden çalışabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8600665246641177,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Hangi günler ofiste bulunmak zorunlu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8196759972432962,
+      "expected_rank": 4
+    },
+    {
+      "user": "finance",
+      "question": "Ev ofisi için masa sandalye alacağım, şirket ne kadar destek veriyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8309317571771704,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Yazın bir ay İspanya'dan çalışabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084446553514298,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Can I work remotely from another country?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7819080933211291,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Evden çalışırken internet faturama katkı yapılıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8501142902614884,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Tatil hakkım kaç gün? 3 yıldır çalışıyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8508496093395447,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "How many days of annual leave do I get?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990650649995911,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "16 yıllık bir çalışanın kaç gün yıllık izni var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8642136760986577,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Bu yıl kullanamadığım izin günlerine ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8439796049057973,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "İzin talebimi kaç gün önceden girmeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421373817161308,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Grip oldum, bugün işe gidemeyeceğim; kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815481620667156,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Raporlu olduğum günler yıllık iznimden düşülür mü?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8372580366114473,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Evleniyorum, kaç gün izin alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420667271265379,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Babamı kaybettim, kaç gün izin hakkım var?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8438319953126323,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Eşim doğum yaptı, kaç gün izin kullanabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8483588086023083,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Maaş almadan bir ay izne çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8327611398416703,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Çocuğumu sağlık sigortasına ekleyebilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8037854726837295,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Diş tedavisi sigortadan karşılanıyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.80970191510356,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Evden çalıştığım gün yemek kartıma para yükleniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.835366280585801,
+      "expected_rank": 4
+    },
+    {
+      "user": "finance",
+      "question": "Yemek kartındaki para ay sonunda siliniyor mu?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8219500564754114,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Bir AWS sertifika sınavına girmek istiyorum, ücretini şirket öder mi?",
+      "group": "cevaplanmalı",
+      "top_score": 0.815692279870655,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Is there a budget for attending conferences?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7730274110624754,
+      "expected_rank": 4
+    },
+    {
+      "user": "finance",
+      "question": "Yeni başlayan arkadaşın bilgisayarı ne zaman teslim edilir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8220477090302793,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "İlk haftamda bana yol gösterecek biri olacak mı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7990802315670715,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Deneme süresi ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8138733072257747,
+      "expected_rank": 3
+    },
+    {
+      "user": "finance",
+      "question": "Deneme süresindeyken tatile çıkabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8059360771167792,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Performans değerlendirmeleri hangi aylarda yapılıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.899856054264329,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Kendimi değerlendirdiğim formu ne zaman doldururum?",
+      "group": "cevaplanmalı",
+      "top_score": 0.839579466336774,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Bir üst pozisyona geçmek için ne gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787899010177092,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "When are promotion decisions made?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7863885717559994,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Mülakat süreci kaç aşamadan oluşuyor?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7731354314117507,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Adaya bandın üstünde teklif vermek istiyoruz, kimin onayı gerekir?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7763619044468795,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Bir arkadaşımı işe önerirsem prim alır mıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.812017437882548,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Evden şirket sistemlerine nasıl bağlanırım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8376810302133815,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "How do I connect to the company network from home?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8076382799008006,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Linux bilgisayarda uzaktan erişim kurabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8213561985921184,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Mac'e VPN programını nereden indiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8510978532153808,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Telefonumdan iç portala nasıl girerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8157092620030721,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "VPN 'sertifika doğrulanamadı' hatası veriyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8279894257535738,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Otelde internet var ama VPN bağlanmıyor, sürekli kopuyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8298681993657762,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "VPN açıkken Zoom görüşmelerimde görüntü donuyor.",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8257271424807759,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Şifremi hatırlamıyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8417463527492022,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Yeni parolam en az kaç karakter olmalı?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8428918369720477,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Çok kez yanlış şifre girdim, hesabıma giremiyorum.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8521072218698529,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Telefonumu değiştirdim, giriş için doğrulama kodları artık gelmiyor.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8421035411202921,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "I lost my phone and can't receive login codes.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8082985509549887,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Şüpheli bir maildeki linke tıkladım, ne yapmalıyım?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8193998782429412,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Müşteri verisi sızarsa kriz ekibi ne kadar sürede toplanır?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.8010763285528951,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Büyük bir güvenlik olayından sonra rapor ne zamana kadar yazılmalı?",
+      "group": "reddedilmeli: cevap yetkisiz belgede",
+      "top_score": 0.7855007124920024,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Bilgisayarımı kaybettim, kime ne zamana kadar haber vermeliyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8101769855766148,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Masamdan kalkarken ekranı hangi kısayolla kilitlerim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8084128687998029,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Can I turn off disk encryption on my laptop?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8226841158785624,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Yazılım Merkezi'nde olmayan bir programı kurmak istiyorum, ne yapmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7910878780185902,
+      "expected_rank": 3
+    },
+    {
+      "user": "finance",
+      "question": "How long does software approval take?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8095517322759648,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Oltalama olduğunu düşündüğüm bir maili nasıl bildiririm?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7958141326704946,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Konu satırındaki [EXTERNAL] etiketi ne anlama geliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8070039587945107,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Ayda kaç sayfa renkli çıktı alabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7986389178579241,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "How do I print a confidential document?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8041607809751846,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Toplantı odasını en fazla kaç saatliğine ayırabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8050912807909382,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "What happens if I don't show up for my room booking?",
+      "group": "cevaplanmalı",
+      "top_score": 0.787399554945566,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Ankara'ya iş seyahatine gidiyorum, yemeğe günlük ne kadar harcayabilirim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8420455454731597,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Fişlerimi ne zamana kadar sisteme yüklemem gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8154489946272496,
+      "expected_rank": 3
+    },
+    {
+      "user": "finance",
+      "question": "Harcadığım masraflar bana ne zaman geri ödenir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8338722362708706,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Almanya'daki konferansta günlük yemek limitim ne kadar?",
+      "group": "cevaplanmalı",
+      "top_score": 0.81885643201989,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Uzun uçuşlarda business class kullanabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.7962082022817533,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Şirket kartıyla yanlışlıkla kendi alışverişimi yaptım.",
+      "group": "cevaplanmalı",
+      "top_score": 0.8045465452786271,
+      "expected_rank": 4
+    },
+    {
+      "user": "finance",
+      "question": "Kimlere şirket kredi kartı veriliyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8117729737775353,
+      "expected_rank": 3
+    },
+    {
+      "user": "finance",
+      "question": "Gelecek yıl bulut harcamaları ne kadar artacak?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8408004062331431,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "2026 pazarlama bütçesinde ne değişiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.869965727824731,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Önümüzdeki yıl kaç kişi işe alınacak?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8103313238911822,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Tedarikçiye faturayı kaç gün içinde ödüyoruz?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8527489105331689,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Sözleşmeyi sonlandırmak için kaç gün önceden haber vermek gerekir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8132297549543501,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Tedarikçi taahhüt ettiği hizmet seviyesini tutturamazsa ne olur?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8297730184806855,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "40 bin TL'lik bir alım için kaç teklif almalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8090694999295313,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Hangi tutarın üzerindeki alımlar kurul onayı gerektirir?",
+      "group": "cevaplanmalı",
+      "top_score": 0.796398711944409,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Yeni bir firmayla çalışmaya başlamak için hangi belgeler gerekiyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8343566531283915,
+      "expected_rank": 3
+    },
+    {
+      "user": "finance",
+      "question": "Maaşlar ayın kaçında yatıyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8073333388179096,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Maaşımda eksik var, kime yazmalıyım?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8085454276655448,
+      "expected_rank": 2
+    },
+    {
+      "user": "finance",
+      "question": "Acil paraya ihtiyacım var, maaşımdan önceden alabilir miyim?",
+      "group": "cevaplanmalı",
+      "top_score": 0.842727684579057,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Avans nasıl geri ödeniyor?",
+      "group": "cevaplanmalı",
+      "top_score": 0.8460124902458341,
+      "expected_rank": 1
+    },
+    {
+      "user": "finance",
+      "question": "Şirket otoparkının aylık ücreti ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8110423940988067,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Yemekhanede bugün ne var?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7891057365208771,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "What is the dress code for the New Year party?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7653247244681967,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Hisse opsiyonu planı nasıl işliyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7901714145110759,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Şirketin spor salonu üyeliği desteği var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8111326348511885,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Emeklilik planına şirket ne kadar katkı yapıyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8130433661598208,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Ofisteki kahve makinesi bozuldu, kime haber vermeliyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7995471102822731,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Şirket servisi hangi güzergâhlardan geçiyor?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7795447611743316,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "How do I request a standing desk for the office?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8011813900324645,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Evcil hayvanımı ofise getirebilir miyim?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8119625391412949,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Yıl sonu partisi ne zaman yapılacak?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7760932669058638,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Şirketin hisseleri borsada işlem görüyor mu?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7969950574397294,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Kreş yardımı var mı?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7940996835360022,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Can I get reimbursed for my gym membership?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.7856328758741972,
+      "expected_rank": null
+    },
+    {
+      "user": "finance",
+      "question": "Askerlik izni ne kadar?",
+      "group": "reddedilmeli: cevap hiçbir belgede yok",
+      "top_score": 0.8343279456655092,
+      "expected_rank": null
+    }
+  ]
+}

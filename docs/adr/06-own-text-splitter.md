@@ -1,6 +1,6 @@
 # ADR-06: Own recursive text splitter instead of langchain-text-splitters
 
-- **Status:** Accepted
+- **Status:** Accepted. The chunk merge strategy (greedy merging across paragraphs) is superseded by [ADR-07](07-paragraph-chunking-and-threshold.md); the decision to use our own splitter still stands.
 - **Date:** 2026-10-20
 
 ## Context

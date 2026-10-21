@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     # Qdrant local mode: vektörler bu klasörde, ayrı sunucu gerekmez (yalnızca yerel demo).
     qdrant_path: str = "data/runtime/qdrant"
     qdrant_collection: str = "knowledge_chunks_v1"
+    retrieval_top_k: int = Field(default=5, gt=0)
+    # En iyi sonucun skoru bunun altındaysa LLM çağrılmaz ("kanıt yok"). Modele ve parçalama
+    # yöntemine özeldir; e5-large + paragraf parçalama ile ölçüldü (docs/adr/07-...).
+    retrieval_min_score: float = Field(default=0.80, ge=0, le=1)
 
 
 @lru_cache

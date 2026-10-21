@@ -24,6 +24,7 @@ Each ADR has the same sections:
 | [03](03-password-hashing-argon2.md) | Password hashing with Argon2 (pwdlib) | Accepted | 2026-10-20 |
 | [04](04-jwt-authentication.md) | Stateless JWT bearer tokens, authority stays in the database | Accepted | 2026-10-20 |
 | [05](05-embedding-model.md) | Embedding model and runtime: `multilingual-e5-large` on fastembed (ONNX) | Accepted | 2026-10-20 |
-| [06](06-own-text-splitter.md) | Own recursive text splitter instead of langchain-text-splitters | Accepted | 2026-10-20 |
+| [06](06-own-text-splitter.md) | Own recursive text splitter instead of langchain-text-splitters | Accepted (merge strategy superseded by 07) | 2026-10-20 |
+| [07](07-paragraph-chunking-and-threshold.md) | Paragraph-preserving chunking and a measured retrieval threshold | Accepted | 2026-10-21 |
 
 Numbers follow the order in which decisions were made. ADRs 01–04 were recorded retroactively, after the code they describe; from ADR-05 on, each record is written when its decision is made.
