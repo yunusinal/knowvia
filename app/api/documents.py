@@ -10,6 +10,7 @@ from app.db.session import get_db
 from app.repositories.vector_store import VectorStore, get_vector_store
 from app.schemas.documents import DocumentOut
 from app.services.authorization import visible_documents
+from app.services.deletion import DocumentBusyError, DocumentNotFoundError, delete_document
 from app.services.embeddings import Embedder, get_embedder
 from app.services.extraction import ExtractionError
 from app.services.ingest import DuplicateDocumentError, IngestFailedError, ingest_document
@@ -59,6 +60,30 @@ def upload_document(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Belge indekslenemedi; daha sonra tekrar deneyin.",
+        ) from None
+    return DocumentOut.model_validate(document)
+
+
+@router.delete("/{document_id}")
+def remove_document(
+    document_id: str,
+    _admin: Annotated[User, Depends(require_admin)],
+    db: Annotated[Session, Depends(get_db)],
+    store: Annotated[VectorStore, Depends(get_vector_store)],
+) -> DocumentOut:
+    """Yalnızca admin: belgeye erişimi hemen keser ve vektörlerini temizler.
+
+    Sonuç durumu `deleted` ya da (vektör temizliği başarısızsa) `cleanup_pending`; ikincisinde
+    belge yine kimseye görünmez ve aynı istek temizliği yeniden dener.
+    """
+    try:
+        document = delete_document(db, store, document_id)
+    except DocumentNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Belge bulunamadı.") from None
+    except DocumentBusyError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Belge hâlâ işleniyor; işlem bitince tekrar deneyin.",
         ) from None
     return DocumentOut.model_validate(document)
 
