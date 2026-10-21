@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -28,6 +28,14 @@ class Settings(BaseSettings):
     # En iyi sonucun skoru bunun altındaysa LLM çağrılmaz ("kanıt yok"). Modele ve parçalama
     # yöntemine özeldir; e5-large + paragraf parçalama ile ölçüldü (docs/adr/07-...).
     retrieval_min_score: float = Field(default=0.80, ge=0, le=1)
+    # OpenAI uyumlu herhangi bir sağlayıcı; anahtar yoksa /chat temiz bir kurulum hatası döner.
+    llm_base_url: str = "https://api.groq.com/openai/v1"
+    llm_model: str = "openai/gpt-oss-120b"
+    # SecretStr: değer loglarda ve hata mesajlarında "**********" olarak görünür.
+    llm_api_key: SecretStr | None = None
+    llm_timeout_seconds: float = Field(default=60, gt=0)
+    llm_max_output_tokens: int = Field(default=1024, gt=0)
+    llm_temperature: float = Field(default=0.0, ge=0, le=2)
 
 
 @lru_cache

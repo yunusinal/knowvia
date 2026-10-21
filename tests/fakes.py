@@ -4,6 +4,22 @@ import hashlib
 import math
 import re
 from collections.abc import Sequence
+from dataclasses import dataclass, field
+
+from app.services.llm import LLMResult
+
+
+@dataclass
+class FakeLLM:
+    """Sırayla verilen cevapları döndürür ve gelen istekleri kaydeder (LLM'e ne gittiğini test etmek için)."""
+
+    answers: list[str] = field(default_factory=lambda: ["Cevap [S1]."])
+    calls: list[tuple[str, str]] = field(default_factory=list)
+
+    def generate(self, system_prompt: str, user_message: str) -> LLMResult:
+        self.calls.append((system_prompt, user_message))
+        answer = self.answers[min(len(self.calls), len(self.answers)) - 1]
+        return LLMResult(text=answer, model="fake-llm", latency_ms=1)
 
 
 class FakeEmbedder:
