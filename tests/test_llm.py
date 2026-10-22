@@ -168,3 +168,21 @@ def test_unoffered_or_malformed_tool_calls_are_ignored(name: str, arguments: str
     # Geçerli araç çağrısı ve metin yoksa boş cevapla aynı güvenli hata.
     with pytest.raises(LLMUnavailableError, match="boş cevap"):
         make_llm(handler).generate("s", "u", tools=[TOOL])
+
+
+def test_all_secrets_are_hidden_when_settings_are_printed(monkeypatch: pytest.MonkeyPatch) -> None:
+    settings = get_settings()
+    monkeypatch.setattr(settings, "demo_user_password", SecretStr("demo-password-value"))
+
+    printed = repr(settings) + str(settings.model_dump())
+    assert "demo-password-value" not in printed
+    assert settings.jwt_secret_key.get_secret_value() not in printed
+
+
+def test_short_jwt_secret_is_rejected() -> None:
+    from pydantic import ValidationError
+
+    from app.core.config import Settings
+
+    with pytest.raises(ValidationError):
+        Settings(jwt_secret_key="too-short", _env_file=None)  # pyright: ignore[reportCallIssue, reportArgumentType]

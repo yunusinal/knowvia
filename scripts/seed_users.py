@@ -37,7 +37,8 @@ def seed_users(session: Session, password: str) -> int:
 
 
 def main() -> None:
-    password = get_settings().demo_user_password
+    secret = get_settings().demo_user_password
+    password = secret.get_secret_value() if secret else ""
     if not password or password == "replace_me":
         raise SystemExit(
             "DEMO_USER_PASSWORD ayarlanmamış. .env dosyasına bir parola yazın "

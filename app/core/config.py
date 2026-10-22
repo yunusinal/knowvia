@@ -13,9 +13,10 @@ class Settings(BaseSettings):
     app_env: str = "development"
     database_url: str = "sqlite:///./data/runtime/app.db"
     # Varsayılanı yok: parola koda yazılmaz, .env'den gelir.
-    demo_user_password: str | None = None
+    # SecretStr: değer repr, log ve hata çıktılarında "**********" görünür (test hataları dahil).
+    demo_user_password: SecretStr | None = None
     # Zorunlu ve varsayılanı yok: ayarlanmamışsa uygulama başlamaz (fail closed).
-    jwt_secret_key: str = Field(min_length=32)
+    jwt_secret_key: SecretStr = Field(min_length=32)
     jwt_expire_minutes: int = 60
     max_upload_mb: int = Field(default=10, gt=0)
     embedding_model: str = "intfloat/multilingual-e5-large"

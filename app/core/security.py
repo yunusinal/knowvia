@@ -28,7 +28,7 @@ def create_access_token(user_id: str) -> str:
     settings = get_settings()
     expires_at = datetime.now(UTC) + timedelta(minutes=settings.jwt_expire_minutes)
     payload = {"sub": user_id, "exp": expires_at}
-    return jwt.encode(payload, settings.jwt_secret_key, algorithm=_JWT_ALGORITHM)
+    return jwt.encode(payload, settings.jwt_secret_key.get_secret_value(), algorithm=_JWT_ALGORITHM)
 
 
 def decode_access_token(token: str) -> str | None:
@@ -36,7 +36,7 @@ def decode_access_token(token: str) -> str | None:
     try:
         # Algoritma açıkça sabitlenir; token'ın kendi "alg" alanına güvenilmez.
         payload = jwt.decode(
-            token, get_settings().jwt_secret_key, algorithms=[_JWT_ALGORITHM]
+            token, get_settings().jwt_secret_key.get_secret_value(), algorithms=[_JWT_ALGORITHM]
         )
     except jwt.InvalidTokenError:
         return None

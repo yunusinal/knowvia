@@ -92,7 +92,7 @@ def test_me_with_tampered_token_is_rejected(client: TestClient, it_user: User) -
 def test_me_with_expired_token_is_rejected(client: TestClient, it_user: User) -> None:
     expired = jwt.encode(
         {"sub": it_user.id, "exp": datetime.now(UTC) - timedelta(minutes=1)},
-        get_settings().jwt_secret_key,
+        get_settings().jwt_secret_key.get_secret_value(),
         algorithm="HS256",
     )
 
