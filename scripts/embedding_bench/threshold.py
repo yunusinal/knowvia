@@ -28,6 +28,7 @@ from app.services.authorization import can_access_document
 from app.services.chunking import chunk_pages
 from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder
 from app.services.retrieval import retrieve
+from app.services.sparse import get_sparse_encoder
 from scripts.embedding_bench.corpus_large import NO_ANSWER, PASSAGES, QUESTIONS
 from scripts.seed_demo_documents import DEMO_DOCS_DIR, seed_documents
 
@@ -78,7 +79,7 @@ def observe(workdir: Path) -> tuple[list[Observation], int]:
     embedder = FastEmbedEmbedder(spec, Path(settings.model_cache_dir))
     engine = create_engine(f"sqlite:///{workdir / 'eval.db'}")
     Base.metadata.create_all(engine)
-    store = VectorStore(QdrantClient(path=str(workdir / "qdrant")), "threshold_eval", spec.dimension)
+    store = VectorStore(QdrantClient(path=str(workdir / "qdrant")), "threshold_eval", spec.dimension, get_sparse_encoder())
     store.ensure_collection()
 
     observations: list[Observation] = []

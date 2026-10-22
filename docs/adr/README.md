@@ -28,6 +28,7 @@ Each ADR has the same sections:
 | [07](07-paragraph-chunking-and-threshold.md) | Paragraph-preserving chunking and a measured retrieval threshold | Accepted | 2026-10-21 |
 | [08](08-server-owned-conversation-context.md) | Server-owned conversation context with an input budget | Accepted | 2026-10-22 |
 | [09](09-support-ticket-propose-then-confirm.md) | Support tickets: the model proposes, the user confirms | Accepted | 2026-10-22 |
-| [10](10-reranking-measured-and-deferred.md) | Re-ranking: measured, deferred for latency (updated with GPU and hybrid results) | Accepted | 2026-10-22 |
+| [10](10-reranking-measured-and-deferred.md) | Re-ranking: measured, deferred for latency (updated with GPU and hybrid results) | Accepted (superseded by 11 for the app) | 2026-10-22 |
+| [11](11-hybrid-search-and-gpu-reranking.md) | Hybrid search always on, GPU re-ranking behind `GPU_ENABLED` | Accepted | 2026-10-22 |
 
 Numbers follow the order in which decisions were made. ADRs 01–04 were recorded retroactively, after the code they describe; from ADR-05 on, each record is written when its decision is made.

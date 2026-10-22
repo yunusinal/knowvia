@@ -14,6 +14,7 @@ from app.services.chat import ChatResult
 from app.services.conversations import append_exchange, get_owned, safe_history
 from app.services.embeddings import Embedder, get_embedder
 from app.services.llm import LLMClient, LLMNotConfiguredError, get_llm
+from app.services.reranker import Reranker, RerankerUnavailableError, get_reranker
 from app.services.smalltalk import canned_reply
 
 router = APIRouter(tags=["chat"])
@@ -44,6 +45,16 @@ def llm_dependency(reply: CannedReply) -> LLMClient | None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(error)) from None
 
 
+def reranker_dependency(reply: CannedReply) -> Reranker | None:
+    """GPU kapalıysa None. GPU_ENABLED=true ama CUDA yoksa 503 ve kurulum yönergesi (sessizce yavaşlamaz)."""
+    if reply is not None:
+        return None
+    try:
+        return get_reranker()
+    except RerankerUnavailableError as error:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(error)) from None
+
+
 @router.post("/chat")
 def chat(
     request: ChatRequest,
@@ -53,6 +64,7 @@ def chat(
     store: Annotated[VectorStore | None, Depends(store_dependency)],
     embedder: Annotated[Embedder | None, Depends(embedder_dependency)],
     llm: Annotated[LLMClient | None, Depends(llm_dependency)],
+    reranker: Annotated[Reranker | None, Depends(reranker_dependency)],
 ) -> ChatResponse:
     """Kullanıcının yetkili olduğu belgelerden kaynaklı cevap; kanıt yoksa sabit ret cevabı."""
     question = request.question.strip()
@@ -73,6 +85,7 @@ def chat(
             top_k=settings.retrieval_top_k,
             min_score=settings.retrieval_min_score,
             history=history,
+            reranker=reranker,
         )
         response_type = "rag"
     saved = append_exchange(db, user, conversation, question, result, response_type)

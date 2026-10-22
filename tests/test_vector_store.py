@@ -2,11 +2,11 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient, models
 
 from app.repositories.vector_store import ChunkHit, VectorStore, point_id
 from app.services.chunking import Chunk
-from tests.fakes import FakeEmbedder
+from tests.fakes import FakeEmbedder, FakeSparseEncoder
 
 COLLECTION = "test_chunks"
 
@@ -25,7 +25,7 @@ def client() -> Iterator[QdrantClient]:
 
 @pytest.fixture
 def store(client: QdrantClient, embedder: FakeEmbedder) -> VectorStore:
-    store = VectorStore(client, COLLECTION, embedder.dimension)
+    store = VectorStore(client, COLLECTION, embedder.dimension, FakeSparseEncoder())
     store.ensure_collection()
     return store
 
@@ -45,7 +45,7 @@ def add_document(
 
 
 def search(store: VectorStore, embedder: FakeEmbedder, query: str, allowed: set[str], limit: int = 5) -> list[ChunkHit]:
-    return store.search(embedder.embed_query(query), allowed, limit)
+    return store.search(embedder.embed_query(query), query, allowed, limit)
 
 
 def test_ensure_collection_is_idempotent(client: QdrantClient, store: VectorStore) -> None:
@@ -55,11 +55,19 @@ def test_ensure_collection_is_idempotent(client: QdrantClient, store: VectorStor
 
 
 def test_existing_collection_with_other_dimension_is_rejected(client: QdrantClient) -> None:
-    VectorStore(client, COLLECTION, dimension=32).ensure_collection()
+    VectorStore(client, COLLECTION, 32, FakeSparseEncoder()).ensure_collection()
 
     # Ör. embedding modeli değişti: eski vektörlerle karşılaştırma anlamsız olurdu.
-    with pytest.raises(RuntimeError, match="yeniden indekslenmeli"):
-        VectorStore(client, COLLECTION, dimension=1024).ensure_collection()
+    with pytest.raises(RuntimeError, match="uyumsuz"):
+        VectorStore(client, COLLECTION, 1024, FakeSparseEncoder()).ensure_collection()
+
+
+def test_old_dense_only_collection_is_rejected_with_migration_hint(client: QdrantClient) -> None:
+    # v1 şeması: isimsiz tek dense vektör, BM25 yok.
+    client.create_collection(COLLECTION, vectors_config=models.VectorParams(size=32, distance=models.Distance.COSINE))
+
+    with pytest.raises(RuntimeError, match="reindex_hybrid"):
+        VectorStore(client, COLLECTION, 32, FakeSparseEncoder()).ensure_collection()
 
 
 def test_search_returns_chunk_fields_and_ranks_best_match_first(store: VectorStore, embedder: FakeEmbedder) -> None:
@@ -156,13 +164,66 @@ def test_point_ids_are_deterministic_and_unique_per_chunk() -> None:
 
 def test_vectors_persist_on_disk_across_clients(tmp_path: Path, embedder: FakeEmbedder) -> None:
     path = str(tmp_path / "qdrant")
-    store = VectorStore(QdrantClient(path=path), COLLECTION, embedder.dimension)
+    store = VectorStore(QdrantClient(path=path), COLLECTION, embedder.dimension, FakeSparseEncoder())
     store.ensure_collection()
     add_document(store, embedder, "doc", "kalıcı metin")
     store.close()  # local mode klasörü kilitler; yeniden açmadan önce kapatılmalı
 
-    reopened = VectorStore(QdrantClient(path=path), COLLECTION, embedder.dimension)
+    reopened = VectorStore(QdrantClient(path=path), COLLECTION, embedder.dimension, FakeSparseEncoder())
     reopened.ensure_collection()
 
     assert reopened.count_document_chunks("doc") == 1
     reopened.close()
+
+
+def test_keyword_only_match_in_a_forbidden_document_is_not_returned(store: VectorStore, embedder: FakeEmbedder) -> None:
+    add_document(store, embedder, "secret", "Kod adı ZX9QK proje bütçesi")
+    add_document(store, embedder, "handbook", "Çalışan el kitabı mesai saatleri")
+    # Dense sorgu el kitabına benzesin; yalnızca BM25 gizli belgedeki nadir terimi yakalayabilir.
+    dense = embedder.embed_query("Çalışan el kitabı mesai saatleri")
+
+    hits = store.search(dense, "ZX9QK", {"handbook"}, 5)
+
+    assert {hit.document_id for hit in hits} == {"handbook"}
+
+
+def test_keyword_search_finds_exact_terms_the_dense_query_misses(store: VectorStore, embedder: FakeEmbedder) -> None:
+    add_document(store, embedder, "vpn", "Otel ağında UDP engelliyse istemciyi TCP443 moduna alın")
+    add_document(store, embedder, *(["handbook"] + [f"Çalışan el kitabı bölüm {i}" for i in range(30)]))
+    dense = embedder.embed_query("Çalışan el kitabı bölüm")  # dense tek başına VPN belgesini ilk 20'ye sokmaz
+
+    hits = store.search(dense, "TCP443", {"vpn", "handbook"}, 5)
+
+    assert "vpn" in {hit.document_id for hit in hits}
+
+
+def test_acl_filter_is_applied_to_both_candidate_searches(
+    store: VectorStore, embedder: FakeEmbedder, client: QdrantClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    add_document(store, embedder, "doc", "izin kuralı")
+    calls: list[dict[str, object]] = []
+    original = client.query_points
+
+    def spy(*args: object, **kwargs: object) -> object:
+        calls.append(kwargs)
+        return original(*args, **kwargs)  # pyright: ignore[reportArgumentType]
+
+    monkeypatch.setattr(client, "query_points", spy)
+    search(store, embedder, "izin", {"doc"})
+
+    prefetch = calls[0]["prefetch"]
+    assert isinstance(prefetch, list) and len(prefetch) == 2
+    assert all(item.filter == calls[0]["query_filter"] for item in prefetch)  # pyright: ignore[reportUnknownMemberType, reportAttributeAccessIssue]
+
+
+def test_hit_score_is_dense_cosine_not_fusion_rank(store: VectorStore, embedder: FakeEmbedder) -> None:
+    add_document(store, embedder, "doc", "Yıllık izin 14 iş günüdür.", "VPN kurulum rehberi")
+
+    query = "izin rehberi"
+    hits = {hit.text: hit.score for hit in search(store, embedder, query, {"doc"})}
+
+    # Eşik kosinüse göre ölçüldü; RRF sıra puanı (1/(k+sıra)) bu skorların yerine geçmemeli.
+    query_vector = embedder.embed_query(query)
+    for text, score in hits.items():
+        passage = embedder.embed_passages([text])[0]
+        assert score == pytest.approx(sum(a * b for a, b in zip(query_vector, passage, strict=True)))

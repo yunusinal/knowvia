@@ -1,7 +1,11 @@
-"""Chunk vektörlerini Qdrant'ta saklar ve izinli belgeler içinde arar.
+"""Chunk vektörlerini Qdrant'ta saklar ve izinli belgeler içinde hibrit arama yapar.
 
 Yetki kararı burada verilmez: hangi belgelerin aranabileceği (`allowed_document_ids`)
 çağıran tarafından SQLite'tan hesaplanır. Qdrant payload'ında yetki/durum alanı tutulmaz.
+
+Her nokta iki isimli vektör taşır: anlam için `dense` (e5) ve kelime eşleşmesi için `bm25`.
+Arama iki listeyi Reciprocal Rank Fusion (RRF) ile birleştirir (ADR-11); yetki filtresi her iki
+aramaya ayrı ayrı uygulanır.
 """
 
 import uuid
@@ -10,15 +14,21 @@ from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+from typing import cast
 
 from qdrant_client import QdrantClient, models
 
 from app.core.config import get_settings
 from app.services.chunking import Chunk
 from app.services.embeddings import get_embedder
+from app.services.sparse import SparseEncoder, SparseVectorData, get_sparse_encoder
 
 # Nokta kimliklerinin türetildiği sabit ad alanı: aynı belge + chunk her zaman aynı kimliği alır.
 _POINT_NAMESPACE = uuid.UUID("6f1c2b1e-4a8d-4c55-9a8e-6b0d3f6c2a17")
+DENSE = "dense"
+SPARSE = "bm25"
+# RRF'e her iki aramadan en az bu kadar aday girer; ölçüm 20 adayla yapıldı (ADR-10, ADR-11).
+MIN_PREFETCH = 20
 
 
 @dataclass(frozen=True)
@@ -28,34 +38,38 @@ class ChunkHit:
     page_number: int | None
     filename: str
     text: str
-    score: float
+    score: float  # dense kosinüs benzerliği; sıralama RRF'ten gelir, eşik bu skora uygulanır
 
 
 class VectorStore:
-    def __init__(self, client: QdrantClient, collection_name: str, dimension: int) -> None:
+    def __init__(self, client: QdrantClient, collection_name: str, dimension: int, sparse: SparseEncoder) -> None:
         self._client = client
         self._collection = collection_name
         self._dimension = dimension
+        self._sparse = sparse
 
     def ensure_collection(self) -> None:
-        """Collection yoksa oluşturur; varsa vektör ayarlarının bu modele uyduğunu doğrular."""
+        """Collection yoksa oluşturur; varsa vektör şemasının bu sürüme ve modele uyduğunu doğrular."""
         if self._client.collection_exists(self._collection):
-            vectors = self._client.get_collection(self._collection).config.params.vectors
+            params = self._client.get_collection(self._collection).config.params
+            dense = params.vectors.get(DENSE) if isinstance(params.vectors, dict) else None
             if (
-                not isinstance(vectors, models.VectorParams)
-                or vectors.size != self._dimension
-                or vectors.distance != models.Distance.COSINE
+                dense is None
+                or dense.size != self._dimension
+                or dense.distance != models.Distance.COSINE
+                or SPARSE not in (params.sparse_vectors or {})
             ):
-                # Farklı modelin vektörleri karşılaştırılamaz; sessizce devam etmek yerine dur.
+                # Farklı model veya eski (yalnız dense) şema karşılaştırılamaz; sessizce devam etmek yerine dur.
                 raise RuntimeError(
-                    f"'{self._collection}' collection'ı bu embedding modeliyle uyumsuz; "
-                    "belgeler yeniden indekslenmeli."
+                    f"'{self._collection}' collection'ı bu sürümle uyumsuz; "
+                    "`uv run python -m scripts.reindex_hybrid` ile taşıyın veya belgeleri yeniden yükleyin."
                 )
             return
 
         self._client.create_collection(
             self._collection,
-            vectors_config=models.VectorParams(size=self._dimension, distance=models.Distance.COSINE),
+            vectors_config={DENSE: models.VectorParams(size=self._dimension, distance=models.Distance.COSINE)},
+            sparse_vectors_config={SPARSE: models.SparseVectorParams(modifier=models.Modifier.IDF)},
         )
         # Local mode indeksleri kullanmaz ve her seferinde uyarı verir; indeks, Qdrant sunucusuna
         # geçildiğinde filtreli aramayı hızlandırmak için yine de oluşturulur.
@@ -78,10 +92,11 @@ class VectorStore:
         if any(len(vector) != self._dimension for vector in vectors):
             raise ValueError("Vektör boyutu collection boyutuyla uyuşmuyor.")
 
+        sparse = self._sparse.embed_documents([chunk.text for chunk in chunks]) if chunks else []
         points = [
             models.PointStruct(
                 id=point_id(document_id, chunk.chunk_index),
-                vector=list(vector),
+                vector={DENSE: list(vector), SPARSE: _sparse_vector(sparse_vector)},
                 payload={
                     "document_id": document_id,
                     "chunk_index": chunk.chunk_index,
@@ -90,7 +105,7 @@ class VectorStore:
                     "text": chunk.text,
                 },
             )
-            for chunk, vector in zip(chunks, vectors)
+            for chunk, vector, sparse_vector in zip(chunks, vectors, sparse, strict=True)
         ]
         if points:
             self._client.upsert(self._collection, points=points, wait=True)
@@ -98,22 +113,35 @@ class VectorStore:
     def search(
         self,
         query_vector: Sequence[float],
+        query_text: str,
         allowed_document_ids: Collection[str],
         limit: int,
     ) -> list[ChunkHit]:
-        """Yalnızca izinli belgelerin chunk'ları arasında arar, en benzerden başlayarak döndürür."""
+        """İzinli belgelerin chunk'ları arasında hibrit arar; RRF sırasıyla, dense skorlarıyla döndürür."""
         if limit <= 0:
             raise ValueError("limit pozitif olmalı.")
         if not allowed_document_ids:
             # İzinli belge yoksa Qdrant'a hiç gidilmez (fail closed).
             return []
 
+        allowed = _document_filter(allowed_document_ids)
+        candidates = max(limit, MIN_PREFETCH)
+        dense_query = list(query_vector)
         result = self._client.query_points(
             self._collection,
-            query=list(query_vector),
-            query_filter=_document_filter(allowed_document_ids),
+            prefetch=[
+                # Yetki filtresi her iki aday listesine ayrı ayrı uygulanır; biri unutulsa yetkisiz parça RRF'e girerdi.
+                models.Prefetch(query=dense_query, using=DENSE, filter=allowed, limit=candidates),
+                models.Prefetch(
+                    query=_sparse_vector(self._sparse.embed_query(query_text)), using=SPARSE,
+                    filter=allowed, limit=candidates,
+                ),
+            ],
+            query=models.FusionQuery(fusion=models.Fusion.RRF),
+            query_filter=allowed,
             limit=limit,
             with_payload=True,
+            with_vectors=[DENSE],
         )
         hits = []
         for point in result.points:
@@ -125,7 +153,8 @@ class VectorStore:
                     page_number=payload["page_number"],
                     filename=payload["filename"],
                     text=payload["text"],
-                    score=point.score,
+                    # RRF skoru sıra tabanlıdır ve eşikle kıyaslanamaz; eşik için kosinüs hesaplanır.
+                    score=_cosine(dense_query, _dense_of(point)),
                 )
             )
         return hits
@@ -157,6 +186,24 @@ def _document_filter(document_ids: Collection[str]) -> models.Filter:
     )
 
 
+def _sparse_vector(data: SparseVectorData) -> models.SparseVector:
+    return models.SparseVector(indices=data.indices, values=data.values)
+
+
+def _dense_of(point: models.ScoredPoint) -> list[float]:
+    vector = point.vector
+    dense = vector.get(DENSE) if isinstance(vector, dict) else None
+    if not isinstance(dense, list):
+        raise RuntimeError("Qdrant sonucu dense vektör içermiyor.")
+    return [float(value) for value in cast(list[float], dense)]
+
+
+def _cosine(left: Sequence[float], right: Sequence[float]) -> float:
+    dot = sum(a * b for a, b in zip(left, right, strict=True))
+    norms = (sum(a * a for a in left) ** 0.5) * (sum(b * b for b in right) ** 0.5)
+    return dot / norms if norms else 0.0
+
+
 @lru_cache
 def get_vector_store() -> VectorStore:
     """Diskteki kalıcı Qdrant'ı açar. Local mode klasörü kilitler: tek süreç (tek worker) kullanılmalı."""
@@ -164,7 +211,7 @@ def get_vector_store() -> VectorStore:
     path = Path(settings.qdrant_path)
     path.mkdir(parents=True, exist_ok=True)
     store = VectorStore(
-        QdrantClient(path=str(path)), settings.qdrant_collection, get_embedder().dimension
+        QdrantClient(path=str(path)), settings.qdrant_collection, get_embedder().dimension, get_sparse_encoder(),
     )
     store.ensure_collection()
     return store

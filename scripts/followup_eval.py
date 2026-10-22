@@ -29,6 +29,7 @@ from app.services.embeddings import get_embedder
 from app.services.llm import LLMUnavailableError, get_llm
 from app.services.prompt import HistoryTurn, strip_citations
 from app.services.retrieval import retrieve
+from app.services.sparse import get_sparse_encoder
 from scripts.rag_eval import ROOT, _normalize_text, _rate, prepare_isolated_corpus
 
 SCENARIOS_PATH = ROOT / "eval" / "conversations.jsonl"
@@ -214,7 +215,7 @@ def run(output_path: Path = DEFAULT_OUTPUT_PATH) -> dict[str, Any]:
     scenarios = load_scenarios()
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     embedder = get_embedder()
-    store = VectorStore(QdrantClient(":memory:"), f"{settings.qdrant_collection}_followup_eval", embedder.dimension)
+    store = VectorStore(QdrantClient(":memory:"), f"{settings.qdrant_collection}_followup_eval", embedder.dimension, get_sparse_encoder())
     store.ensure_collection()
     try:
         Base.metadata.create_all(engine)

@@ -5,6 +5,7 @@ __pycache__/
 
 # Sanal ortam (uv sync ile yeniden oluşturulur)
 .venv/
+.venv-gpu/
 
 # Sırlar: yalnızca .env.example commit edilir
 .env

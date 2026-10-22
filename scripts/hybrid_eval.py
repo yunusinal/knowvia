@@ -32,6 +32,7 @@ from app.services.authorization import allowed_document_ids
 from app.services.chat import retrieval_query
 from app.services.embeddings import get_embedder
 from app.services.prompt import HistoryTurn
+from app.services.sparse import get_sparse_encoder
 from scripts.doc2dial_eval import RERANKER, load_reranker
 from scripts.rag_eval import ROOT, _rate, load_questions, prepare_isolated_corpus
 
@@ -81,7 +82,7 @@ def run(rerank_device: str | None = None) -> dict[str, Any]:
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     embedder = get_embedder()
     source = QdrantClient(":memory:")
-    store = VectorStore(source, "demo", embedder.dimension)
+    store = VectorStore(source, "demo", embedder.dimension, get_sparse_encoder())
     store.ensure_collection()
     bm25 = SparseTextEmbedding("Qdrant/bm25", cache_dir=settings.model_cache_dir, language="turkish")
     client = QdrantClient(":memory:")
@@ -99,7 +100,7 @@ def run(rerank_device: str | None = None) -> dict[str, Any]:
         sparse = list(bm25.embed([(point.payload or {})["text"] for point in points]))
         client.upsert("hybrid", [
             models.PointStruct(id=point.id, payload=point.payload, vector={
-                "dense": point.vector,  # pyright: ignore[reportArgumentType]
+                "dense": point.vector["dense"],  # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript, reportCallIssue]
                 "bm25": models.SparseVector(indices=vector.indices.tolist(), values=vector.values.tolist()),
             })
             for point, vector in zip(points, sparse, strict=True)

@@ -28,13 +28,17 @@ from app.services.authorization import allowed_document_ids
 from app.services.chat import answer_question
 from app.services.embeddings import get_embedder
 from app.services.ingest import ingest_document
-from app.services.llm import get_llm
+from app.services.llm import LLMUnavailableError, get_llm
+from app.services.reranker import get_reranker
 from app.services.retrieval import retrieve
+from app.services.sparse import get_sparse_encoder
 from scripts.seed_demo_documents import load_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 QUESTIONS_PATH = ROOT / "eval" / "questions.jsonl"
 DEFAULT_OUTPUT_PATH = ROOT / "eval" / "results" / "current-llm-2026-10-22.json"
+PAUSE_SECONDS = 6
+RETRY_WAIT_SECONDS = 30
 DEMO_USERS = {
     "admin@demo.local": (Role.ADMIN, None),
     "it@demo.local": (Role.MEMBER, Department.IT),
@@ -104,6 +108,7 @@ def evaluate_question(
     llm: Any,
     user: User,
     question: EvalQuestion,
+    reranker: Any = None,
 ) -> dict[str, Any]:
     settings = get_settings()
     hits = retrieve(db, store, embedder, user, question.question, top_k=5)
@@ -117,17 +122,28 @@ def evaluate_question(
         )
     }
 
-    started = time.perf_counter()
-    result = answer_question(
-        db,
-        store,
-        embedder,
-        llm,
-        user,
-        question.question,
-        top_k=settings.retrieval_top_k,
-        min_score=settings.retrieval_min_score,
-    )
+    for attempt in range(3):
+        started = time.perf_counter()
+        try:
+            result = answer_question(
+                db,
+                store,
+                embedder,
+                llm,
+                user,
+                question.question,
+                top_k=settings.retrieval_top_k,
+                min_score=settings.retrieval_min_score,
+                reranker=reranker,
+            )
+            break
+        except LLMUnavailableError:
+            # Groq ücretsiz katmanı dakikada 8000 token verir; sınırda bekleyip yeniden dener.
+            if attempt == 2:
+                raise
+            time.sleep(RETRY_WAIT_SECONDS)
+    else:  # pragma: no cover - döngü ya break ya raise ile biter
+        raise RuntimeError("unreachable")
     end_to_end_ms = round((time.perf_counter() - started) * 1000)
 
     top_five_point_ids = {point_id(hit.document_id, hit.chunk_index) for hit in hits}
@@ -188,6 +204,11 @@ def evaluate_question(
             "end_to_end": end_to_end_ms,
         },
     }
+
+
+def _paced(row: dict[str, Any]) -> dict[str, Any]:
+    time.sleep(PAUSE_SECONDS)  # sağlayıcının dakikalık token sınırına takılmamak için
+    return row
 
 
 def _rate(values: list[bool]) -> dict[str, int | float]:
@@ -252,20 +273,23 @@ def run(output_path: Path = DEFAULT_OUTPUT_PATH) -> dict[str, Any]:
     )
     client = QdrantClient(":memory:")
     embedder = get_embedder()
-    store = VectorStore(client, f"{settings.qdrant_collection}_eval", embedder.dimension)
+    store = VectorStore(client, f"{settings.qdrant_collection}_eval", embedder.dimension, get_sparse_encoder())
     store.ensure_collection()
     try:
         Base.metadata.create_all(engine)
         with Session(engine) as db:
             users = prepare_isolated_corpus(db, store, embedder)
             llm = get_llm()
+            # Uygulamayla aynı kural: GPU_ENABLED=true ise yeniden sıralama açık (CUDA yoksa hata).
+            reranker = get_reranker()
             results = [
-                evaluate_question(db, store, embedder, llm, users[item.user_email], item)
+                _paced(evaluate_question(db, store, embedder, llm, users[item.user_email], item, reranker))
                 for item in questions
             ]
         report = {
             "created_at": datetime.now(UTC).isoformat(),
             "llm_model": settings.llm_model,
+            "retrieval": "hybrid (dense + bm25, RRF)" + (" + GPU re-ranking" if settings.gpu_enabled else ""),
             "embedding_model": settings.embedding_model,
             "retrieval_top_k": 5,
             "retrieval_min_score": settings.retrieval_min_score,

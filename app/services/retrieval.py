@@ -31,7 +31,7 @@ def retrieve(
     if not allowed:
         return []  # yetkili belge yoksa soru embed edilmez, Qdrant'a gidilmez (fail closed)
 
-    hits = store.search(embedder.embed_query(question), allowed, top_k)
+    hits = store.search(embedder.embed_query(question), question, allowed, top_k)
     return _recheck_access(db, user, hits)
 
 

@@ -21,7 +21,7 @@ from app.main import app  # noqa: E402
 from app.repositories.vector_store import VectorStore, get_vector_store  # noqa: E402
 from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder, get_embedder  # noqa: E402
 from app.api.chat import embedder_dependency, llm_dependency, store_dependency  # noqa: E402
-from tests.fakes import FakeEmbedder, FakeLLM  # noqa: E402
+from tests.fakes import FakeEmbedder, FakeLLM, FakeSparseEncoder  # noqa: E402
 
 
 @pytest.fixture(scope="session")
@@ -64,7 +64,7 @@ def fake_embedder() -> FakeEmbedder:
 @pytest.fixture
 def vector_store(fake_embedder: FakeEmbedder) -> Iterator[VectorStore]:
     """Gerçek Qdrant istemcisi, bellekte (master plan §11.1: Qdrant taklit edilmez)."""
-    store = VectorStore(QdrantClient(":memory:"), "test_chunks", fake_embedder.dimension)
+    store = VectorStore(QdrantClient(":memory:"), "test_chunks", fake_embedder.dimension, FakeSparseEncoder())
     store.ensure_collection()
     yield store
     store.close()

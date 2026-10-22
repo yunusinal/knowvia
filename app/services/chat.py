@@ -15,6 +15,7 @@ from app.repositories.vector_store import ChunkHit, VectorStore, point_id
 from app.services.embeddings import Embedder
 from app.services.llm import LLMClient
 from app.services.prompt import SYSTEM_PROMPT, HistoryTurn, LabeledSource, build_user_message, label_sources, parse_answer
+from app.services.reranker import Reranker
 from app.services.retrieval import retrieve
 from app.services.tickets import PROPOSAL_MESSAGE, SUPPORT_TICKET_TOOL, TicketProposal, proposal_from
 
@@ -56,12 +57,20 @@ def answer_question(
     top_k: int,
     min_score: float,
     history: list[HistoryTurn] | None = None,
+    reranker: Reranker | None = None,
 ) -> ChatResult:
     started = time.perf_counter()
     previous_turns = history or []
-    hits = retrieve(db, store, embedder, user, retrieval_query(question, previous_turns), top_k)
-    # Birinci çekimserlik katmanı: eşiğin altındaki chunk'lar LLM'e hiç gitmez.
+    query = retrieval_query(question, previous_turns)
+    # Yeniden sıralama varsa daha geniş aday havuzu alınır; sonra en iyi `top_k` seçilir.
+    candidates = get_settings().rerank_candidates if reranker is not None else top_k
+    hits = retrieve(db, store, embedder, user, query, max(candidates, top_k))
+    # Birinci çekimserlik katmanı: eşiğin altındaki chunk'lar LLM'e (ve sıralayıcıya) hiç gitmez.
     evidence = [hit for hit in hits if hit.score >= min_score]
+    if reranker is not None and evidence:
+        scores = reranker.rerank(query, [hit.text for hit in evidence])
+        evidence = [hit for _, hit in sorted(zip(scores, evidence, strict=True), key=lambda pair: -pair[0])]
+    evidence = evidence[:top_k]
     retrieval_ms = _elapsed_ms(started)
     if not evidence:
         return _no_evidence(retrieval_ms, generation_ms=0)

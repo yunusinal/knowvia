@@ -38,6 +38,7 @@ from app.services.ingest import DuplicateDocumentError, ingest_document
 from app.services.llm import LLMUnavailableError, get_llm
 from app.services.prompt import HistoryTurn
 from app.services.retrieval import retrieve
+from app.services.sparse import get_sparse_encoder
 from scripts.followup_eval import PAUSE_SECONDS, _rewrite
 from scripts.rag_eval import ROOT, _normalize_text, _rate
 
@@ -102,7 +103,8 @@ def open_corpus(
     domain: str, corpus: str, documents: dict[str, dict[str, Any]], embedder: Embedder,
 ) -> tuple[Session, VectorStore, User, dict[str, str], int | None]:
     """Önbellekteki korpusu açar; yoksa veya yarımsa baştan kurar. Dönüş: belge id → doc2dial id."""
-    folder = CACHE_DIR / f"doc2dial-{domain}-{corpus}"
+    # -v2: isimli dense + bm25 şeması (ADR-11); eski önbellek bu sürümle açılamaz, ayrı klasörde kalır.
+    folder = CACHE_DIR / f"doc2dial-{domain}-{corpus}-v2"
     ready = folder / "ready.json"
     if folder.exists() and not ready.exists():
         shutil.rmtree(folder)  # önceki kurulum yarıda kalmış; yarım korpusla ölçüm yapılmaz
@@ -110,7 +112,7 @@ def open_corpus(
     engine = create_engine(f"sqlite:///{folder / 'eval.db'}")
     Base.metadata.create_all(engine)
     db = Session(engine)
-    store = VectorStore(QdrantClient(path=str(folder / "qdrant")), "doc2dial", embedder.dimension)
+    store = VectorStore(QdrantClient(path=str(folder / "qdrant")), "doc2dial", embedder.dimension, get_sparse_encoder())
     store.ensure_collection()
     doc_ids = list(documents)
 
@@ -362,7 +364,7 @@ def open_hybrid_corpus(
         shutil.rmtree(folder)
     client = QdrantClient(path=str(folder / "qdrant"))
     if not ready.exists():
-        source = QdrantClient(path=str(CACHE_DIR / f"doc2dial-{domain}-{corpus}" / "qdrant"))
+        source = QdrantClient(path=str(CACHE_DIR / f"doc2dial-{domain}-{corpus}-v2" / "qdrant"))
         client.create_collection(
             "hybrid",
             vectors_config={"dense": models.VectorParams(size=embedder.dimension, distance=models.Distance.COSINE)},
@@ -376,7 +378,7 @@ def open_hybrid_corpus(
             client.upsert("hybrid", [
                 models.PointStruct(
                     id=point.id, payload=point.payload,
-                    vector={"dense": point.vector, "bm25": models.SparseVector(  # pyright: ignore[reportArgumentType]
+                    vector={"dense": point.vector["dense"], "bm25": models.SparseVector(  # pyright: ignore[reportArgumentType, reportIndexIssue, reportOptionalSubscript, reportCallIssue]
                         indices=vector.indices.tolist(), values=vector.values.tolist())},
                 )
                 for point, vector in zip(points, sparse, strict=True)

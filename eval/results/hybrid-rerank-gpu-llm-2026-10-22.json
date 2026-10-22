@@ -1,0 +1,1257 @@
+{
+  "created_at": "2026-10-22T18:13:54.312331+00:00",
+  "llm_model": "openai/gpt-oss-120b",
+  "retrieval": "hybrid (dense + bm25, RRF) + GPU re-ranking",
+  "embedding_model": "intfloat/multilingual-e5-large",
+  "retrieval_top_k": 5,
+  "retrieval_min_score": 0.8,
+  "corpus_document_count": 13,
+  "metrics": {
+    "question_count": 22,
+    "answerable_question_count": 16,
+    "recall_at_5": {
+      "passed": 16,
+      "total": 16,
+      "rate": 1.0
+    },
+    "expected_answer_fact_coverage": {
+      "passed": 16,
+      "total": 16,
+      "rate": 1.0
+    },
+    "abstention_accuracy": {
+      "passed": 22,
+      "total": 22,
+      "rate": 1.0
+    },
+    "citation_correctness": {
+      "passed": 22,
+      "total": 22,
+      "rate": 1.0
+    },
+    "acl_leakage": {
+      "leaks": 0,
+      "cases": 22,
+      "passed": true
+    },
+    "latency_ms": {
+      "retrieval": {
+        "count": 22,
+        "mean_ms": 419,
+        "median_ms": 262
+      },
+      "generation": {
+        "count": 17,
+        "mean_ms": 994,
+        "median_ms": 711
+      },
+      "end_to_end": {
+        "count": 22,
+        "mean_ms": 1187,
+        "median_ms": 898
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "R01",
+      "category": "answerable",
+      "question": "Haftada en fazla kaç gün uzaktan çalışabiliyorum?",
+      "user_email": "it@demo.local",
+      "answer": "Haftada en fazla 3 gün uzaktan çalışabilirsiniz. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "72a9ccc6-a2f1-4b40-b3c2-de68f511364e",
+          "filename": "remote-work-policy-2026.md",
+          "page_number": null,
+          "chunk_id": "4dd64cdb-41c2-55a2-8aa4-16161b91075d",
+          "snippet": "# Uzaktan Çalışma Politikası (2026)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nUzaktan Çalışma Politikası (2026, yürürlükte). Çalışanlar haftada en fazla 3 gün uzaktan çalışabilir. Salı ve Perşembe günleri tüm ekipler için ofis günüdür. Uzaktan çalışm…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8871
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.8795
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8776
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8689
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.8481
+        }
+      ],
+      "expected_document": "remote-work-policy-2026.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 4006,
+        "generation": 1380,
+        "end_to_end": 5387
+      }
+    },
+    {
+      "id": "R02",
+      "category": "answerable",
+      "question": "Uzaktan çalışanlara internet için aylık ne kadar destek veriliyor?",
+      "user_email": "hr@demo.local",
+      "answer": "Haftada en az 2 gün uzaktan çalışan personele aylık 400 TL internet desteği verilir[S2].",
+      "sources": [
+        {
+          "source_id": "S2",
+          "document_id": "72a9ccc6-a2f1-4b40-b3c2-de68f511364e",
+          "filename": "remote-work-policy-2026.md",
+          "page_number": null,
+          "chunk_id": "172f4d5a-b015-561e-b79c-2de0c0505edd",
+          "snippet": "Uzaktan Çalışma Politikası (2026) — İnternet Gideri. Haftada en az 2 gün uzaktan çalışan personele aylık 400 TL internet desteği maaşla birlikte ödenir. Destek, yöneticinin onayladığı uzaktan çalışma planına göre otomatik hesaplanır."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.9089
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.9035
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8686
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.848
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.821
+        }
+      ],
+      "expected_document": "remote-work-policy-2026.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 319,
+        "generation": 1980,
+        "end_to_end": 2300
+      }
+    },
+    {
+      "id": "R03",
+      "category": "answerable",
+      "question": "Ofise gelinmesi gereken sabit günler hangileri?",
+      "user_email": "hr@demo.local",
+      "answer": "Salı ve Perşembe günleri ofis günüdür. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "72a9ccc6-a2f1-4b40-b3c2-de68f511364e",
+          "filename": "remote-work-policy-2026.md",
+          "page_number": null,
+          "chunk_id": "4dd64cdb-41c2-55a2-8aa4-16161b91075d",
+          "snippet": "# Uzaktan Çalışma Politikası (2026)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nUzaktan Çalışma Politikası (2026, yürürlükte). Çalışanlar haftada en fazla 3 gün uzaktan çalışabilir. Salı ve Perşembe günleri tüm ekipler için ofis günüdür. Uzaktan çalışm…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8241
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8231
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8201
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8231
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8061
+        }
+      ],
+      "expected_document": "remote-work-policy-2026.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 365,
+        "generation": 469,
+        "end_to_end": 834
+      }
+    },
+    {
+      "id": "R04",
+      "category": "answerable",
+      "question": "Yurt dışından yılda kaç iş gününe kadar uzaktan çalışabilirim?",
+      "user_email": "it@demo.local",
+      "answer": "Yurt dışından yılda en fazla **20 iş günü** uzaktan çalışabilirsiniz. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "72a9ccc6-a2f1-4b40-b3c2-de68f511364e",
+          "filename": "remote-work-policy-2026.md",
+          "page_number": null,
+          "chunk_id": "0443808c-de56-5840-9f82-0d13133cc5b4",
+          "snippet": "Uzaktan Çalışma Politikası (2026) — Yurt Dışından Çalışma. Yurt dışından uzaktan çalışma yılda en fazla 20 iş günüyle sınırlıdır ve İK ile Bilgi Güvenliği'nin yazılı onayını gerektirir. Yaptırım uygulanan ülkelerden şirket sistemlerine bağlanmak yasaktır."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.9036
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.8547
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.8536
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.853
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8513
+        }
+      ],
+      "expected_document": "remote-work-policy-2026.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 439,
+        "generation": 1506,
+        "end_to_end": 1945
+      }
+    },
+    {
+      "id": "R05",
+      "category": "answerable",
+      "question": "1 ile 5 yıl kıdemi olan çalışanın yıllık ücretli izin hakkı kaç gün?",
+      "user_email": "hr@demo.local",
+      "answer": "1–5 yıl kıdemi olan çalışanların yıllık ücretli izin hakkı 14 iş günüdür[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "b61a7a05-3141-4323-b7c7-7f9ee083e5a7",
+          "filename": "annual-leave-policy.md",
+          "page_number": null,
+          "chunk_id": "c9d45753-ae08-5cdb-9a07-e4d251a6b7b2",
+          "snippet": "# İzin Politikası\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nYıllık İzin Politikası. 1–5 yıl kıdemi olan çalışanlar yılda 14 iş günü, 5–15 yıl arası kıdemi olanlar 20 iş günü, 15 yıldan fazla kıdemi olanlar 26 iş günü ücretli yıllık izin hakkına sahip…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8975
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8593
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8509
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8511
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8315
+        }
+      ],
+      "expected_document": "annual-leave-policy.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 384,
+        "generation": 785,
+        "end_to_end": 1170
+      }
+    },
+    {
+      "id": "R06",
+      "category": "answerable",
+      "question": "Kullanılmayan yıllık izinden sonraki yıla en fazla kaç gün aktarılabiliyor?",
+      "user_email": "it@demo.local",
+      "answer": "Kullanılmayan yıllık iznin en fazla **5 günü** bir sonraki yıla devredilebilir. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "b61a7a05-3141-4323-b7c7-7f9ee083e5a7",
+          "filename": "annual-leave-policy.md",
+          "page_number": null,
+          "chunk_id": "74ad17cb-3168-5d5d-8fa7-574f8894c4b2",
+          "snippet": "Yıllık İzin Politikası — Başvuru ve Devir. İzin talepleri İK portalından en az 7 gün önceden girilir ve yönetici onayıyla kesinleşir. Kullanılmayan iznin en fazla 5 günü bir sonraki yıla devredilebilir; kalan günler yıl sonunda yanar."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8778
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8509
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8501
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8414
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8289
+        }
+      ],
+      "expected_document": "annual-leave-policy.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 301,
+        "generation": 497,
+        "end_to_end": 799
+      }
+    },
+    {
+      "id": "R07",
+      "category": "answerable",
+      "question": "Yurt içi iş seyahatinde günlük yemek harcama limiti nedir?",
+      "user_email": "finance@demo.local",
+      "answer": "Yurt içi iş seyahatlerinde günlük yemek harcama limiti 750 TL’dir[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "0296f734-108a-49f1-9b34-7fcb5a261f0c",
+          "filename": "expense-policy.md",
+          "page_number": null,
+          "chunk_id": "56e61440-99d6-5869-977d-3f5c2576b7a9",
+          "snippet": "# Harcama ve Bordro Politikası\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nHarcama Politikası. İş seyahatlerinde günlük yemek harcama limiti yurt içinde 750 TL'dir. Taksi masrafları yalnızca toplu taşımanın mümkün olmadığı durumlarda karşılanır."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "expense-policy.md",
+          "score": 0.9014
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8785
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8466
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8249
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8332
+        }
+      ],
+      "expected_document": "expense-policy.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 403,
+        "generation": 1568,
+        "end_to_end": 1972
+      }
+    },
+    {
+      "id": "R08",
+      "category": "answerable",
+      "question": "Masraf fişini harcamadan sonra kaç gün içinde sisteme girmeliyim?",
+      "user_email": "finance@demo.local",
+      "answer": "Masraf fişini harcamanın ardından 30 gün içinde Masraf Portalı’na fotoğrafıyla girmeniz gerekir[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "0296f734-108a-49f1-9b34-7fcb5a261f0c",
+          "filename": "expense-policy.md",
+          "page_number": null,
+          "chunk_id": "b738afb4-7ed8-516a-80e3-d6d4dbbb1d5b",
+          "snippet": "Harcama Politikası — Masraf Bildirimi. Masraflar harcamadan sonraki 30 gün içinde Masraf Portalı'na fiş fotoğrafıyla girilir. 5.000 TL üzerindeki harcamalar için önceden bölüm müdürü onayı alınmalıdır; onaylanan masraflar bir sonraki maaşla ödenir."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8833
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.8205
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8135
+        },
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.824
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7767
+        }
+      ],
+      "expected_document": "expense-policy.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 332,
+        "generation": 634,
+        "end_to_end": 966
+      }
+    },
+    {
+      "id": "R09",
+      "category": "answerable",
+      "question": "5.000 TL üstündeki bir masrafı yapmadan önce ne gerekiyor?",
+      "user_email": "finance@demo.local",
+      "answer": "5.000 TL üzerindeki harcamalar için önceden bölüm müdürü onayı alınmalıdır[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "0296f734-108a-49f1-9b34-7fcb5a261f0c",
+          "filename": "expense-policy.md",
+          "page_number": null,
+          "chunk_id": "b738afb4-7ed8-516a-80e3-d6d4dbbb1d5b",
+          "snippet": "Harcama Politikası — Masraf Bildirimi. Masraflar harcamadan sonraki 30 gün içinde Masraf Portalı'na fiş fotoğrafıyla girilir. 5.000 TL üzerindeki harcamalar için önceden bölüm müdürü onayı alınmalıdır; onaylanan masraflar bir sonraki maaşla ödenir."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8466
+        },
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.8266
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8079
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.8103
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.7779
+        }
+      ],
+      "expected_document": "expense-policy.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 250,
+        "generation": 709,
+        "end_to_end": 959
+      }
+    },
+    {
+      "id": "R10",
+      "category": "answerable",
+      "question": "VPN sertifika doğrulama hatasında ilk hangi kontrolleri yapmalıyım?",
+      "user_email": "it@demo.local",
+      "answer": "VPN “Sertifika doğrulanamadı” hatası aldığınızda önce cihazınızın saatinin doğru olduğundan emin olun, ardından VPN istemcisinin önbelleğini temizleyin. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "041f2dfb-cfcb-4074-9fba-3d19221ce3d8",
+          "filename": "vpn-troubleshooting.md",
+          "page_number": null,
+          "chunk_id": "89accdf1-29cd-59e7-8610-bda771d316fa",
+          "snippet": "# VPN Sorun Giderme (IT iç)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nVPN Sorun Giderme (IT iç). 'Sertifika doğrulanamadı' hatasında önce cihaz saatinin doğru olduğunu kontrol edin, ardından istemci önbelleğini temizleyin. Sorun sürerse cihaz sertifi…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8873
+        },
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8408
+        },
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8433
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.8239
+        },
+        {
+          "filename": "vpn-setup.md",
+          "score": 0.8425
+        }
+      ],
+      "expected_document": "vpn-troubleshooting.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 418,
+        "generation": 958,
+        "end_to_end": 1376
+      }
+    },
+    {
+      "id": "R11",
+      "category": "answerable",
+      "question": "Otel Wi-Fi ağında VPN'in UDP bağlantısı engelleniyorsa ne yapmalıyım?",
+      "user_email": "it@demo.local",
+      "answer": "Otel (veya kafe) ağında UDP engellendiğinde VPN istemcisini TCP 443 moduna almanız gerekir. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "041f2dfb-cfcb-4074-9fba-3d19221ce3d8",
+          "filename": "vpn-troubleshooting.md",
+          "page_number": null,
+          "chunk_id": "e6740e45-7d3b-5ac6-a491-b51b537c28fb",
+          "snippet": "VPN Sorun Giderme — Bağlantı Kopmaları. Bağlantı 30 dakikada bir kopuyorsa kullanıcının ev modeminde MTU değerini 1400'e düşürün. Otel ve kafe ağlarında UDP engelleniyorsa istemciyi TCP 443 moduna alın."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8792
+        },
+        {
+          "filename": "vpn-setup.md",
+          "score": 0.8236
+        },
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8579
+        },
+        {
+          "filename": "vpn-troubleshooting.md",
+          "score": 0.8364
+        },
+        {
+          "filename": "vpn-setup.md",
+          "score": 0.8257
+        }
+      ],
+      "expected_document": "vpn-troubleshooting.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 149,
+        "generation": 428,
+        "end_to_end": 577
+      }
+    },
+    {
+      "id": "R12",
+      "category": "answerable",
+      "question": "Yeni parola için uzunluk ve eski parolaları kullanma kuralı nedir?",
+      "user_email": "it@demo.local",
+      "answer": "Yeni parola en az 12 karakter uzunluğunda olmalı ve son 5 parolanızdan farklı olmalıdır. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "105d5fc0-3770-4b01-890a-1f5bf848cf7d",
+          "filename": "password-reset.md",
+          "page_number": null,
+          "chunk_id": "c76d2a14-de75-58f5-ac13-806585bb7212",
+          "snippet": "# Parola Sıfırlama ve Hesap Güvenliği\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nParola Sıfırlama Prosedürü. Parolanızı unuttuysanız giriş ekranındaki 'Parolamı unuttum' bağlantısına tıklayın, kurumsal e-posta adresinizi girin ve telefonunuza gelen 6…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "password-reset.md",
+          "score": 0.842
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.8236
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7727
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.8139
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7724
+        }
+      ],
+      "expected_document": "password-reset.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 238,
+        "generation": 537,
+        "end_to_end": 775
+      }
+    },
+    {
+      "id": "R13",
+      "category": "answerable",
+      "question": "Kurumsal hesaplarda MFA mecburi mi?",
+      "user_email": "hr@demo.local",
+      "answer": "Evet, tüm kurumsal hesaplarda MFA zorunludur. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "105d5fc0-3770-4b01-890a-1f5bf848cf7d",
+          "filename": "password-reset.md",
+          "page_number": null,
+          "chunk_id": "56e5c01e-81a5-5fc4-84fd-87a338d7ef98",
+          "snippet": "Çok Faktörlü Doğrulama (MFA). Tüm kurumsal hesaplarda MFA zorunludur. Telefonunuzu değiştirdiyseniz veya kaybettiyseniz Authenticator kaydını sıfırlamak için kimliğinizle birlikte IT Servis Masası'na başvurun. SMS ile doğrulama yalnızca geçici olarak 7 gün kullanılabilir."
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "password-reset.md",
+          "score": 0.8582
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8079
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.787
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.7863
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.792
+        }
+      ],
+      "expected_document": "password-reset.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 186,
+        "generation": 711,
+        "end_to_end": 897
+      }
+    },
+    {
+      "id": "R14",
+      "category": "answerable",
+      "question": "Bir oltalama e-postasındaki bağlantıya tıklarsam ilk ne yapmalı ve kime ne zaman haber vermeliyim?",
+      "user_email": "it@demo.local",
+      "answer": "Olayı fark ettiğiniz anda cihazı **derhal ağdan ayırmalısınız** ve **15 dakika içinde güvenlik ekibine bildirimde bulunmalısınız**. [S1]",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "fc789bbd-82e6-43fe-b777-e4d962871b06",
+          "filename": "incident-response-internal.md",
+          "page_number": null,
+          "chunk_id": "322d711b-fbd8-59e9-9642-e0f8199bc6f8",
+          "snippet": "# Olay Müdahale Planı (IT iç)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nOlay Müdahale Planı (IT iç). Bir oltalama e-postasına tıklandığından şüpheleniliyorsa cihaz derhal ağdan ayrılır ve güvenlik ekibine 15 dakika içinde bildirilir. Olay kaydı açılı…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "incident-response-internal.md",
+          "score": 0.8294
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.7941
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7966
+        },
+        {
+          "filename": "office-and-it-guidelines-en.md",
+          "score": 0.8006
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.799
+        }
+      ],
+      "expected_document": "incident-response-internal.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 263,
+        "generation": 1368,
+        "end_to_end": 1631
+      }
+    },
+    {
+      "id": "R15",
+      "category": "answerable",
+      "question": "2026 bütçe planında bulut altyapısı harcaması nasıl değişiyor?",
+      "user_email": "finance@demo.local",
+      "answer": "2026 bütçe planında bulut altyapısı harcamalarına %20 artış ayrılmıştır[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "8f095c91-a86b-417b-a90e-9c1f38e5ca99",
+          "filename": "budget-plan-2026-confidential.md",
+          "page_number": null,
+          "chunk_id": "08b8ec13-df01-5745-93a9-1558d666d21b",
+          "snippet": "# 2026 Bütçe Planı (Gizli)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\n2026 Bütçe Planı (Gizli — yalnızca Finans). 2026 yılı toplam işletme bütçesi 48 milyon TL olarak planlanmıştır. Pazarlama bütçesi %12 azaltılırken bulut altyapı harcamalarına %20 ar…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "budget-plan-2026-confidential.md",
+          "score": 0.8771
+        },
+        {
+          "filename": "budget-plan-2026-confidential.md",
+          "score": 0.8596
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8034
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.8087
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7826
+        }
+      ],
+      "expected_document": "budget-plan-2026-confidential.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 264,
+        "generation": 2207,
+        "end_to_end": 2472
+      }
+    },
+    {
+      "id": "R16",
+      "category": "answerable",
+      "question": "Tedarikçi faturalarında standart ödeme vadesi kaç gün?",
+      "user_email": "finance@demo.local",
+      "answer": "Standart ödeme vadesi fatura tarihinden itibaren **60 gündür**[S1].",
+      "sources": [
+        {
+          "source_id": "S1",
+          "document_id": "7c7d7ca8-0f86-48d1-9558-eb4216fb1319",
+          "filename": "vendor-contract-terms-internal.md",
+          "page_number": null,
+          "chunk_id": "be857166-6a98-58a6-a50f-007cd123d7a2",
+          "snippet": "# Tedarikçi Sözleşmeleri ve Satın Alma (Finans iç)\n\n> Sentetik demo belgesi: tamamen uydurmadır; gerçek bir kurum veya kişiyle ilgisi yoktur.\n\nTedarikçi Sözleşme Koşulları (Finans iç). Standart ödeme vadesi fatura tarihinden itibaren 60 gündür. Bir yıldan uzun sözleşmelerde yıllık fiyat artışı TÜFE…"
+        }
+      ],
+      "retrieved_top5": [
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.8895
+        },
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.838
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8093
+        },
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.8331
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7763
+        }
+      ],
+      "expected_document": "vendor-contract-terms-internal.md",
+      "recall_at_5": true,
+      "expected_answer_facts_present": true,
+      "should_abstain": false,
+      "did_abstain": false,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 260,
+        "generation": 638,
+        "end_to_end": 898
+      }
+    },
+    {
+      "id": "R17",
+      "category": "abstention",
+      "question": "Şirket otoparkının aylık abonelik ücreti ne kadar?",
+      "user_email": "hr@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7965
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7875
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.7726
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7799
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.7711
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 83,
+        "generation": 0,
+        "end_to_end": 83
+      }
+    },
+    {
+      "id": "R18",
+      "category": "acl_denial",
+      "question": "Finansın 2026 toplam işletme bütçesi kaç milyon TL?",
+      "user_email": "it@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7783
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7652
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7654
+        },
+        {
+          "filename": "remote-work-policy-2024-archived.md",
+          "score": 0.7584
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.7578
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 82,
+        "generation": 0,
+        "end_to_end": 82
+      }
+    },
+    {
+      "id": "R19",
+      "category": "acl_denial",
+      "question": "Bir P1 olayında kriz ekibi kaç dakika içinde toplanmalı?",
+      "user_email": "hr@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7803
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7478
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.7754
+        },
+        {
+          "filename": "annual-leave-policy.md",
+          "score": 0.768
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7522
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 99,
+        "generation": 0,
+        "end_to_end": 99
+      }
+    },
+    {
+      "id": "R20",
+      "category": "acl_denial",
+      "question": "Finansın standart tedarikçi ödeme vadesi kaç gün?",
+      "user_email": "it@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8036
+        },
+        {
+          "filename": "expense-policy.md",
+          "score": 0.8106
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7795
+        },
+        {
+          "filename": "password-reset.md",
+          "score": 0.7909
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7895
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 183,
+        "generation": 521,
+        "end_to_end": 704
+      }
+    },
+    {
+      "id": "R21",
+      "category": "acl_denial",
+      "question": "İşe alım için gizli aday değerlendirme puanlama ölçütü nedir?",
+      "user_email": "it@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7982
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7728
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7946
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7701
+        },
+        {
+          "filename": "employee-handbook.md",
+          "score": 0.7742
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 96,
+        "generation": 0,
+        "end_to_end": 96
+      }
+    },
+    {
+      "id": "R22",
+      "category": "abstention",
+      "question": "Şirketin gelecek yıl düzenleyeceği yaz pikniğinin tarihi nedir?",
+      "user_email": "finance@demo.local",
+      "answer": "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      "sources": [],
+      "retrieved_top5": [
+        {
+          "filename": "budget-plan-2026-confidential.md",
+          "score": 0.7934
+        },
+        {
+          "filename": "vendor-contract-terms-internal.md",
+          "score": 0.7616
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.789
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7711
+        },
+        {
+          "filename": "remote-work-policy-2026.md",
+          "score": 0.7852
+        }
+      ],
+      "expected_document": null,
+      "recall_at_5": null,
+      "expected_answer_facts_present": null,
+      "should_abstain": true,
+      "did_abstain": true,
+      "abstention_correct": true,
+      "citation_correct": true,
+      "acl_pass": true,
+      "acl_checks": {
+        "unauthorized_document_in_retrieval": false,
+        "unauthorized_document_in_citations": false,
+        "forbidden_answer_markers": []
+      },
+      "latency_ms": {
+        "retrieval": 95,
+        "generation": 0,
+        "end_to_end": 95
+      }
+    }
+  ]
+}

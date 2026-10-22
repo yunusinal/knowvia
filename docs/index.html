@@ -216,7 +216,7 @@
       <ol class="path">
         <li><b>Kim sorduğu okunur</b><p>Rol ve departman token'dan değil, her istekte veritabanından alınır.</p></li>
         <li><b>İzinli belgeler listelenir</b><p>Liste boşsa arama hiç yapılmaz.</p></li>
-        <li><b>Yalnız bu listede aranır</b><p>Vektör araması ön filtreyle sınırlanır, sonuçlar yeniden denetlenir.</p></li>
+        <li><b>Yalnız bu listede aranır</b><p>Anlam ve kelime araması ayrı ayrı bu listeyle sınırlanır, sonuçlar yeniden denetlenir.</p></li>
         <li><b>Zayıf eşleşme elenir</b><p>Benzerliği ölçülmüş eşiğin altındaki parçalar modele gitmez.</p></li>
         <li><b>Cevap kaynağıyla döner</b><p>Uydurulmuş kaynak etiketleri silinir; dayanak yoksa sabit ret verilir.</p></li>
       </ol>
@@ -248,7 +248,7 @@
           <tr><td>Yetkisiz bilginin cevaba sızması</td><td class="value">0</td><td class="scope">22 tek soru ve 23 takip turu, sentetik şirket belgeleri</td></tr>
           <tr><td>Bilgi yokken doğru ret</td><td class="value">22 / 22</td><td class="scope">Tek sorular; takip sorularında 22 / 23</td></tr>
           <tr><td>Takip sorusunda doğru belge ilk 5 sonuçta</td><td class="value">%85</td><td class="scope">doc2dial, 908 gerçek diyalog turu (İngilizce)</td></tr>
-          <tr><td>Yeniden sıralamayla doğru belge ilk sırada</td><td class="value">%64 → %76</td><td class="scope">300 tur; CPU'da yavaş olduğu için henüz kullanılmıyor</td></tr>
+          <tr><td>Hibrit arama ve yeniden sıralamayla doğru belge ilk sırada</td><td class="value">%66 → %79</td><td class="scope">doc2dial, 908 tur; yeniden sıralama GPU'da soru başına ~0.3 sn</td></tr>
         </tbody>
       </table>
       <p class="caveat">Sonuçlar küçük veya alana özgü test kümelerinde, yerel donanımda alınmıştır; genel bir doğruluk garantisi değildir. Ayrıntılar ve denenen alternatifler mimari karar kayıtlarındadır.</p>
@@ -256,7 +256,7 @@
 
     <div class="stack">
       <span><strong>Altyapı</strong></span>
-      <span>FastAPI</span><span>SQLite</span><span>Qdrant</span><span>multilingual-e5-large</span><span>Streamlit</span><span>OpenAI uyumlu LLM (Groq)</span>
+      <span>FastAPI</span><span>SQLite</span><span>Qdrant (hibrit arama)</span><span>multilingual-e5-large</span><span>Streamlit</span><span>OpenAI uyumlu LLM (Groq)</span>
     </div>
   </main>
 

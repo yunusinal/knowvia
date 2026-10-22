@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from app.services.llm import LLMResult, ToolCall
+from app.services.sparse import SparseVectorData
 
 
 @dataclass
@@ -68,3 +69,20 @@ class FakeEmbedder:
             vector[0] = 1.0
             return vector
         return [value / norm for value in vector]
+
+
+class FakeSparseEncoder:
+    """Modelsiz BM25 taklidi: her kelime sabit bir indekse, değeri terim sayısına gider (IDF'yi Qdrant ekler)."""
+
+    def embed_documents(self, texts: Sequence[str]) -> list[SparseVectorData]:
+        return [self._vector(text) for text in texts]
+
+    def embed_query(self, text: str) -> SparseVectorData:
+        return self._vector(text)
+
+    def _vector(self, text: str) -> SparseVectorData:
+        counts: dict[int, float] = {}
+        for word in re.findall(r"\w+", text.lower()):
+            index = int.from_bytes(hashlib.blake2b(word.encode(), digest_size=4).digest())
+            counts[index] = counts.get(index, 0.0) + 1.0
+        return SparseVectorData(indices=list(counts), values=list(counts.values()))

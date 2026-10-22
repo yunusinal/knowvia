@@ -24,8 +24,13 @@ class Settings(BaseSettings):
     model_cache_dir: str = "data/runtime/models"
     # Qdrant local mode: vektörler bu klasörde, ayrı sunucu gerekmez (yalnızca yerel demo).
     qdrant_path: str = "data/runtime/qdrant"
-    qdrant_collection: str = "knowledge_chunks_v1"
+    # v2: isimli dense + bm25 vektörleri (hibrit arama, ADR-11). v1'den taşıma: scripts.reindex_hybrid
+    qdrant_collection: str = "knowledge_chunks_v2"
     retrieval_top_k: int = Field(default=5, gt=0)
+    # true: arama adayları GPU'da çapraz kodlayıcıyla yeniden sıralanır (onnxruntime-gpu ortamı gerekir,
+    # README "GPU ile çalıştırma"). false: yeniden sıralama kapalı; CPU'da soru başına ~14 sn sürerdi (ADR-10).
+    gpu_enabled: bool = False
+    rerank_candidates: int = Field(default=20, gt=0)
     # En iyi sonucun skoru bunun altındaysa LLM çağrılmaz ("kanıt yok"). Modele ve parçalama
     # yöntemine özeldir; e5-large + paragraf parçalama ile ölçüldü (docs/adr/07-...).
     retrieval_min_score: float = Field(default=0.80, ge=0, le=1)
