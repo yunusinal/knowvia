@@ -18,6 +18,32 @@ Sentetik belgeler ve demo hesaplarıyla çalışan, geliştirme aşamasındaki y
 
 **Akış:** Streamlit → FastAPI → SQLite erişim kontrolü → filtreli Qdrant araması → SQLite son kontrolü → LLM → kaynaklı cevap.
 
+## Mimari
+
+```mermaid
+flowchart LR
+    UI["Streamlit<br/>(yalnız JWT taşır)"] -->|"soru + sohbet kimliği"| API["FastAPI"]
+    API --> AUTH["JWT doğrulama<br/>rol ve departman SQLite'tan"]
+    AUTH --> ACL["İzinli belge listesi<br/>(SQLite)"]
+    ACL -->|"boşsa arama yapılmaz"| QD["Qdrant araması<br/>document_id ön filtresi"]
+    QD --> POST["SQLite son kontrolü<br/>+ benzerlik eşiği 0.80"]
+    POST -->|"kanıt yoksa sabit ret"| LLM["LLM<br/>yalnız yetkili parçalar"]
+    LLM --> CHECK["Atıf doğrulama<br/>uydurma [S#] silinir"]
+    CHECK --> UI
+    LLM -.->|"araç çağrısı = taslak"| TICKET["Destek talebi<br/>kullanıcı onayıyla"]
+    API --- DB[("SQLite<br/>kullanıcı, belge, sohbet, talep")]
+```
+
+## Güvenlik modeli
+
+- **Yetkinin tek kaynağı SQLite.** Rol ve departman token'dan veya istekten değil, her istekte veritabanından okunur. Qdrant kayıtlarında yetki bilgisi tutulmaz.
+- **İki katmanlı arama filtresi.** Qdrant yalnız izinli `document_id` listesiyle aranır; dönen her parça SQLite'ta yeniden kontrol edilir. İzinli belge yoksa Qdrant hiç çağrılmaz (fail closed).
+- **Tek tip ret.** "Bilgi yok" ve "yetki yok" aynı sabit cevabı alır; cevap gizli bir belgenin varlığını ele vermez.
+- **LLM'e yalnız yetkili parçalar gider.** Belge metni talimat değil alıntı olarak verilir; belgenin `<source>` etiketini kapatıp talimat eklemesi engellenir.
+- **Silme önce erişimi keser.** Belge `deleting` durumuna geçtiği anda hiçbir aramada çıkmaz; vektör temizliği sonra yapılır.
+- **Sohbet geçmişi sunucuda ve sahibine özel.** Eski cevapların dayandığı belgelerin yetkisi her turda yeniden denetlenir; yetkisi kalkan cevap ne ekranda gösterilir ne modele gönderilir.
+- **Veri yazan araç onaysız çalışmaz.** Model destek talebini yalnızca önerir; kayıt kullanıcı onayıyla açılır.
+
 ## Yerel kurulum
 
 Python 3.11+ ve `uv` gereklidir. Aşağıdaki komutlar Windows PowerShell içindir; proje kökünde çalıştırın.
