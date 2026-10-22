@@ -182,6 +182,27 @@ def test_empty_chat_offers_example_questions_that_disappear_after_asking() -> No
     assert len(at.get("button_group")) == 0  # sohbet başlayınca örnekler kaybolur
 
 
+def test_reloaded_conversation_shows_timing_only_under_answers() -> None:
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+    at.run()  # geçmiş sunucudan yeniden yüklenir; kullanıcı mesajları da retrieval_ms taşır
+    for message in backend.conversations["00000000-0000-4000-8000-000000000001"]:
+        message.setdefault("retrieval_ms", 0)
+        message.setdefault("generation_ms", 0)
+    at.run()
+
+    timings = [c.value for c in at.caption if " sn · arama " in c.value]
+    assert timings == ["0.0 sn · arama 1 ms · dil modeli 1 ms"]
+
+
+def test_first_typed_question_also_removes_the_empty_chat_prompt() -> None:
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+
+    assert len(at.get("button_group")) == 0
+    assert "Belgelerinize ne sormak istersiniz?" not in [s.value for s in at.subheader]
+
+
 def test_sidebar_counts_only_active_documents() -> None:
     backend.documents.append({**DOCUMENT, "id": "d2", "status": "failed"})
     at = logged_in("admin@demo.local")

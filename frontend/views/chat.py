@@ -38,7 +38,9 @@ def render_message(message: dict[str, Any]) -> None:
                             if source["page_number"] is not None:
                                 st.badge(f"Sayfa {source['page_number']}", icon=":material/article:", color="gray")
                         st.text(source["snippet"])
-        if "retrieval_ms" in message and message.get("response_type", "rag") != "canned":
+        # Sunucudan yüklenen kullanıcı mesajları da süre alanı taşır; süre yalnız cevaplara aittir.
+        is_answer = message["role"] == "assistant"
+        if is_answer and "retrieval_ms" in message and message.get("response_type", "rag") != "canned":
             seconds = (message["retrieval_ms"] + message["generation_ms"]) / 1000
             st.caption(f"{seconds:.1f} sn · arama {message['retrieval_ms']} ms · dil modeli {message['generation_ms']} ms")
 
@@ -152,5 +154,7 @@ if not messages:
 
 if question := st.chat_input("Bir soru sorun", max_chars=1000, submit_mode="disable"):
     ask(question)
+    if len(messages) == 2:
+        st.rerun()  # ilk soru: boş sohbet ekranı (örnek sorular) kalmasın, sohbet baştan çizilsin
 
 render_ticket_proposal()

@@ -4,6 +4,10 @@
 [browser]
 gatherUsageStats = false
 
+[server]
+# API'nin MAX_UPLOAD_MB sınırıyla aynı; yükleme kutusu kullanıcıya gerçek sınırı gösterir.
+maxUploadSize = 10
+
 [client]
 # Geliştirici araçlarını (Deploy düğmesi vb.) gizler; uygulama menüsü kalır.
 toolbarMode = "minimal"

@@ -24,7 +24,8 @@ def sidebar() -> None:
         st.markdown("### :material/menu_book: Knowvia")
         st.caption("Belgelere sorun, kaynaklarıyla öğrenin.")
         with st.container(border=True):
-            st.markdown(f"**{user['email']}**")
+            # Kod biçimi: düz e-posta Markdown'da mailto bağlantısına dönüşür.
+            st.markdown(f"**`{user['email']}`**")
             with st.container(horizontal=True):
                 st.badge(
                     labels.ROLE_LABELS.get(role, role),
