@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
+from app.api.limits import enforce_chat_limit
 from app.core.config import get_settings
 from app.db.models import User
 from app.db.session import get_db
@@ -59,6 +60,7 @@ def reranker_dependency(reply: CannedReply) -> Reranker | None:
 def chat(
     request: ChatRequest,
     user: Annotated[User, Depends(get_current_user)],
+    _limit: Annotated[None, Depends(enforce_chat_limit)],
     db: Annotated[Session, Depends(get_db)],
     reply: CannedReply,
     store: Annotated[VectorStore | None, Depends(store_dependency)],

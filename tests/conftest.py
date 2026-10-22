@@ -21,6 +21,7 @@ from app.main import app  # noqa: E402
 from app.repositories.vector_store import VectorStore, get_vector_store  # noqa: E402
 from app.services.embeddings import SUPPORTED_MODELS, FastEmbedEmbedder, get_embedder  # noqa: E402
 from app.api.chat import embedder_dependency, llm_dependency, store_dependency  # noqa: E402
+from app.api.limits import get_limiters  # noqa: E402
 from tests.fakes import FakeEmbedder, FakeLLM, FakeSparseEncoder  # noqa: E402
 
 
@@ -68,6 +69,14 @@ def vector_store(fake_embedder: FakeEmbedder) -> Iterator[VectorStore]:
     store.ensure_collection()
     yield store
     store.close()
+
+
+@pytest.fixture(autouse=True)
+def fresh_rate_limits() -> Iterator[None]:
+    """Her test kendi sayaçlarıyla başlar; sınır testleri diğer testleri etkilemez."""
+    get_limiters.cache_clear()
+    yield
+    get_limiters.cache_clear()
 
 
 @pytest.fixture

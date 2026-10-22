@@ -31,6 +31,15 @@ class Settings(BaseSettings):
     # README "GPU ile çalıştırma"). false: yeniden sıralama kapalı; CPU'da soru başına ~14 sn sürerdi (ADR-10).
     gpu_enabled: bool = False
     rerank_candidates: int = Field(default=20, gt=0)
+    # Herkese açık demo için dakikalık sınırlar (ADR-12). Genel sınır, LLM sağlayıcısının dakikalık
+    # kotasının (Groq ücretsiz: 8000 token) tek kişi tarafından tüketilmesini önler.
+    chat_limit_per_user_per_minute: int = Field(default=8, gt=0)
+    chat_limit_global_per_minute: int = Field(default=20, gt=0)
+    login_limit_per_email_per_minute: int = Field(default=10, gt=0)
+    # Ayarlanırsa admin bu parolayı kullanır; üye parolası (DEMO_USER_PASSWORD) herkese açıklansa da admin gizli kalır.
+    admin_password: SecretStr | None = None
+    # true: API açılırken embedding/BM25 modelleri ve Qdrant yüklenir (Docker'da açık; testlerde kapalı).
+    warmup_on_start: bool = False
     # En iyi sonucun skoru bunun altındaysa LLM çağrılmaz ("kanıt yok"). Modele ve parçalama
     # yöntemine özeldir; e5-large + paragraf parçalama ile ölçüldü (docs/adr/07-...).
     retrieval_min_score: float = Field(default=0.80, ge=0, le=1)

@@ -425,3 +425,12 @@ def test_tickets_page_explains_empty_state() -> None:
     at.switch_page("views/tickets.py").run()
 
     assert "Henüz destek talebi yok" in at.info[0].value
+
+
+def test_public_demo_lists_member_accounts_with_password_but_never_admin(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("KNOWVIA_PUBLIC_DEMO_PASSWORD", "acik-demo")
+    at = app()
+
+    hint = next(c.value for c in at.caption if "Demo hesapları" in c.value)
+    assert "acik-demo" in hint and "finance@demo.local" in hint
+    assert "admin" not in hint

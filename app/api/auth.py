@@ -6,6 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
+from app.api.limits import enforce_login_limit
 from app.core.security import DUMMY_PASSWORD_HASH, create_access_token, verify_password
 from app.db.models import User
 from app.db.session import get_db
@@ -20,6 +21,7 @@ def login(
     db: Annotated[Session, Depends(get_db)],
 ) -> TokenResponse:
     """E-posta (form alanı: username) ve parolayla giriş; başarılıysa JWT döner."""
+    enforce_login_limit(form.username)
     user = db.scalars(select(User).where(User.email == form.username)).first()
 
     if user is None:

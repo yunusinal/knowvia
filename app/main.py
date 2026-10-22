@@ -5,15 +5,27 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
 from app.api import auth, chat, conversations, documents, tickets
+from app.core.config import get_settings
 from app.db.session import init_db
 from app.repositories.vector_store import get_vector_store
+from app.services.embeddings import get_embedder
 from app.services.llm import LLMUnavailableError
+from app.services.sparse import get_sparse_encoder
+
+
+def warm_up() -> None:
+    """Modelleri açılışta yükler; aksi halde ilk ziyaretçi ~2.3 GB modelin yüklenmesini bekler (ADR-12)."""
+    get_vector_store()
+    get_embedder().embed_query("hazırlık")
+    get_sparse_encoder().embed_query("hazırlık")
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     """Açılışta veritabanı tablolarını hazırlar; kapanışta Qdrant'ın klasör kilidini bırakır."""
     init_db()
+    if get_settings().warmup_on_start:
+        warm_up()
     yield
     # Vektör deposu yalnızca ilk kullanıldığında açılır; açılmadıysa kapatılacak bir şey yok.
     if get_vector_store.cache_info().currsize:

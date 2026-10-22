@@ -4,12 +4,16 @@ Tasarım `docs/index.html` tanıtım sayfasıyla aynı dili konuşur: aynı soru
 farklı cevap. Ayrıntılı hikâye o sayfada; burada giriş öne çıkar.
 """
 
+import os
+
 import streamlit as st
 
 from frontend import session
 from frontend.api_client import ApiError
 
 REPO_URL = "https://github.com/yunusinal/knowvia"
+# Herkese açık demoda ziyaretçilere gösterilen üye parolası; admin hiçbir zaman listelenmez (ADR-12).
+PUBLIC_DEMO_PASSWORD = os.environ.get("KNOWVIA_PUBLIC_DEMO_PASSWORD", "")
 QUESTION = "2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?"
 
 GUARDS = [
@@ -41,7 +45,13 @@ def login_form() -> None:
             session.sign_in(token, user)
             st.rerun()
         # E-postalar kod biçiminde: düz metin Markdown'da mailto bağlantısına dönüşür.
-        st.caption("Demo hesabı örneği `it@demo.local`; parola `.env` içindeki `DEMO_USER_PASSWORD` değeridir.")
+        if PUBLIC_DEMO_PASSWORD:
+            st.caption(
+                f"Demo hesapları: `it@demo.local`, `hr@demo.local`, `finance@demo.local`; parola `{PUBLIC_DEMO_PASSWORD}`. "
+                "Aynı soruyu farklı hesaplarla sorup cevabın nasıl değiştiğini görün."
+            )
+        else:
+            st.caption("Demo hesabı örneği `it@demo.local`; parola `.env` içindeki `DEMO_USER_PASSWORD` değeridir.")
 
 
 hero, login = st.columns([3, 2], gap="large", vertical_alignment="center")
