@@ -21,6 +21,20 @@ Sentetik belgeler ve demo hesaplarıyla çalışan, geliştirme aşamasındaki y
 
 **Akış:** Streamlit → FastAPI → SQLite erişim kontrolü → filtreli Qdrant araması → SQLite son kontrolü → LLM → kaynaklı cevap.
 
+## Ekran görüntüleri
+
+Aynı soru, iki kullanıcı: Finans çalışanı kaynaklı cevap alır, IT çalışanı aynı sabit reddi alır.
+
+| Finans | IT |
+|---|---|
+| ![Finans kullanıcısı bütçe sorusuna kaynaklı cevap alıyor](docs/assets/finance-answer.png) | ![IT kullanıcısı aynı soruda sabit ret alıyor](docs/assets/it-refusal.png) |
+
+| Kaynaklı cevap | Onaylı destek talebi taslağı |
+|---|---|
+| ![VPN sorusuna kaynak kartıyla cevap](docs/assets/chat-sources.png) | ![Model talep taslağı öneriyor, kayıt onayla açılıyor](docs/assets/ticket-draft.png) |
+
+![Admin belge listesi ve yükleme ekranı](docs/assets/documents-admin.png)
+
 ## Mimari
 
 ```mermaid
