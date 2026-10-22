@@ -170,6 +170,17 @@ def test_unknown_or_already_deleted_document_returns_404(
     assert delete(client, users["admin"], documents["vpn"].id).status_code == 404
 
 
+def test_document_of_another_tenant_cannot_be_deleted(
+    client: TestClient, session: Session, users: dict[str, User], documents: dict[str, Document]
+) -> None:
+    vpn = reload(session, documents["vpn"])
+    vpn.tenant_id = "other-org"
+    session.commit()
+
+    assert delete(client, users["admin"], vpn.id).status_code == 404
+    assert reload(session, vpn).status == DocumentStatus.ACTIVE
+
+
 def test_document_still_processing_cannot_be_deleted(
     client: TestClient, session: Session, users: dict[str, User], documents: dict[str, Document]
 ) -> None:

@@ -9,7 +9,7 @@ import logging
 
 from sqlalchemy.orm import Session
 
-from app.db.models import Document, DocumentStatus
+from app.db.models import DEMO_TENANT, Document, DocumentStatus
 from app.repositories.vector_store import VectorStore
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,8 @@ class DocumentBusyError(Exception):
 
 def delete_document(db: Session, store: VectorStore, document_id: str) -> Document:
     document = db.get(Document, document_id)
-    if document is None or document.status == DocumentStatus.DELETED:
+    # Okuma kuralıyla aynı: başka kiracının belgesi bu uygulama için yoktur (404, varlığı ele verilmez).
+    if document is None or document.tenant_id != DEMO_TENANT or document.status == DocumentStatus.DELETED:
         raise DocumentNotFoundError(document_id)
     if document.status == DocumentStatus.PROCESSING:
         # Yükleme bitince belgeyi `active` yapıp silmeyi geri alabilirdi.
