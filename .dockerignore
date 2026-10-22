@@ -1,0 +1,21 @@
+# İmaja yalnızca çalışmak için gereken dosyalar girer; sırlar, yerel veri ve ajan dosyaları asla.
+.env
+.env.*
+!.env.example
+.venv/
+.venv-gpu/
+data/runtime/
+eval/
+docs/
+tests/
+scripts/embedding_bench/
+**/__pycache__/
+.pytest_cache/
+.git/
+.claude/
+.agents/
+context/
+ogrenme/
+CLAUDE.md
+AGENTS.md
+.mcp.json

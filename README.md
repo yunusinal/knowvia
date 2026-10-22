@@ -137,6 +137,16 @@ NVIDIA ekran kartı varsa arama adayları bir çapraz kodlayıcıyla (`BAAI/bge-
 
 `GPU_ENABLED=true` olduğu halde CUDA bulunamazsa sohbet sessizce yavaş moda düşmez; kurulum yönergesiyle 503 hatası verir. Model (~1.1 GB) ilk soruda indirilir.
 
+## Canlıya alma (Docker)
+
+Uygulama tek bir konteynerde (API + arayüz) ve önünde otomatik HTTPS sağlayan Caddy ile çalışır; ARM (Oracle Ampere) ve x86_64 için derlenir. Sunucuda `.env` doldurulduktan sonra:
+
+```bash
+docker compose up -d --build
+```
+
+Herkese açık demo için istek sınırları, ayrı ve gizli admin parolası (`ADMIN_PASSWORD`) ve gece çalışan ziyaretçi verisi sıfırlaması (`scripts/reset_demo.py`) vardır. Oracle Cloud Always Free üzerinde adım adım kurulum: [docs/deploy-oracle.md](docs/deploy-oracle.md). Kararlar: [ADR-12](docs/adr/12-public-demo-deployment.md).
+
 ## Demo hesapları
 
 Parola, ilk seed sırasında `.env` içindeki `DEMO_USER_PASSWORD` değeridir.

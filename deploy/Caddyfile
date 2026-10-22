@@ -1,0 +1,13 @@
+# Caddy: alan adı için Let's Encrypt sertifikasını kendisi alır ve yeniler (otomatik HTTPS).
+{$KNOWVIA_DOMAIN} {
+	encode zstd gzip
+	# Streamlit websocket kullanır; reverse_proxy bunu ek ayarsız taşır.
+	reverse_proxy app:8501
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "DENY"
+		-Server
+	}
+}

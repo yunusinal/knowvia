@@ -1,0 +1,4 @@
+# Konteynerde çalışan kabuk betikleri LF olmalı; CRLF ile Linux'ta "bad interpreter" hatası verir.
+*.sh text eol=lf
+Dockerfile text eol=lf
+deploy/Caddyfile text eol=lf

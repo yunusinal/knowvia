@@ -1,0 +1,39 @@
+# Sunucuda: docker compose up -d --build   (ayrıntı: docs/deploy-oracle.md)
+services:
+  app:
+    build: .
+    image: knowvia:latest
+    restart: unless-stopped
+    init: true  # sinyalleri iletir, yetim süreçleri toplar
+    env_file: .env
+    environment:
+      # .env'deki yerel yollar yerine konteynerin kalıcı birimi kullanılır.
+      DATABASE_URL: sqlite:////data/app.db
+      QDRANT_PATH: /data/qdrant
+      MODEL_CACHE_DIR: /data/models
+      GPU_ENABLED: "false"  # Oracle Ampere'de GPU yok
+      WARMUP_ON_START: "true"  # ilk ziyaretçi model yüklemesini beklemesin
+    volumes:
+      - knowvia-data:/data
+    expose:
+      - "8501"  # yalnız Caddy erişir; ana makinede port açılmaz
+
+  caddy:
+    image: caddy:2.10.2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      KNOWVIA_DOMAIN: ${KNOWVIA_DOMAIN:?KNOWVIA_DOMAIN .env içinde tanımlanmalı}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  knowvia-data:
+  caddy-data:
+  caddy-config:
