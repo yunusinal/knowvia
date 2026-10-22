@@ -52,6 +52,11 @@ def ask(question: str) -> None:
         with st.spinner("Cevap hazırlanıyor…"):
             result = session.client().chat(question, st.session_state.get(session.CONVERSATION_ID))
         st.session_state[session.CONVERSATION_ID] = result["conversation_id"]
+        proposal = result.get("ticket_proposal")
+        # Yeni her cevap eski taslağı geçersiz kılar; taslak yalnızca öneren cevabın hemen ardından onaylanır.
+        st.session_state[session.PENDING_TICKET] = (
+            {**proposal, "conversation_id": result["conversation_id"]} if proposal else None
+        )
         answer = {
             "role": "assistant",
             "content": result["answer"],
@@ -70,7 +75,41 @@ def ask(question: str) -> None:
     render_message(answer)
 
 
+def render_ticket_proposal() -> None:
+    """Modelin önerdiği talebi gösterir; kayıt yalnızca kullanıcı "Talebi oluştur" derse açılır."""
+    pending = st.session_state.get(session.PENDING_TICKET)
+    if not pending or pending["conversation_id"] != st.session_state.get(session.CONVERSATION_ID):
+        return
+    with st.container(border=True):
+        st.markdown("**:material/support_agent: Destek talebi taslağı**")
+        st.caption("Konuyu ve açıklamayı kontrol edip düzenleyebilirsiniz. Talep yalnızca onaylarsanız oluşturulur.")
+        with st.form("ticket_proposal", border=False):
+            subject = st.text_input("Konu", value=pending["subject"], max_chars=120)
+            description = st.text_area("Açıklama", value=pending["description"], max_chars=2000)
+            with st.container(horizontal=True):
+                confirmed = st.form_submit_button("Talebi oluştur", type="primary", icon=":material/check:")
+                cancelled = st.form_submit_button("Vazgeç", icon=":material/close:")
+    if cancelled:
+        st.session_state[session.PENDING_TICKET] = None
+        st.rerun()
+    if confirmed:
+        try:
+            ticket = session.client().create_ticket(subject or "", description or "", pending["conversation_id"])
+        except SessionExpiredError as error:
+            session.sign_out(error.message)
+        except ApiError as error:
+            st.error(error.message, icon=":material/error:")
+            return
+        st.session_state[session.PENDING_TICKET] = None
+        st.session_state[TICKET_CREATED] = ticket["subject"]
+        st.rerun()
+
+
+TICKET_CREATED = "ticket_created"
+
 st.title("Knowvia", icon=":material/menu_book:")
+if created := st.session_state.pop(TICKET_CREATED, None):
+    st.success(f"Destek talebi oluşturuldu: {created}", icon=":material/check_circle:")
 st.caption("Yalnızca erişim yetkiniz olan belgelerden, kaynak göstererek cevap verilir.")
 st.caption("Takip sorularında önceki soru ve cevaplar, mevcut kaynaklara ayrılan yer ölçüsünde kullanılır.")
 
@@ -113,3 +152,5 @@ if not messages:
 
 if question := st.chat_input("Bir soru sorun", max_chars=1000, submit_mode="disable"):
     ask(question)
+
+render_ticket_proposal()

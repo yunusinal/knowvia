@@ -12,6 +12,7 @@ Sentetik belgeler ve demo hesaplarıyla çalışan, geliştirme aşamasındaki y
 - Yeterli bilgi bulunamadığında sabit ret cevabı.
 - Selamlama ve teşekkür gibi tanımlı mesajlara LLM kullanmadan hazır yanıt.
 - Takip sorularında aynı sohbetin önceki kullanıcı sorularını ve asistan yanıtlarını bağlam bütçesine göre kullanma.
+- Belgedeki adımlar sorunu çözmediğinde destek talebi taslağı: model yalnızca taslak önerir (tool calling), talep kullanıcı onaylayınca oluşturulur. Üye kendi taleplerini, admin tüm talepleri görür.
 
 **Teknolojiler:** Python, FastAPI, Streamlit, SQLite / SQLAlchemy, Qdrant local, FastEmbed (`multilingual-e5-large`), JWT ve Argon2. Cevap üretimi için OpenAI uyumlu bir LLM sağlayıcısı kullanılır.
 
@@ -101,6 +102,7 @@ uv run python -m scripts.rag_eval
 
 - Yerel demo kapsamındadır; üretim ortamına hazır bir kurumsal sistem iddiası taşımaz.
 - Sohbetler kullanıcı hesabına bağlı olarak SQLite'ta saklanır. Takip sorusunda önceki soru ve yanıtlar bütçeye göre seçilir; kaynakların güncel erişim yetkisi yeniden denetlenir. Eski yanıtlar kanıt sayılmaz.
+- Destek talepleri yerel SQLite'ta tutulur; gerçek bir yardım masasına gönderilmez ve durum akışı yalnızca "açık"tır. Talep önerisi, LLM sağlayıcısının tool calling desteğine bağlıdır.
 - Taranmış PDF / OCR, DOCX ve görsel içerik işleme desteklenmez.
 - LLM ayarlanmadan belge soruları kurulum hatası verir; tanımlı hazır sosyal yanıtlar çalışmaya devam eder.
 - Belge silme yeni aramalarda erişimi hemen keser. O belgeye dayanan eski cevaplar sohbet geçmişinde gizlenir ve yeni bağlama alınmaz, ancak metinleri SQLite'ta kalır; sohbet silme ve saklama süresi politikası henüz yok.

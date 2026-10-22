@@ -43,6 +43,7 @@ class FakeBackend:
     uploads: list[tuple[str, str, str]] = field(default_factory=list)
     chat_requests: list[tuple[str, str | None]] = field(default_factory=list)
     conversations: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    tickets: list[dict[str, Any]] = field(default_factory=list)
 
 
 backend = FakeBackend()
@@ -85,6 +86,21 @@ class FakeKnowviaClient:
              "generation_ms": result["generation_ms"], "response_type": result.get("response_type", "rag")},
         ])
         return result
+
+    def create_ticket(self, subject: str, description: str, conversation_id: str | None = None) -> dict[str, Any]:
+        assert self.token is not None
+        ticket = {"id": f"t{len(backend.tickets) + 1}", "subject": subject, "description": description,
+                  "status": "open", "created_by_email": self.token.removeprefix("token:"),
+                  "conversation_id": conversation_id, "created_at": "2026-10-22T10:00:00+00:00"}
+        backend.tickets.append(ticket)
+        return ticket
+
+    def list_tickets(self) -> list[dict[str, Any]]:
+        assert self.token is not None
+        email = self.token.removeprefix("token:")
+        if USERS[email]["role"] == "admin":
+            return backend.tickets
+        return [ticket for ticket in backend.tickets if ticket["created_by_email"] == email]
 
     def delete_document(self, document_id: str) -> dict[str, Any]:
         backend.deleted.append(document_id)
@@ -319,3 +335,72 @@ def test_frontend_never_uses_shared_streamlit_caches() -> None:
     sources = "\n".join(p.read_text(encoding="utf-8") for p in APP.parent.rglob("*.py"))
 
     assert re.search(r"@st\.cache|st\.cache_(data|resource)\s*\(", sources) is None
+
+
+PROPOSAL_RESULT = {
+    "answer": "Bu sorun için bir destek talebi taslağı hazırladım. Talep yalnızca siz onaylarsanız oluşturulur.",
+    "sources": [], "no_evidence": False, "retrieval_ms": 1, "generation_ms": 1,
+    "ticket_proposal": {"subject": "VPN sertifika hatası", "description": "Saat ve önbellek denendi."},
+}
+
+
+def proposal_shown(at: AppTest) -> bool:
+    return any(button.label == "Talebi oluştur" for button in at.button)
+
+
+def test_ticket_proposal_is_created_only_after_confirmation_with_user_edits() -> None:
+    backend.chat_result = PROPOSAL_RESULT.copy()
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("Hâlâ çalışmıyor, talep açar mısın?").run()
+
+    assert proposal_shown(at)
+    assert backend.tickets == []  # taslak kendiliğinden kayıt olmaz
+    next(t for t in at.text_input if t.label == "Konu").set_value("VPN hâlâ bağlanmıyor")
+    next(button for button in at.button if button.label == "Talebi oluştur").click().run()
+
+    assert [ticket["subject"] for ticket in backend.tickets] == ["VPN hâlâ bağlanmıyor"]
+    assert backend.tickets[0]["conversation_id"] == "00000000-0000-4000-8000-000000000001"
+    assert at.success[0].value == "Destek talebi oluşturuldu: VPN hâlâ bağlanmıyor"
+    assert not proposal_shown(at)
+
+
+def test_cancelled_proposal_creates_nothing() -> None:
+    backend.chat_result = PROPOSAL_RESULT.copy()
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("Talep açar mısın?").run()
+    next(button for button in at.button if button.label == "Vazgeç").click().run()
+
+    assert backend.tickets == []
+    assert not proposal_shown(at)
+
+
+def test_next_question_discards_an_unconfirmed_proposal() -> None:
+    backend.chat_result = PROPOSAL_RESULT.copy()
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("Talep açar mısın?").run()
+    backend.chat_result = FakeBackend().chat_result
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+
+    assert not proposal_shown(at)
+
+
+def test_tickets_page_shows_own_tickets_and_admin_sees_owners() -> None:
+    backend.tickets = [
+        {"id": "t1", "subject": "IT talebi", "description": "Ayrıntı", "status": "open",
+         "created_by_email": "it@demo.local", "conversation_id": None, "created_at": "2026-10-22T10:00:00+00:00"},
+    ]
+    member = logged_in("it@demo.local")
+    member.switch_page("views/tickets.py").run()
+    assert "**IT talebi**" in texts(member)
+    assert "it@demo.local" not in [c.value for c in member.caption]
+
+    admin = logged_in("admin@demo.local")
+    admin.switch_page("views/tickets.py").run()
+    assert "22.10.2026 10:00 · it@demo.local" in [c.value for c in admin.caption]
+
+
+def test_tickets_page_explains_empty_state() -> None:
+    at = logged_in("it@demo.local")
+    at.switch_page("views/tickets.py").run()
+
+    assert "Henüz destek talebi yok" in at.info[0].value

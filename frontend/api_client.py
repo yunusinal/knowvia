@@ -69,6 +69,15 @@ class KnowviaClient:
             payload["conversation_id"] = conversation_id
         return self._request("POST", "/chat", json=payload)
 
+    def create_ticket(self, subject: str, description: str, conversation_id: str | None = None) -> dict[str, Any]:
+        payload: dict[str, Any] = {"subject": subject, "description": description}
+        if conversation_id:
+            payload["conversation_id"] = conversation_id
+        return self._request("POST", "/support-tickets", json=payload)
+
+    def list_tickets(self) -> list[dict[str, Any]]:
+        return self._request("GET", "/support-tickets")
+
     def _request(self, method: str, path: str, **kwargs: Any) -> Any:
         headers = {"Authorization": f"Bearer {self._token}"} if self._token else {}
         try:

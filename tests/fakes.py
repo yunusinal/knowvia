@@ -6,19 +6,30 @@ import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
-from app.services.llm import LLMResult
+from typing import Any
+
+from app.services.llm import LLMResult, ToolCall
 
 
 @dataclass
 class FakeLLM:
-    """Sırayla verilen cevapları döndürür ve gelen istekleri kaydeder (LLM'e ne gittiğini test etmek için)."""
+    """Sırayla verilen cevapları döndürür ve gelen istekleri kaydeder (LLM'e ne gittiğini test etmek için).
 
-    answers: list[str] = field(default_factory=lambda: ["Cevap [S1]."])
+    Cevap bir `ToolCall` ise model metin yerine o aracı çağırmış gibi davranır.
+    """
+
+    answers: list[str | ToolCall] = field(default_factory=lambda: ["Cevap [S1]."])
     calls: list[tuple[str, str]] = field(default_factory=list)
+    offered_tools: list[list[dict[str, Any]] | None] = field(default_factory=list)
 
-    def generate(self, system_prompt: str, user_message: str) -> LLMResult:
+    def generate(
+        self, system_prompt: str, user_message: str, tools: list[dict[str, Any]] | None = None
+    ) -> LLMResult:
         self.calls.append((system_prompt, user_message))
+        self.offered_tools.append(tools)
         answer = self.answers[min(len(self.calls), len(self.answers)) - 1]
+        if isinstance(answer, ToolCall):
+            return LLMResult(text="", model="fake-llm", latency_ms=1, tool_call=answer)
         return LLMResult(text=answer, model="fake-llm", latency_ms=1)
 
 

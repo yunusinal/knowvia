@@ -80,4 +80,5 @@ def chat(
         "answer": result.answer, "sources": result.sources, "no_evidence": result.no_evidence,
         "retrieval_ms": result.retrieval_ms, "generation_ms": result.generation_ms,
         "response_type": response_type, "conversation_id": saved.id,
+        "ticket_proposal": result.ticket_proposal,
     })

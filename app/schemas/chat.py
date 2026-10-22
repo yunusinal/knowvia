@@ -24,6 +24,15 @@ class SourceOut(BaseModel):
     snippet: str
 
 
+class TicketProposalOut(BaseModel):
+    """Modelin önerdiği destek talebi taslağı; henüz kayıt değildir."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    subject: str
+    description: str
+
+
 class ChatResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -34,3 +43,4 @@ class ChatResponse(BaseModel):
     generation_ms: int
     response_type: Literal["rag", "canned"] = "rag"
     conversation_id: str
+    ticket_proposal: TicketProposalOut | None = None

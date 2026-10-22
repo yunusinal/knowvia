@@ -4,11 +4,12 @@ Sağlayıcı yalnızca ayarla değişir (LLM_BASE_URL, LLM_MODEL, LLM_API_KEY). 
 kullanıcıya gösterilebilir ve asla anahtar ya da sağlayıcının ham cevabını içermez.
 """
 
+import json
 import logging
 import time
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Protocol
+from typing import Any, Protocol
 
 import httpx2
 import openai
@@ -29,16 +30,27 @@ class LLMUnavailableError(Exception):
 
 
 @dataclass(frozen=True)
+class ToolCall:
+    """Modelin çağırmak istediği araç. Yalnızca bir istektir; çalıştırıp çalıştırmamak uygulamanın kararıdır."""
+
+    name: str
+    arguments: dict[str, Any]
+
+
+@dataclass(frozen=True)
 class LLMResult:
     text: str
     model: str
     latency_ms: int
+    tool_call: ToolCall | None = None
 
 
 class LLMClient(Protocol):
     """Gerçek adaptör ve testlerdeki sahte LLM aynı arayüzü uygular."""
 
-    def generate(self, system_prompt: str, user_message: str) -> LLMResult: ...
+    def generate(
+        self, system_prompt: str, user_message: str, tools: list[dict[str, Any]] | None = None
+    ) -> LLMResult: ...
 
 
 class OpenAICompatibleLLM:
@@ -64,8 +76,12 @@ class OpenAICompatibleLLM:
             http_client=http_client,
         )
 
-    def generate(self, system_prompt: str, user_message: str) -> LLMResult:
+    def generate(
+        self, system_prompt: str, user_message: str, tools: list[dict[str, Any]] | None = None
+    ) -> LLMResult:
         started = time.perf_counter()
+        # Araç yalnızca verildiğinde gönderilir; bazı sağlayıcılar boş "tools" listesini reddeder.
+        extra: dict[str, Any] = {"tools": tools} if tools else {}
         try:
             completion = self._client.chat.completions.create(
                 model=self._model,
@@ -75,20 +91,40 @@ class OpenAICompatibleLLM:
                 ],
                 temperature=self._temperature,
                 max_completion_tokens=self._max_output_tokens,
+                **extra,
             )
         except openai.APIError as error:
             # Ayrıntı sunucu günlüğüne; kullanıcıya yalnızca genel neden gider.
             logger.warning("LLM isteği başarısız: %s", type(error).__name__)
             raise LLMUnavailableError(_user_message_for(error)) from error
 
-        content = completion.choices[0].message.content if completion.choices else None
-        if not content or not content.strip():
+        message = completion.choices[0].message if completion.choices else None
+        content = (message.content or "").strip() if message else ""
+        tool_call = _first_tool_call(message.tool_calls if message else None, tools)
+        if not content and tool_call is None:
             raise LLMUnavailableError("Dil modeli boş cevap döndürdü.")
         return LLMResult(
-            text=content.strip(),
+            text=content,
             model=completion.model or self._model,
             latency_ms=round((time.perf_counter() - started) * 1000),
+            tool_call=tool_call,
         )
+
+
+def _first_tool_call(calls: Any, tools: list[dict[str, Any]] | None) -> ToolCall | None:
+    """Yalnızca istekte verilen bir aracın, JSON nesnesi argümanlı ilk çağrısını kabul eder."""
+    offered = {tool["function"]["name"] for tool in tools or []}
+    for call in calls or []:
+        function = getattr(call, "function", None)
+        if function is None or function.name not in offered:
+            continue  # model uydurma bir araç adı verdiyse yok sayılır
+        try:
+            arguments = json.loads(function.arguments or "{}")
+        except json.JSONDecodeError:
+            continue
+        if isinstance(arguments, dict):
+            return ToolCall(name=function.name, arguments=arguments)
+    return None
 
 
 def _user_message_for(error: openai.APIError) -> str:

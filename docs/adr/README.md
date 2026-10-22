@@ -27,5 +27,6 @@ Each ADR has the same sections:
 | [06](06-own-text-splitter.md) | Own recursive text splitter instead of langchain-text-splitters | Accepted (merge strategy superseded by 07) | 2026-10-20 |
 | [07](07-paragraph-chunking-and-threshold.md) | Paragraph-preserving chunking and a measured retrieval threshold | Accepted | 2026-10-21 |
 | [08](08-server-owned-conversation-context.md) | Server-owned conversation context with an input budget | Accepted | 2026-10-22 |
+| [09](09-support-ticket-propose-then-confirm.md) | Support tickets: the model proposes, the user confirms | Accepted | 2026-10-22 |
 
 Numbers follow the order in which decisions were made. ADRs 01–04 were recorded retroactively, after the code they describe; from ADR-05 on, each record is written when its decision is made.

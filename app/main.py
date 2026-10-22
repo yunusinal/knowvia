@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from app.api import auth, chat, conversations, documents
+from app.api import auth, chat, conversations, documents, tickets
 from app.db.session import init_db
 from app.repositories.vector_store import get_vector_store
 from app.services.llm import LLMUnavailableError
@@ -25,6 +25,7 @@ app.include_router(auth.router)
 app.include_router(documents.router)
 app.include_router(chat.router)
 app.include_router(conversations.router)
+app.include_router(tickets.router)
 
 
 @app.exception_handler(LLMUnavailableError)

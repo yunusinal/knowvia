@@ -18,6 +18,7 @@ TOKEN = "token"
 USER = "user"
 MESSAGES = "messages"
 CONVERSATION_ID = "conversation_id"
+PENDING_TICKET = "pending_ticket"  # modelin önerdiği, kullanıcının henüz onaylamadığı talep taslağı
 NOTICE = "notice"
 
 
@@ -39,6 +40,7 @@ def sign_in(token: str, user: dict[str, Any]) -> None:
     st.session_state[USER] = user
     st.session_state[MESSAGES] = []
     st.session_state[CONVERSATION_ID] = None
+    st.session_state[PENDING_TICKET] = None
 
 
 def sign_out(notice: str | None = None) -> NoReturn:

@@ -103,3 +103,19 @@ def test_unreachable_server_gives_clear_message() -> None:
 
     with pytest.raises(ApiError, match="Sunucuya ulaşılamıyor"):
         client_with(handler).list_documents()
+
+
+def test_create_ticket_posts_confirmed_draft_as_json() -> None:
+    seen: dict[str, object] = {}
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        seen["path"] = request.url.path
+        seen["body"] = json.loads(request.content)
+        return httpx2.Response(201, json={"id": "t1"})
+
+    client_with(handler).create_ticket("VPN", "Saat denendi.", "00000000-0000-4000-8000-000000000001")
+
+    assert seen["path"] == "/support-tickets"
+    assert seen["body"] == {
+        "subject": "VPN", "description": "Saat denendi.", "conversation_id": "00000000-0000-4000-8000-000000000001",
+    }

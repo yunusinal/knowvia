@@ -16,6 +16,7 @@ from app.services.embeddings import Embedder
 from app.services.llm import LLMClient
 from app.services.prompt import SYSTEM_PROMPT, HistoryTurn, LabeledSource, build_user_message, label_sources, parse_answer
 from app.services.retrieval import retrieve
+from app.services.tickets import PROPOSAL_MESSAGE, SUPPORT_TICKET_TOOL, TicketProposal, proposal_from
 
 NO_EVIDENCE_MESSAGE = "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım."
 _SNIPPET_CHARS = 300
@@ -40,6 +41,8 @@ class ChatResult:
     generation_ms: int
     # LLM'e verilen tüm belgeler (atıf yapılmayanlar dahil); geçmişte yetki kontrolü bunlarla yapılır.
     context_document_ids: list[str] = field(default_factory=list)
+    # Model destek talebi önerdiyse taslak; kayıt yalnızca kullanıcı onaylayınca oluşur.
+    ticket_proposal: TicketProposal | None = None
 
 
 def answer_question(
@@ -88,7 +91,18 @@ def answer_question(
         if _prompt_cost(build_user_message(question, sources, candidate)) > prompt_limit:
             break
         selected_history = candidate
-    generated = llm.generate(SYSTEM_PROMPT, build_user_message(question, sources, selected_history))
+    generated = llm.generate(
+        SYSTEM_PROMPT, build_user_message(question, sources, selected_history), tools=[SUPPORT_TICKET_TOOL]
+    )
+    context_document_ids = list(dict.fromkeys(source.hit.document_id for source in sources))
+    proposal = proposal_from(generated.tool_call)
+    if proposal is not None:
+        # Model yalnızca taslak önerdi; metni sabit tutarız ki "talep açıldı" gibi bir iddia gösterilmesin.
+        return ChatResult(
+            answer=PROPOSAL_MESSAGE, sources=[], no_evidence=False,
+            retrieval_ms=retrieval_ms, generation_ms=generated.latency_ms,
+            context_document_ids=context_document_ids, ticket_proposal=proposal,
+        )
     parsed = parse_answer(generated.text, sources)
     if parsed.insufficient:
         # İkinci katman: kaynaklar soruyu karşılamıyorsa model INSUFFICIENT_CONTEXT döndürür.
@@ -103,7 +117,7 @@ def answer_question(
         no_evidence=False,
         retrieval_ms=retrieval_ms,
         generation_ms=generated.latency_ms,
-        context_document_ids=list(dict.fromkeys(source.hit.document_id for source in sources)),
+        context_document_ids=context_document_ids,
     )
 
 

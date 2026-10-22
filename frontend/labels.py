@@ -11,6 +11,7 @@ STATUS_LABELS = {
     "cleanup_pending": "Temizlik bekliyor",
     "deleted": "Silindi",
 }
+TICKET_STATUS_LABELS = {"open": "Açık", "closed": "Kapalı"}
 ROLE_LABELS = {"admin": "Admin", "member": "Üye"}
 
 

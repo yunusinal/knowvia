@@ -64,6 +64,7 @@ else:
         [
             st.Page(VIEWS / "chat.py", title="Sohbet", icon=":material/chat:", default=True),
             st.Page(VIEWS / "documents.py", title="Belgeler", icon=":material/description:"),
+            st.Page(VIEWS / "tickets.py", title="Destek talepleri", icon=":material/support_agent:"),
         ]
     )
 if signed_in:

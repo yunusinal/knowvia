@@ -117,3 +117,54 @@ def test_api_key_is_hidden_when_settings_are_printed(monkeypatch: pytest.MonkeyP
 
     assert SECRET_KEY not in repr(settings)
     assert SECRET_KEY not in str(settings.model_dump())
+
+
+TOOL = {"type": "function", "function": {"name": "create_support_ticket", "parameters": {"type": "object"}}}
+
+
+def tool_call_body(name: str, arguments: str) -> dict[str, object]:
+    body = completion_body(None)
+    message = body["choices"][0]["message"]  # pyright: ignore[reportIndexIssue]
+    message["tool_calls"] = [  # pyright: ignore[reportIndexIssue]
+        {"id": "call_1", "type": "function", "function": {"name": name, "arguments": arguments}}
+    ]
+    return body
+
+
+def test_tools_are_sent_only_when_given() -> None:
+    bodies: list[dict[str, object]] = []
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        bodies.append(json.loads(request.content))
+        return httpx2.Response(200, json=completion_body("cevap"))
+
+    make_llm(handler).generate("s", "u")
+    make_llm(handler).generate("s", "u", tools=[TOOL])
+
+    assert "tools" not in bodies[0]
+    assert bodies[1]["tools"] == [TOOL]
+
+
+def test_offered_tool_call_is_parsed() -> None:
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(200, json=tool_call_body("create_support_ticket", '{"subject": "VPN"}'))
+
+    result = make_llm(handler).generate("s", "u", tools=[TOOL])
+
+    assert result.text == ""
+    assert result.tool_call is not None
+    assert result.tool_call.name == "create_support_ticket"
+    assert result.tool_call.arguments == {"subject": "VPN"}
+
+
+@pytest.mark.parametrize(
+    ("name", "arguments"),
+    [("delete_everything", "{}"), ("create_support_ticket", "not json"), ("create_support_ticket", "[1, 2]")],
+)
+def test_unoffered_or_malformed_tool_calls_are_ignored(name: str, arguments: str) -> None:
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(200, json=tool_call_body(name, arguments))
+
+    # Geçerli araç çağrısı ve metin yoksa boş cevapla aynı güvenli hata.
+    with pytest.raises(LLMUnavailableError, match="boş cevap"):
+        make_llm(handler).generate("s", "u", tools=[TOOL])

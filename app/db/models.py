@@ -43,6 +43,11 @@ class ConversationRole(enum.StrEnum):
     ASSISTANT = "assistant"
 
 
+class TicketStatus(enum.StrEnum):
+    OPEN = "open"
+    CLOSED = "closed"
+
+
 def _enum_type(enum_class: type[enum.Enum], name: str) -> Enum:
     """Enum değerini (ör. "admin") saklar; listede olmayan değeri hem Python'da hem DB'de reddeder."""
     return Enum(
@@ -126,4 +131,20 @@ class ConversationMessage(Base):
     response_type: Mapped[str] = mapped_column(String(16), default="rag")
     retrieval_ms: Mapped[int] = mapped_column(default=0)
     generation_ms: Mapped[int] = mapped_column(default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)
+
+
+class SupportTicket(Base):
+    """Yerel destek talebi kaydı; gerçek bir yardım masası entegrasyonu değildir."""
+
+    __tablename__ = "support_tickets"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_new_id)
+    created_by: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    conversation_id: Mapped[str | None] = mapped_column(ForeignKey("conversations.id"), nullable=True)
+    subject: Mapped[str] = mapped_column(String(120))
+    description: Mapped[str] = mapped_column(Text)
+    status: Mapped[TicketStatus] = mapped_column(
+        _enum_type(TicketStatus, "ticket_status"), default=TicketStatus.OPEN
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)

@@ -124,7 +124,7 @@ def test_below_threshold_means_no_llm_call(
     body = ask(client, users["admin"], "tamamen alakasız bir soru").json()
 
     assert fake_llm.calls == []
-    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0, "response_type": "rag", "conversation_id": body["conversation_id"]}
+    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0, "response_type": "rag", "conversation_id": body["conversation_id"], "ticket_proposal": None}
 
 
 def test_only_chunks_above_threshold_are_sent_to_llm(
@@ -273,6 +273,7 @@ def test_canned_reply_skips_all_rag_resources_without_llm_key(
         "answer": "Teşekkürler, iyiyim! Size nasıl yardımcı olabilirim? Belgeleriniz hakkında bir soru sorabilirsiniz.",
         "sources": [], "no_evidence": False, "retrieval_ms": 0, "generation_ms": 0,
         "response_type": "canned", "conversation_id": response.json()["conversation_id"],
+        "ticket_proposal": None,
     }
 
 
@@ -307,7 +308,7 @@ def test_missing_llm_key_returns_503_with_setup_help(
 def test_provider_failure_returns_503_without_details(
     client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    def failing(system_prompt: str, user_message: str) -> None:
+    def failing(system_prompt: str, user_message: str, tools: object = None) -> None:
         raise LLMUnavailableError("Dil modeli şu anda kullanılamıyor; tekrar deneyin.")
 
     monkeypatch.setattr(fake_llm, "generate", failing)
