@@ -252,24 +252,38 @@ def run(domain: str, corpus: str, rewrite_sample: int, seed: int) -> dict[str, A
 RERANKER = "onnx-community/bge-reranker-v2-m3-ONNX"  # BAAI/bge-reranker-v2-m3 (Apache-2.0), çok dilli
 
 
-def load_reranker() -> Any:
+RERANKER_FILES = {"cpu": ("onnx/model_int8.onnx", 0.57), "gpu": ("onnx/model_fp16.onnx", 1.14)}
+
+
+def load_reranker(device: str = "cpu") -> Any:
+    """CPU'da int8 (hızlı), GPU'da fp16 model; int8 işlemleri CUDA'da hızlanmaz.
+
+    GPU için `onnxruntime-gpu` kurulu ayrı bir ortam gerekir (bkz. ADR-10); CUDA/cuDNN pip
+    paketlerinden `preload_dlls` ile yüklenir, ayrıca CUDA Toolkit kurmak gerekmez.
+    """
     from fastembed.common.model_description import ModelSource
     from fastembed.rerank.cross_encoder import TextCrossEncoder
 
+    model_file, size = RERANKER_FILES[device]
     TextCrossEncoder.add_custom_model(
-        model=RERANKER, sources=ModelSource(hf=RERANKER), model_file="onnx/model_int8.onnx",
-        description="bge-reranker-v2-m3, int8 ONNX", license="apache-2.0", size_in_gb=0.57,
+        model=RERANKER, sources=ModelSource(hf=RERANKER), model_file=model_file,
+        description=f"bge-reranker-v2-m3 ({model_file})", license="apache-2.0", size_in_gb=size,
     )
+    if device == "gpu":
+        import onnxruntime
+
+        onnxruntime.preload_dlls(directory="")  # pip ile gelen CUDA/cuDNN DLL'leri
+        return TextCrossEncoder(RERANKER, cache_dir=get_settings().model_cache_dir, providers=["CUDAExecutionProvider"])
     return TextCrossEncoder(RERANKER, cache_dir=get_settings().model_cache_dir)
 
 
-def run_rerank(domain: str, corpus: str, sample_size: int, candidates: int, seed: int) -> dict[str, Any]:
+def run_rerank(domain: str, corpus: str, sample_size: int, candidates: int, seed: int, device: str = "cpu") -> dict[str, Any]:
     """Bugünkü sorguyla ilk `candidates` adayı alır, çapraz kodlayıcıyla yeniden sıralar ve ilk 5'i ölçer."""
     settings = get_settings()
     documents, dialogues = load_domain(domain)
     samples = random.Random(seed).sample(follow_up_turns(dialogues), sample_size)
     embedder = get_embedder()
-    reranker = load_reranker()
+    reranker = load_reranker(device)
     db, store, user, mapping, _ = open_corpus(domain, corpus, documents, embedder)
     rows, rerank_ms = [], []
     try:
@@ -309,14 +323,154 @@ def run_rerank(domain: str, corpus: str, sample_size: int, candidates: int, seed
         "created_at": datetime.now(UTC).isoformat(),
         "dataset": "doc2dial v1.0.1 validation (IBM, CC BY 3.0)",
         "domain": domain, "corpus": corpus, "embedding_model": settings.embedding_model,
-        "reranker": f"{RERANKER} (onnx/model_int8.onnx)", "candidates": candidates,
+        "reranker": f"{RERANKER} ({RERANKER_FILES[device][0]})", "device": device, "candidates": candidates,
         "sample_turns": len(rows), "seed": seed,
         "metrics": summarize(rows, settings.retrieval_min_score),
         "doc_in_candidates": _rate([row["doc_in_candidates"] for row in rows]),
         "rerank_ms": {"mean": round(sum(rerank_ms) / len(rerank_ms)), "max": max(rerank_ms)},
         "results": rows,
     }
-    output = RESULTS_DIR / f"doc2dial-{domain}-{corpus}-rerank-{datetime.now(UTC).date().isoformat()}.json"
+    suffix = "rerank" if device == "cpu" else f"rerank-{device}"
+    output = RESULTS_DIR / f"doc2dial-{domain}-{corpus}-{suffix}-{datetime.now(UTC).date().isoformat()}.json"
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"output": str(output), **{k: v for k, v in report.items() if k != "results"}}, ensure_ascii=False, indent=2))
+    return report
+
+
+def _span_hit(prefixes: list[str], texts: list[str], hit_docs: list[str | None], doc_id: str) -> bool:
+    return any(
+        prefix and prefix in _normalize_text(text)
+        for prefix in prefixes for text, hit_doc in zip(texts, hit_docs, strict=True) if hit_doc == doc_id
+    )
+
+
+def open_hybrid_corpus(
+    domain: str, corpus: str, documents: dict[str, dict[str, Any]], embedder: Embedder, bm25: Any,
+) -> tuple[QdrantClient, dict[str, str]]:
+    """Önbellekteki dense korpusu, BM25 seyrek vektörleri eklenmiş isimli-vektörlü bir koleksiyona kopyalar.
+
+    Dense vektörler yeniden hesaplanmaz; yalnızca her parçanın BM25 vektörü üretilir.
+    """
+    from qdrant_client import models
+
+    db, store, _, mapping, _ = open_corpus(domain, corpus, documents, embedder)
+    db.close()
+    store.close()
+    folder = CACHE_DIR / f"doc2dial-{domain}-{corpus}-hybrid"
+    ready = folder / "ready.json"
+    if folder.exists() and not ready.exists():
+        shutil.rmtree(folder)
+    client = QdrantClient(path=str(folder / "qdrant"))
+    if not ready.exists():
+        source = QdrantClient(path=str(CACHE_DIR / f"doc2dial-{domain}-{corpus}" / "qdrant"))
+        client.create_collection(
+            "hybrid",
+            vectors_config={"dense": models.VectorParams(size=embedder.dimension, distance=models.Distance.COSINE)},
+            # IDF'yi Qdrant koleksiyon istatistiğinden hesaplar; parça vektörü yalnızca terim frekansı taşır.
+            sparse_vectors_config={"bm25": models.SparseVectorParams(modifier=models.Modifier.IDF)},
+        )
+        offset = None
+        while True:
+            points, offset = source.scroll("doc2dial", limit=256, offset=offset, with_vectors=True, with_payload=True)
+            sparse = list(bm25.embed([(point.payload or {})["text"] for point in points]))
+            client.upsert("hybrid", [
+                models.PointStruct(
+                    id=point.id, payload=point.payload,
+                    vector={"dense": point.vector, "bm25": models.SparseVector(  # pyright: ignore[reportArgumentType]
+                        indices=vector.indices.tolist(), values=vector.values.tolist())},
+                )
+                for point, vector in zip(points, sparse, strict=True)
+            ])
+            if offset is None:
+                break
+        source.close()
+        ready.write_text("{}", encoding="utf-8")
+    return client, mapping
+
+
+def run_hybrid(domain: str, corpus: str, rerank_device: str | None = None) -> dict[str, Any]:
+    """Aynı sorguyla yalnız dense, yalnız BM25 ve RRF hibrit aramayı karşılaştırır.
+
+    `rerank_device` verilirse dense ve hibrit ilk 20 aday ayrıca çapraz kodlayıcıyla yeniden sıralanır.
+    """
+    from fastembed import SparseTextEmbedding
+    from qdrant_client import models
+
+    settings = get_settings()
+    documents, dialogues = load_domain(domain)
+    samples = follow_up_turns(dialogues)
+    embedder = get_embedder()
+    bm25 = SparseTextEmbedding("Qdrant/bm25", cache_dir=settings.model_cache_dir, language="english")
+    client, mapping = open_hybrid_corpus(domain, corpus, documents, embedder, bm25)
+    # Üründeki gibi: her iki arama da izinli belge listesiyle ayrı ayrı filtrelenir.
+    acl = models.Filter(must=[models.FieldCondition(key="document_id", match=models.MatchAny(any=list(mapping)))])
+    top_k, candidates = settings.retrieval_top_k, 20
+    reranker = load_reranker(rerank_device) if rerank_device else None
+    variants = ["dense", "bm25", "hybrid_rrf"] + (["dense_rerank", "hybrid_rerank"] if reranker else [])
+    rows = []
+    try:
+        for sample in samples:
+            document = documents[sample["doc_id"]]
+            prefixes = [
+                _normalize_text(document["spans"][span_id]["text_sp"])[:SPAN_PREFIX_CHARS]
+                for span_id in sample["span_ids"]
+            ]
+            query = retrieval_query(sample["question"], sample["history"])
+            dense = embedder.embed_query(query)
+            sparse_vector = next(iter(bm25.query_embed(query)))
+            sparse = models.SparseVector(indices=sparse_vector.indices.tolist(), values=sparse_vector.values.tolist())
+            requests = {
+                "dense": {"query": dense, "using": "dense"},
+                "bm25": {"query": sparse, "using": "bm25"},
+                "hybrid_rrf": {
+                    "prefetch": [
+                        models.Prefetch(query=dense, using="dense", filter=acl, limit=candidates),
+                        models.Prefetch(query=sparse, using="bm25", filter=acl, limit=candidates),
+                    ],
+                    "query": models.FusionQuery(fusion=models.Fusion.RRF),
+                },
+            }
+            if reranker is not None:
+                requests["dense_rerank"] = requests["dense"]
+                requests["hybrid_rerank"] = requests["hybrid_rrf"]
+            row: dict[str, Any] = {"dial_id": sample["dial_id"], "turn_id": sample["turn_id"]}
+            for name, request in requests.items():
+                reranked = name.endswith("_rerank")
+                result = client.query_points(
+                    "hybrid", query_filter=acl, limit=candidates if reranked else top_k, with_payload=True, **request,
+                )
+                points = result.points
+                if reranked and reranker is not None and points:
+                    scores = list(reranker.rerank(query, [(point.payload or {})["text"] for point in points]))
+                    points = [point for _, point in sorted(zip(scores, points, strict=True), key=lambda pair: -pair[0])]
+                points = points[:top_k]
+                payloads = [point.payload or {} for point in points]
+                hit_docs = [mapping.get(payload["document_id"]) for payload in payloads]
+                row[name] = {
+                    "doc_first": bool(hit_docs) and hit_docs[0] == sample["doc_id"],
+                    "doc_in_top5": sample["doc_id"] in hit_docs,
+                    "span_in_top5": _span_hit(prefixes, [payload["text"] for payload in payloads], hit_docs, sample["doc_id"]),
+                    "top_score": round(points[0].score, 4) if points else None,
+                }
+            rows.append(row)
+    finally:
+        client.close()
+
+    metrics = {
+        name: {metric: _rate([row[name][metric] for row in rows]) for metric in METRICS}
+        for name in variants
+    }
+    report = {
+        "created_at": datetime.now(UTC).isoformat(),
+        "dataset": "doc2dial v1.0.1 validation (IBM, CC BY 3.0)",
+        "domain": domain, "corpus": corpus, "embedding_model": settings.embedding_model,
+        "sparse_model": "Qdrant/bm25 (english stemmer, IDF modifier)", "fusion": "RRF", "candidates": candidates,
+        "query": "retrieval_query (question + last exchange)", "follow_up_turns": len(rows),
+        "reranker": f"{RERANKER} ({RERANKER_FILES[rerank_device][0]}, {rerank_device})" if rerank_device else None,
+        "metrics": metrics, "results": rows,
+    }
+    suffix = "hybrid" if not rerank_device else f"hybrid-rerank-{rerank_device}"
+    output = RESULTS_DIR / f"doc2dial-{domain}-{corpus}-{suffix}-{datetime.now(UTC).date().isoformat()}.json"
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"output": str(output), **{k: v for k, v in report.items() if k != "results"}}, ensure_ascii=False, indent=2))
     return report
@@ -330,9 +484,14 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--rerank-sample", type=int, default=0, help="Yeniden sıralama deneyi için tur sayısı (0 = kapalı)")
     parser.add_argument("--candidates", type=int, default=20, help="Yeniden sıralanacak aday sayısı")
+    parser.add_argument("--rerank-device", default="cpu", choices=["cpu", "gpu"])
+    parser.add_argument("--hybrid", action="store_true", help="Dense, BM25 ve RRF hibrit aramayı karşılaştır")
+    parser.add_argument("--with-rerank", action="store_true", help="--hybrid ile birlikte yeniden sıralama varyantlarını da ölç")
     args = parser.parse_args()
-    if args.rerank_sample:
-        run_rerank(args.domain, args.corpus, args.rerank_sample, args.candidates, args.seed)
+    if args.hybrid:
+        run_hybrid(args.domain, args.corpus, args.rerank_device if args.with_rerank else None)
+    elif args.rerank_sample:
+        run_rerank(args.domain, args.corpus, args.rerank_sample, args.candidates, args.seed, args.rerank_device)
     else:
         run(args.domain, args.corpus, args.rewrite_sample, args.seed)
 

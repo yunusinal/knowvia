@@ -1,0 +1,2060 @@
+{
+  "created_at": "2026-10-22T17:30:26.102633+00:00",
+  "corpus": "data/demo_docs (13 synthetic Turkish/English documents)",
+  "embedding_model": "intfloat/multilingual-e5-large",
+  "sparse_model": "Qdrant/bm25 (turkish stemmer, IDF)",
+  "retrieval_min_score": 0.8,
+  "candidates": 20,
+  "reranker": "onnx-community/bge-reranker-v2-m3-ONNX (gpu)",
+  "cases": 45,
+  "answerable": 34,
+  "refusal_cases": 11,
+  "metrics": {
+    "dense": {
+      "first": {
+        "passed": 32,
+        "total": 34,
+        "rate": 0.9412
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 2,
+          "total": 3,
+          "rate": 0.6667
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "bm25": {
+      "first": {
+        "passed": 31,
+        "total": 34,
+        "rate": 0.9118
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 1,
+          "total": 3,
+          "rate": 0.3333
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "hybrid_rrf": {
+      "first": {
+        "passed": 31,
+        "total": 34,
+        "rate": 0.9118
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 1,
+          "total": 3,
+          "rate": 0.3333
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "hybrid_gated": {
+      "first": {
+        "passed": 31,
+        "total": 34,
+        "rate": 0.9118
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 1,
+          "total": 3,
+          "rate": 0.3333
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "dense_rerank": {
+      "first": {
+        "passed": 33,
+        "total": 34,
+        "rate": 0.9706
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 3,
+          "total": 3,
+          "rate": 1.0
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "hybrid_rerank": {
+      "first": {
+        "passed": 33,
+        "total": 34,
+        "rate": 0.9706
+      },
+      "in_top5": {
+        "passed": 34,
+        "total": 34,
+        "rate": 1.0
+      },
+      "first_by_kind": {
+        "elliptical": {
+          "passed": 8,
+          "total": 8,
+          "rate": 1.0
+        },
+        "followup": {
+          "passed": 7,
+          "total": 7,
+          "rate": 1.0
+        },
+        "single": {
+          "passed": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "topic_switch": {
+          "passed": 3,
+          "total": 3,
+          "rate": 1.0
+        }
+      },
+      "forbidden_document_seen": 0
+    },
+    "first_layer_refusal": {
+      "dense_threshold": {
+        "passed": 5,
+        "total": 11,
+        "rate": 0.4545
+      },
+      "hybrid_gated": {
+        "passed": 5,
+        "total": 11,
+        "rate": 0.4545
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "R01",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R02",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R03",
+      "kind": "single",
+      "dense": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R04",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R05",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R06",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R07",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R08",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R09",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R10",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R11",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R12",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 3
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R13",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 2
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R14",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 2
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R15",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 4
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R16",
+      "kind": "single",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "R17",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 0
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": true,
+      "gated_rejects": true
+    },
+    {
+      "id": "R18",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 0
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": true,
+      "gated_rejects": true
+    },
+    {
+      "id": "R19",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 0
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": true,
+      "gated_rejects": true
+    },
+    {
+      "id": "R20",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 2
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    },
+    {
+      "id": "R21",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 0
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": true,
+      "gated_rejects": true
+    },
+    {
+      "id": "R22",
+      "kind": "single",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 0
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": true,
+      "gated_rejects": true
+    },
+    {
+      "id": "F01-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F02-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F02-t3",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F03-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F04-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F05-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F06-t2",
+      "kind": "followup",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 3
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F07-t2",
+      "kind": "topic_switch",
+      "dense": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F08-t2",
+      "kind": "topic_switch",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F09-t2",
+      "kind": "topic_switch",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": false,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F10-t2",
+      "kind": "acl",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    },
+    {
+      "id": "F11-t2",
+      "kind": "acl",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    },
+    {
+      "id": "F12-t2",
+      "kind": "abstention",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    },
+    {
+      "id": "F13-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F14-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F15-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F16-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F16-t3",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F17-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F18-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F19-t2",
+      "kind": "elliptical",
+      "dense": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": true,
+        "in_top5": true,
+        "forbidden_seen": false,
+        "returned": 5
+      }
+    },
+    {
+      "id": "F20-t2",
+      "kind": "acl",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    },
+    {
+      "id": "F21-t2",
+      "kind": "abstention",
+      "dense": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "bm25": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rrf": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_gated": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "hybrid_rerank": {
+        "first": null,
+        "in_top5": null,
+        "forbidden_seen": false,
+        "returned": 5
+      },
+      "dense_gate_rejects": false,
+      "gated_rejects": false
+    }
+  ]
+}
