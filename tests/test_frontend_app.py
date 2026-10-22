@@ -144,8 +144,8 @@ def test_landing_page_with_login_is_shown_first() -> None:
     assert at.title[0].value == "Knowvia"
     assert [t.label for t in at.text_input] == ["E-posta", "Parola"]
     assert len(at.chat_input) == 0  # giriş yapmadan sohbet yok
-    assert [h.value for h in at.header] == ["Neden Knowvia?", "Nasıl çalışır?"]
-    assert "Sızıntısız ret" in texts(at)
+    assert [h.value for h in at.header] == ["Aynı soru, farklı cevap", "Sızdırmamak için yapılanlar"]
+    assert "Tek tip ret" in texts(at)
     github = at.get("link_button")[0]
     assert github.proto.url == "https://github.com/yunusinal/knowvia"  # pyright: ignore[reportAttributeAccessIssue]
 

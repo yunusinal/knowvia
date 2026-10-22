@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowvia · Erişim yetkisine duyarlı bilgi asistanı</title>
+<meta name="description" content="Knowvia, şirket belgelerine sorulan soruları yalnızca soran kişinin erişebildiği belgelerden, kaynak göstererek cevaplayan açık kaynaklı bir RAG asistanıdır.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F5F7;
+    --sheet: #FFFFFF;
+    --ink: #16202E;
+    --slate: #5B6878;
+    --rule: #D5DBE2;
+    --teal: #0E6B6B;
+    --teal-dark: #0A5252;
+    --marker: #F6E05E;
+    --redact: #16202E;
+    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --serif: "Source Serif 4", Georgia, serif;
+    --measure: 64ch;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1.0625rem/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--teal); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--marker); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+
+  /* Üst çubuk */
+  .top { display: flex; align-items: center; justify-content: space-between; padding-block: 1.5rem; }
+  .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+  .brand svg { width: 28px; height: 28px; }
+  .top nav { display: flex; gap: 1.75rem; }
+  .top nav a { color: var(--slate); text-decoration: none; font-weight: 500; font-size: .975rem; }
+  .top nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding-block: 2.5rem 1rem; }
+  .hero h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -.035em;
+    max-width: 22ch;
+  }
+  .hero h1 span { display: block; color: var(--slate); font-weight: 600; text-wrap: balance; }
+  .lede { margin: 1.25rem 0 0; max-width: 56ch; font-size: 1.2rem; line-height: 1.55; color: #2E3A4A; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .55rem;
+    padding: .8rem 1.25rem; border-radius: 6px;
+    font: 600 1rem var(--sans); text-decoration: none;
+    border: 1.5px solid var(--teal);
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn.primary { background: var(--teal); color: #fff; }
+  .btn.primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
+  .btn.ghost { color: var(--teal); background: transparent; }
+  .btn.ghost:hover { background: #E3EEEE; }
+
+  /* Canlı karşılaştırma */
+  .stage { margin: 2.5rem 0 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+  .ask { display: flex; align-items: center; gap: .9rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--rule); font-weight: 600; font-size: 1.08rem; }
+  .ask svg { flex: none; width: 22px; height: 22px; color: var(--slate); }
+  .lanes { display: grid; grid-template-columns: 1fr 1fr; }
+  .lane { padding: 1.5rem 1.5rem 1.75rem; }
+  .lane + .lane { border-left: 1px solid var(--rule); }
+  .who { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.1rem; color: var(--slate); font-size: .95rem; }
+  .who strong { color: var(--ink); font-weight: 600; }
+  .dept { padding: .12rem .55rem; border-radius: 999px; font-size: .8rem; font-weight: 600; background: #E8ECF1; color: var(--ink); }
+  .dept.finance { background: #DDEFEA; color: var(--teal-dark); }
+  .answer { margin: 0; font-size: 1.12rem; line-height: 1.5; font-weight: 500; }
+  .cite { background: var(--marker); padding: 0 .25em; border-radius: 3px; font-weight: 600; font-size: .9em; }
+  .refusal { margin: 0; font-size: 1.12rem; line-height: 1.5; color: #2E3A4A; }
+
+  .excerpt { margin: 1.25rem 0 0; padding: 1rem 1.1rem; border-left: 3px solid var(--marker); background: #FAFBFC; }
+  .excerpt .file { display: flex; align-items: center; gap: .5rem; font: 600 .82rem var(--sans); color: var(--slate); margin-bottom: .45rem; }
+  .excerpt p { margin: 0; font: 400 1.02rem/1.65 var(--serif); }
+  .excerpt mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: inherit; }
+
+  .hidden-doc { margin-top: 1.25rem; padding: 1rem 1.1rem; border: 1px dashed var(--rule); border-radius: 6px; }
+  .hidden-doc .file { display: block; font: 600 .82rem var(--sans); color: var(--slate); margin-bottom: .6rem; }
+  .bar { display: block; height: .8rem; margin: .45rem 0; background: var(--redact); border-radius: 2px; }
+  .bar:nth-child(3) { width: 92%; } .bar:nth-child(4) { width: 76%; } .bar:nth-child(5) { width: 54%; }
+  .note { margin: .9rem 0 0; font-size: .92rem; color: var(--slate); }
+
+  /* Sayfadaki tek animasyon: Finans tarafında karartma kalkar, cevap görünür. */
+  .reveal { position: relative; display: block; }
+  .reveal::after {
+    content: ""; position: absolute; inset: -2px -4px;
+    background: var(--redact); border-radius: 2px;
+    transform-origin: right center;
+    animation: lift 900ms cubic-bezier(.7, 0, .2, 1) 700ms forwards;
+  }
+  @keyframes lift { to { transform: scaleX(0); } }
+  @media (prefers-reduced-motion: reduce) { .reveal::after { animation: none; transform: scaleX(0); } }
+
+  /* Bölümler */
+  section.block { padding-block: 5rem 0; }
+  .block h2 { margin: 0 0 .6rem; font-size: clamp(1.8rem, 3.6vw, 2.5rem); line-height: 1.1; letter-spacing: -.025em; font-weight: 800; }
+  .block .intro { margin: 0 0 2.25rem; max-width: var(--measure); color: #2E3A4A; }
+
+  ol.path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); counter-reset: step; border-top: 2px solid var(--ink); }
+  ol.path li { counter-increment: step; padding: 1.1rem 1.1rem 0 0; }
+  ol.path li::before { content: counter(step); display: block; font-weight: 800; font-size: 1.6rem; color: var(--teal); margin-bottom: .35rem; }
+  ol.path b { display: block; font-size: 1.02rem; margin-bottom: .3rem; }
+  ol.path p { margin: 0; color: var(--slate); font-size: .95rem; line-height: 1.5; }
+
+  dl.guards { margin: 0; display: grid; grid-template-columns: minmax(12rem, 18rem) 1fr; border-top: 1px solid var(--rule); }
+  dl.guards dt, dl.guards dd { margin: 0; padding: 1.15rem 0; border-bottom: 1px solid var(--rule); }
+  dl.guards dt { font-weight: 700; padding-right: 2rem; }
+  dl.guards dd { color: #2E3A4A; max-width: var(--measure); }
+
+  table.metrics { width: 100%; border-collapse: collapse; font-size: 1rem; }
+  table.metrics th, table.metrics td { text-align: left; padding: .95rem 1rem .95rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.metrics th { font-size: .88rem; font-weight: 600; color: var(--slate); border-bottom: 2px solid var(--ink); }
+  table.metrics td.value { font-weight: 800; font-size: 1.15rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.metrics td.scope { color: var(--slate); font-size: .95rem; }
+  .caveat { margin: 1.25rem 0 0; max-width: var(--measure); color: var(--slate); font-size: .95rem; }
+
+  .stack { margin-top: 5rem; padding-block: 2.5rem; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; color: var(--slate); font-size: .95rem; }
+  .stack strong { color: var(--ink); }
+  footer { padding-block: 2rem 3rem; border-top: 1px solid var(--rule); color: var(--slate); font-size: .92rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+
+  @media (max-width: 860px) {
+    ol.path { grid-template-columns: 1fr 1fr; row-gap: 1.5rem; }
+  }
+  @media (max-width: 760px) {
+    .top nav { gap: 1rem; }
+    .top nav a:not(.gh) { display: none; }
+    .hero { padding-block: 2.5rem 2rem; }
+    .lanes { grid-template-columns: 1fr; }
+    .lane + .lane { border-left: 0; border-top: 1px solid var(--rule); }
+    ol.path { grid-template-columns: 1fr; }
+    dl.guards { grid-template-columns: 1fr; }
+    dl.guards dt { padding-bottom: .2rem; border-bottom: 0; }
+    dl.guards dd { padding-top: 0; }
+    table.metrics thead { display: none; }
+    table.metrics, table.metrics tbody, table.metrics tr, table.metrics td { display: block; }
+    table.metrics tr { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+    table.metrics td { border: 0; padding: 0; }
+    table.metrics td.value { margin: .2rem 0; font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="3" width="16" height="22" rx="2" fill="none" stroke="#16202E" stroke-width="2.2"/><rect x="7" y="9" width="8" height="2.4" fill="#16202E"/><rect x="7" y="14" width="8" height="2.4" fill="#F6E05E"/><circle cx="20" cy="19" r="5" fill="#0E6B6B"/><path d="M18 19.2l1.4 1.4 2.8-2.8" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Knowvia
+    </a>
+    <nav aria-label="Sayfa içi">
+      <a href="#yol">Nasıl çalışır</a>
+      <a href="#olcumler">Ölçümler</a>
+      <a class="gh" href="https://github.com/yunusinal/knowvia">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Aynı soru. <span>Kimin sorduğuna göre farklı cevap.</span></h1>
+      <p class="lede">Knowvia, şirket belgelerine doğal dille sorulan soruları yalnızca soran kişinin erişebildiği belgelerden, kaynak göstererek cevaplar. Yetkisi olmadığı bilgi cevaba hiç girmez; bilgi yoksa uydurmaz.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/yunusinal/knowvia">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Kaynak kodunu incele
+        </a>
+        <a class="btn ghost" href="https://github.com/yunusinal/knowvia#yerel-kurulum">Yerelde çalıştır</a>
+      </div>
+
+      <figure class="stage" aria-label="Aynı sorunun iki farklı kullanıcıya verilen cevabı">
+        <div class="ask">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 01-11.7 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg>
+          2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?
+        </div>
+        <div class="lanes">
+          <div class="lane">
+            <div class="who"><strong>finance@demo.local</strong><span class="dept finance">Finans</span></div>
+            <p class="answer"><span class="reveal">Bulut altyapı harcamalarına %20 artış ayrıldı. <span class="cite">S1</span></span></p>
+            <blockquote class="excerpt">
+              <span class="file"><span class="cite">S1</span>budget-plan-2026-confidential.md</span>
+              <p>Pazarlama bütçesi %12 azaltılırken <mark>bulut altyapı harcamalarına %20 artış ayrılmıştır.</mark></p>
+            </blockquote>
+            <p class="note">Cevap yalnızca bu kullanıcının erişebildiği belgeden gelir ve hangi cümleye dayandığı gösterilir.</p>
+          </div>
+          <div class="lane">
+            <div class="who"><strong>it@demo.local</strong><span class="dept">IT</span></div>
+            <p class="refusal">Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.</p>
+            <div class="hidden-doc" aria-label="Erişilemeyen belge">
+              <span class="file">Finans departmanına özel belge</span>
+              <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <p class="note">Bütçe belgesi bu kullanıcının aramasına hiç girmez. Ret mesajı, bilgi hiç olmasaydı vereceği mesajla birebir aynıdır; gizli belgenin varlığını ele vermez.</p>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="block" id="yol">
+      <h2>Bir sorunun yolu</h2>
+      <p class="intro">Her soru aynı beş adımdan geçer. Yetki kararı dil modeline bırakılmaz; model, kullanıcının görmeye yetkili olmadığı hiçbir metni görmez.</p>
+      <ol class="path">
+        <li><b>Kim sorduğu okunur</b><p>Rol ve departman token'dan değil, her istekte veritabanından alınır.</p></li>
+        <li><b>İzinli belgeler listelenir</b><p>Liste boşsa arama hiç yapılmaz.</p></li>
+        <li><b>Yalnız bu listede aranır</b><p>Vektör araması ön filtreyle sınırlanır, sonuçlar yeniden denetlenir.</p></li>
+        <li><b>Zayıf eşleşme elenir</b><p>Benzerliği ölçülmüş eşiğin altındaki parçalar modele gitmez.</p></li>
+        <li><b>Cevap kaynağıyla döner</b><p>Uydurulmuş kaynak etiketleri silinir; dayanak yoksa sabit ret verilir.</p></li>
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2>Sızdırmamak için yapılanlar</h2>
+      <p class="intro">Bir bilgi asistanının en zor işi, bilmediğini ya da gösteremeyeceğini dürüstçe söylemektir.</p>
+      <dl class="guards">
+        <dt>Tek tip ret</dt>
+        <dd>"Bilgi yok" ve "yetkiniz yok" aynı mesajı, aynı kaynak listesini ve aynı durum kodunu alır.</dd>
+        <dt>Silince erişim anında kesilir</dt>
+        <dd>Belge önce aramadan çıkarılır, vektörleri sonra temizlenir. Temizlik yarım kalsa bile belge geri gelmez.</dd>
+        <dt>Sohbet geçmişi yeniden denetlenir</dt>
+        <dd>Takip sorularında eski cevaplar kullanılır, ama dayandıkları belgeye erişim kalktıysa ne ekranda görünürler ne de modele gönderilirler.</dd>
+        <dt>Belge metni talimat sayılmaz</dt>
+        <dd>Kaynaklar modele alıntı olarak verilir; belgenin içine yazılmış komutlar uygulanmaz.</dd>
+        <dt>Destek talebi onayla açılır</dt>
+        <dd>Belgedeki adımlar sorunu çözmezse model bir talep taslağı önerir. Kayıt, siz taslağı görüp onayladığınızda oluşur.</dd>
+      </dl>
+    </section>
+
+    <section class="block" id="olcumler">
+      <h2>Ölçtüklerimiz</h2>
+      <p class="intro">Kararlar tahminle değil ölçümle alındı; ölçülen ama işe yaramayan fikirler de kayıtlı.</p>
+      <table class="metrics">
+        <thead><tr><th scope="col">Ne ölçüldü</th><th scope="col">Sonuç</th><th scope="col">Nerede</th></tr></thead>
+        <tbody>
+          <tr><td>Yetkisiz bilginin cevaba sızması</td><td class="value">0</td><td class="scope">22 tek soru ve 23 takip turu, sentetik şirket belgeleri</td></tr>
+          <tr><td>Bilgi yokken doğru ret</td><td class="value">22 / 22</td><td class="scope">Tek sorular; takip sorularında 22 / 23</td></tr>
+          <tr><td>Takip sorusunda doğru belge ilk 5 sonuçta</td><td class="value">%85</td><td class="scope">doc2dial, 908 gerçek diyalog turu (İngilizce)</td></tr>
+          <tr><td>Yeniden sıralamayla doğru belge ilk sırada</td><td class="value">%64 → %76</td><td class="scope">300 tur; CPU'da yavaş olduğu için henüz kullanılmıyor</td></tr>
+        </tbody>
+      </table>
+      <p class="caveat">Sonuçlar küçük veya alana özgü test kümelerinde, yerel donanımda alınmıştır; genel bir doğruluk garantisi değildir. Ayrıntılar ve denenen alternatifler mimari karar kayıtlarındadır.</p>
+    </section>
+
+    <div class="stack">
+      <span><strong>Altyapı</strong></span>
+      <span>FastAPI</span><span>SQLite</span><span>Qdrant</span><span>multilingual-e5-large</span><span>Streamlit</span><span>OpenAI uyumlu LLM (Groq)</span>
+    </div>
+  </main>
+
+  <footer>
+    <span>Sentetik demo belgeleriyle çalışan yerel bir portföy projesi; gerçek şirket verisi içermez.</span>
+    <a href="https://github.com/yunusinal/knowvia">github.com/yunusinal/knowvia</a>
+  </footer>
+</div>
+</body>
+</html>

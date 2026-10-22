@@ -1,36 +1,40 @@
-# Knowvia arayüz teması: Streamlit'in resmi "shadcn" tema şablonu, vurgu rengi çivit (indigo).
+# Knowvia arayüz teması: docs/index.html tanıtım sayfasıyla aynı palet (kâğıt, mürekkep, petrol yeşili) ve yazı tipi.
 # `uv run streamlit run frontend/streamlit_app.py` repo kökünden çalıştırıldığında okunur.
 
 [browser]
 gatherUsageStats = false
 
+[client]
+# Geliştirici araçlarını (Deploy düğmesi vb.) gizler; uygulama menüsü kalır.
+toolbarMode = "minimal"
+
 [theme]
 base = "light"
-primaryColor = "#4F46E5"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F8FAFC"
+primaryColor = "#0E6B6B"
+backgroundColor = "#F7F8FA"
+secondaryBackgroundColor = "#EEF1F5"
 codeBackgroundColor = "#F1F5F9"
-textColor = "#0F172A"
-linkColor = "#4F46E5"
-borderColor = "#E2E8F0"
+textColor = "#16202E"
+linkColor = "#0E6B6B"
+borderColor = "#D5DBE2"
 showWidgetBorder = true
 showSidebarBorder = true
-baseRadius = "8px"
-buttonRadius = "8px"
-font = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+baseRadius = "6px"
+buttonRadius = "6px"
+font = "'Schibsted Grotesk':https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap"
 codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
 baseFontSize = 14
-headingFontWeights = [600, 600, 600, 600, 600, 600]
-grayColor = "#64748B"
+headingFontWeights = [800, 700, 700, 600, 600, 600]
+grayColor = "#5B6878"
 blueColor = "#2563EB"
-greenColor = "#16A34A"
+greenColor = "#0E6B6B"
 redColor = "#DC2626"
 orangeColor = "#EA580C"
 violetColor = "#7C3AED"
-dataframeBorderColor = "#E2E8F0"
-dataframeHeaderBackgroundColor = "#F8FAFC"
+dataframeBorderColor = "#D5DBE2"
+dataframeHeaderBackgroundColor = "#EEF1F5"
 
 [theme.sidebar]
-backgroundColor = "#F8FAFC"
-secondaryBackgroundColor = "#F1F5F9"
-borderColor = "#E2E8F0"
+backgroundColor = "#EEF1F5"
+secondaryBackgroundColor = "#E3E8EE"
+borderColor = "#D5DBE2"

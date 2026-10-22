@@ -1,5 +1,7 @@
 # Knowvia
 
+![Knowvia: aynı soruya Finans kullanıcısı kaynaklı cevap, IT kullanıcısı sabit ret alıyor](docs/assets/landing.png)
+
 Erişim yetkisine duyarlı bir RAG bilgi asistanı. Kullanıcılar şirket belgelerine doğal dille soru sorar; cevaplar yalnızca erişebildikleri belgelerden hazırlanır ve kaynaklarıyla gösterilir.
 
 Sentetik belgeler ve demo hesaplarıyla çalışan, geliştirme aşamasındaki yerel bir portföy projesidir.

@@ -1,4 +1,8 @@
-"""Landing page: projeyi tanıtır ve giriş formunu sunar (giriş yapılmamışken görünen tek sayfa)."""
+"""Landing page: projeyi kısaca tanıtır ve giriş formunu sunar (giriş yapılmamışken görünen tek sayfa).
+
+Tasarım `docs/index.html` tanıtım sayfasıyla aynı dili konuşur: aynı soruya iki kullanıcının aldığı
+farklı cevap. Ayrıntılı hikâye o sayfada; burada giriş öne çıkar.
+"""
 
 import streamlit as st
 
@@ -6,48 +10,24 @@ from frontend import session
 from frontend.api_client import ApiError
 
 REPO_URL = "https://github.com/yunusinal/knowvia"
+QUESTION = "2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?"
 
-FEATURES = [
-    (
-        ":material/lock_person:",
-        "Yetkiye duyarlı arama",
-        "Sorularınız yalnızca erişim izniniz olan belgelerde aranır. Departmanınıza özel bilgiler "
-        "kendi erişim sınırları içinde kalır.",
-    ),
-    (
-        ":material/format_quote:",
-        "Kaynaklı cevaplar",
-        "Cevaplar yalnızca belgelerdeki bilgiye dayanır ve dosya adı, sayfa ve alıntıyla gösterilir. "
-        "Bilgi yoksa cevap uydurulmaz.",
-    ),
-    (
-        ":material/visibility_off:",
-        "Sızıntısız ret",
-        "\"Bilgi yok\" ile \"yetkiniz yok\" aynı cevabı alır; ret mesajı gizli bir belgenin varlığını ele vermez.",
-    ),
-    (
-        ":material/auto_delete:",
-        "Güncel belge erişimi",
-        "Silinen belgeler yeni sorularda kaynak olarak kullanılmaz. Önceki cevaplar sohbet geçmişinde kalır.",
-    ),
-]
-
-STEPS = [
-    (":material/upload_file:", "Yükle", "Admin PDF, TXT veya MD belgesini departman ve görünürlükle yükler."),
-    (":material/segment:", "İndeksle", "Metin paragraflara bölünür ve çok dilli bir modelle vektöre çevrilir."),
-    (":material/manage_search:", "Yetkili ara", "Soru yalnızca kullanıcının yetkili olduğu belgelerde aranır."),
-    (":material/chat:", "Kaynaklı cevap", "Dil modeli yalnızca bulunan parçalardan, kaynak göstererek cevap verir."),
+GUARDS = [
+    ("Tek tip ret", "\"Bilgi yok\" ve \"yetkiniz yok\" aynı mesajı alır; gizli bir belgenin varlığı ele verilmez."),
+    ("Kaynaklı cevap", "Cevaplar yalnızca yetkili belgelerden gelir; dosya adı ve alıntıyla gösterilir."),
+    ("Silince erişim anında kesilir", "Silinen belge bir sonraki sorudan itibaren hiçbir aramada çıkmaz."),
+    ("Destek talebi onayla açılır", "Model yalnızca taslak önerir; kayıt siz onaylayınca oluşur."),
 ]
 
 
 def login_form() -> None:
     with st.container(border=True):
-        st.subheader("Giriş yap", icon=":material/login:")
+        st.subheader("Giriş yap")
         session.show_notice()
         with st.form("login", border=False):
             email = st.text_input("E-posta", placeholder="it@demo.local")
             password = st.text_input("Parola", type="password")
-            submitted = st.form_submit_button("Giriş yap", type="primary", icon=":material/arrow_forward:", width="stretch")
+            submitted = st.form_submit_button("Giriş yap", type="primary", width="stretch")
         if submitted:
             if not email or not password:
                 st.error("E-posta ve parola gerekli.", icon=":material/error:")
@@ -60,45 +40,41 @@ def login_form() -> None:
                 return
             session.sign_in(token, user)
             st.rerun()
+        # E-postalar kod biçiminde: düz metin Markdown'da mailto bağlantısına dönüşür.
+        st.caption("Demo hesabı örneği `it@demo.local`; parola `.env` içindeki `DEMO_USER_PASSWORD` değeridir.")
 
 
 hero, login = st.columns([3, 2], gap="large", vertical_alignment="center")
 with hero:
-    st.title("Knowvia", icon=":material/menu_book:")
-    st.subheader("Ekibinizin bilgisi, erişim sınırlarınız içinde.")
+    st.title("Knowvia")
+    st.markdown("# Aynı soru. :gray[Kimin sorduğuna göre farklı cevap.]")
     st.markdown(
-        "Şirket belgelerinizi doğal dille sorgulayın. Her kullanıcı yalnızca **yetkili olduğu** belgelerden, "
-        "**kaynak gösterilerek** cevap alır."
+        "Şirket belgelerine doğal dille sorun. Her kullanıcı yalnızca **erişebildiği** belgelerden, "
+        "**kaynak gösterilerek** cevap alır; yetkisi olmadığı bilgi cevaba hiç girmez."
     )
-    st.badge("Yerel demo · sentetik belgeler", icon=":material/science:", color="gray")
-    st.link_button("Kaynak kodu GitHub'da", REPO_URL, icon=":material/code:")
+    st.link_button("Kaynak kodunu incele", REPO_URL, icon=":material/code:")
 with login:
     login_form()
 
 st.space("medium")
-st.header("Neden Knowvia?")
-for row in (FEATURES[:2], FEATURES[2:]):
-    for column, (icon, title, text) in zip(st.columns(2), row):
-        with column, st.container(border=True, height="stretch"):
-            st.markdown(f"**{icon} {title}**")
-            st.caption(text)
+st.header("Aynı soru, farklı cevap")
+st.caption(QUESTION)
+finance, it = st.columns(2)
+with finance, st.container(border=True, height="stretch"):
+    st.markdown("`finance@demo.local` :green-badge[Finans]")
+    st.markdown("Bulut altyapı harcamalarına %20 artış ayrıldı. :yellow-background[**S1**]")
+    st.caption("Kaynak: budget-plan-2026-confidential.md")
+with it, st.container(border=True, height="stretch"):
+    st.markdown("`it@demo.local` :gray-badge[IT]")
+    st.markdown("Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.")
+    st.caption("Bütçe belgesi bu kullanıcının aramasına hiç girmez.")
 
 st.space("medium")
-st.header("Nasıl çalışır?")
-for column, (number, (icon, title, text)) in zip(st.columns(2), enumerate(STEPS[:2], start=1)):
+st.header("Sızdırmamak için yapılanlar")
+for column, (title, text) in zip(st.columns(len(GUARDS)), GUARDS):
     with column:
-        st.markdown(f"**{icon} {number}. {title}**")
-        st.caption(text)
-for column, (number, (icon, title, text)) in zip(st.columns(2), enumerate(STEPS[2:], start=3)):
-    with column:
-        st.markdown(f"**{icon} {number}. {title}**")
+        st.markdown(f"**{title}**")
         st.caption(text)
 
-st.space("medium")
-with st.expander("Demo hesapları", icon=":material/badge:"):
-    st.markdown(
-        "`admin@demo.local` · `it@demo.local` · `hr@demo.local` · `finance@demo.local`  \n"
-        "Parola: `.env` içindeki `DEMO_USER_PASSWORD`. Aynı soruyu farklı rollerle sorup cevapların "
-        "nasıl değiştiğini görebilirsiniz (ör. 2026 bütçesi yalnızca Finans ve admin için)."
-    )
-st.caption("Knowvia · Erişim yetkisine duyarlı bilgi asistanı · Yerel portföy prototipi")
+st.space("small")
+st.caption("Sentetik demo belgeleriyle çalışan yerel bir portföy projesi; gerçek şirket verisi içermez.")
