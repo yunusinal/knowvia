@@ -249,14 +249,92 @@ def run(domain: str, corpus: str, rewrite_sample: int, seed: int) -> dict[str, A
     return report
 
 
+RERANKER = "onnx-community/bge-reranker-v2-m3-ONNX"  # BAAI/bge-reranker-v2-m3 (Apache-2.0), çok dilli
+
+
+def load_reranker() -> Any:
+    from fastembed.common.model_description import ModelSource
+    from fastembed.rerank.cross_encoder import TextCrossEncoder
+
+    TextCrossEncoder.add_custom_model(
+        model=RERANKER, sources=ModelSource(hf=RERANKER), model_file="onnx/model_int8.onnx",
+        description="bge-reranker-v2-m3, int8 ONNX", license="apache-2.0", size_in_gb=0.57,
+    )
+    return TextCrossEncoder(RERANKER, cache_dir=get_settings().model_cache_dir)
+
+
+def run_rerank(domain: str, corpus: str, sample_size: int, candidates: int, seed: int) -> dict[str, Any]:
+    """Bugünkü sorguyla ilk `candidates` adayı alır, çapraz kodlayıcıyla yeniden sıralar ve ilk 5'i ölçer."""
+    settings = get_settings()
+    documents, dialogues = load_domain(domain)
+    samples = random.Random(seed).sample(follow_up_turns(dialogues), sample_size)
+    embedder = get_embedder()
+    reranker = load_reranker()
+    db, store, user, mapping, _ = open_corpus(domain, corpus, documents, embedder)
+    rows, rerank_ms = [], []
+    try:
+        for sample in samples:
+            document = documents[sample["doc_id"]]
+            prefixes = [
+                _normalize_text(document["spans"][span_id]["text_sp"])[:SPAN_PREFIX_CHARS]
+                for span_id in sample["span_ids"]
+            ]
+            query = retrieval_query(sample["question"], sample["history"])
+            hits = retrieve(db, store, embedder, user, query, candidates)
+            started = time.perf_counter()
+            scores = list(reranker.rerank(query, [hit.text for hit in hits]))
+            rerank_ms.append(round((time.perf_counter() - started) * 1000))
+            reranked = [hit for _, hit in sorted(zip(scores, hits, strict=True), key=lambda pair: -pair[0])]
+            row: dict[str, Any] = {"dial_id": sample["dial_id"], "turn_id": sample["turn_id"]}
+            for name, ranked in (("h2_300", hits), ("h2_300_rerank", reranked)):
+                top = ranked[: settings.retrieval_top_k]
+                hit_docs = [mapping.get(hit.document_id) for hit in top]
+                row[name] = {
+                    "doc_first": bool(hit_docs) and hit_docs[0] == sample["doc_id"],
+                    "doc_in_top5": sample["doc_id"] in hit_docs,
+                    "span_in_top5": any(
+                        prefix and prefix in _normalize_text(hit.text)
+                        for prefix in prefixes for hit, hit_doc in zip(top, hit_docs, strict=True)
+                        if hit_doc == sample["doc_id"]
+                    ),
+                    "top_score": round(top[0].score, 4) if top else None,
+                }
+            row["doc_in_candidates"] = sample["doc_id"] in [mapping.get(hit.document_id) for hit in hits]
+            rows.append(row)
+    finally:
+        db.close()
+        store.close()
+
+    report = {
+        "created_at": datetime.now(UTC).isoformat(),
+        "dataset": "doc2dial v1.0.1 validation (IBM, CC BY 3.0)",
+        "domain": domain, "corpus": corpus, "embedding_model": settings.embedding_model,
+        "reranker": f"{RERANKER} (onnx/model_int8.onnx)", "candidates": candidates,
+        "sample_turns": len(rows), "seed": seed,
+        "metrics": summarize(rows, settings.retrieval_min_score),
+        "doc_in_candidates": _rate([row["doc_in_candidates"] for row in rows]),
+        "rerank_ms": {"mean": round(sum(rerank_ms) / len(rerank_ms)), "max": max(rerank_ms)},
+        "results": rows,
+    }
+    output = RESULTS_DIR / f"doc2dial-{domain}-{corpus}-rerank-{datetime.now(UTC).date().isoformat()}.json"
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"output": str(output), **{k: v for k, v in report.items() if k != "results"}}, ensure_ascii=False, indent=2))
+    return report
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--domain", default="dmv", choices=["dmv", "ssa", "va", "studentaid"])
     parser.add_argument("--corpus", default="plain", choices=["plain", "title"])
     parser.add_argument("--rewrite-sample", type=int, default=0, help="LLM ile yeniden yazılacak tur sayısı (0 = kapalı)")
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--rerank-sample", type=int, default=0, help="Yeniden sıralama deneyi için tur sayısı (0 = kapalı)")
+    parser.add_argument("--candidates", type=int, default=20, help="Yeniden sıralanacak aday sayısı")
     args = parser.parse_args()
-    run(args.domain, args.corpus, args.rewrite_sample, args.seed)
+    if args.rerank_sample:
+        run_rerank(args.domain, args.corpus, args.rerank_sample, args.candidates, args.seed)
+    else:
+        run(args.domain, args.corpus, args.rewrite_sample, args.seed)
 
 
 if __name__ == "__main__":

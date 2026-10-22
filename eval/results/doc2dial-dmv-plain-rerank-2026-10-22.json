@@ -1,0 +1,5160 @@
+{
+  "created_at": "2026-10-22T14:40:24.485553+00:00",
+  "dataset": "doc2dial v1.0.1 validation (IBM, CC BY 3.0)",
+  "domain": "dmv",
+  "corpus": "plain",
+  "embedding_model": "intfloat/multilingual-e5-large",
+  "reranker": "onnx-community/bge-reranker-v2-m3-ONNX (onnx/model_int8.onnx)",
+  "candidates": 20,
+  "sample_turns": 300,
+  "seed": 7,
+  "metrics": {
+    "h2_300": {
+      "doc_first": {
+        "passed": 193,
+        "total": 300,
+        "rate": 0.6433
+      },
+      "doc_in_top5": {
+        "passed": 258,
+        "total": 300,
+        "rate": 0.86
+      },
+      "span_in_top5": {
+        "passed": 192,
+        "total": 300,
+        "rate": 0.64
+      },
+      "top_score_below_threshold": 0
+    },
+    "h2_300_rerank": {
+      "doc_first": {
+        "passed": 229,
+        "total": 300,
+        "rate": 0.7633
+      },
+      "doc_in_top5": {
+        "passed": 271,
+        "total": 300,
+        "rate": 0.9033
+      },
+      "span_in_top5": {
+        "passed": 210,
+        "total": 300,
+        "rate": 0.7
+      },
+      "top_score_below_threshold": 0
+    }
+  },
+  "doc_in_candidates": {
+    "passed": 283,
+    "total": 300,
+    "rate": 0.9433
+  },
+  "rerank_ms": {
+    "mean": 14269,
+    "max": 18492
+  },
+  "results": [
+    {
+      "dial_id": "a4c27bfdbf1a9af7104ce1eb0bcbddae",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9087
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9087
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3f3aa224b819953746fd223c1e30eb73",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8699
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8692
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8dfbc6bbc436a7c35b02324a0e242f71",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8653
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8518
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a0d55e015b45ddf31e0d3f59a312fd14",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8802
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8802
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c7d24046942242f386a3bc811f696284",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8823
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8823
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0982c8b2c4ad57fbd3c6742faee1b15f",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8792
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8792
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f99a36c314571dccd76c64aeb834f7f7",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8702
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8691
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "38a66de8d36c9215ae1eda39fdc4de3a",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8615
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8615
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3a410477dbe131c029e2d94f2f893cf7",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8843
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8821
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "87f858b77a9c091d9e2fff489ae2d67d",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8821
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8711
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4370540138a6a16977bf0678833201b7",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8766
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8714
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3bee48d7fc015432db1eebf78dc8bb52",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8477
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8477
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e3b20d8a420739e6edb4affd1efc0ffd",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8254
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8068
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "072ed5e3eb9bef4f825ec06e96b64090",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8511
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8313
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "47d8822063e3d1b654b289f45d412789",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8946
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8946
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "93aadf11feb6bb1fc54a55a3eecb5cf2",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8816
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8816
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e68a76105466f5d7c54a88d4427de19d",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8926
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8903
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7e49e6b2fce71d19e286bf86807aee0",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9072
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9072
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0982c8b2c4ad57fbd3c6742faee1b15f",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8558
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8558
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6f9180a71a8195073fd4fe17e708cee9",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8275
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.827
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3a410477dbe131c029e2d94f2f893cf7",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8725
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8725
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7cb48d85a325daee92d8e7ee4f6c525a",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8582
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8397
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "805608cc4f35eaedc6c2102960439d5b",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8684
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8672
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50f6b766c50164e444b90ef83528ae56",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8829
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8829
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "1ce115e80931303c840d3e2d4fb470f2",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9294
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9294
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "b9cf0a683dcd6d051034d990420df113",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.892
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.892
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9cd8e929d260d5814b03867fef5f2711",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.879
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8754
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a59386f175d1e40ac86caadd392dcf73",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.901
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.901
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "62d721f3440bdf296ea704421b953a0a",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9016
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9016
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "881b658df2c763b66fdc76eddd7803ba",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9093
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9093
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8aa8cc7b7efd4fb75177c127a668e56b",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8723
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8723
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50f6b766c50164e444b90ef83528ae56",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.882
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8643
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e5533fd78efdf1ebb666455dc19eb012",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8952
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8854
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "dcd22bdde8f5db763597ee2db6d90e89",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8276
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8276
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8dfbc6bbc436a7c35b02324a0e242f71",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8526
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.827
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ac3c7b5541da7893b6f28c565e14be95",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8492
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8388
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a59386f175d1e40ac86caadd392dcf73",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8387
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8387
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c7d24046942242f386a3bc811f696284",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8927
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.875
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8d816b5204a19ae320ad8ecaee124b10",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8699
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8647
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "630481c93cb85b8daf98b15e61dc1a05",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9123
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9123
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2e9623b209161de6e9448f0c0d2b113b",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.864
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.864
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7e49e6b2fce71d19e286bf86807aee0",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8482
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8441
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "cd0cfb77675741b68ed4086445228e92",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8702
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8702
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "38a66de8d36c9215ae1eda39fdc4de3a",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9131
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9131
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "b906f692960dfc54e5fe197311ce3694",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8602
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8602
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6ca24debeeed39e9aef5a17d20236efc",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.9027
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8795
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "723c0ce5d555d9f7a88c12c98f79c364",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8588
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8445
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "8d816b5204a19ae320ad8ecaee124b10",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9055
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.897
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09183376ad5319c87d538c0f2481e510",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8926
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8643
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6d7e52859f69d32562b06c7cca97e39f",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8882
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8882
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "23178e836c47051d9cc2be93932f6757",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8579
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8467
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7545e6f53bbe7d12b6846061f8dd6ed",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9423
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9423
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4370540138a6a16977bf0678833201b7",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8782
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8324
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "05a65d539c40a37a9312b36ffa160507",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9212
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9212
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50cef3d6f133e8988f1f3b9984f98be1",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8793
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8771
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5394941f2d884d14df83c54ed0fb57fd",
+      "turn_id": 15,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9312
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9312
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f8c1f76e9cbf79b143db7755a0c97fb5",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.939
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.89
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3a8b0307c3889e2c51b3ea3a6954bce7",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8396
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8203
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5e581647369af82487b785ae35416a25",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8979
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8877
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "99bc7f180b2d4c61302f471b3bfc7f29",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8478
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8427
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50f6b766c50164e444b90ef83528ae56",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8818
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8521
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "b9cf0a683dcd6d051034d990420df113",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8997
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8997
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50f6b766c50164e444b90ef83528ae56",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8793
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8793
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6e4c4b8e2ef51e5e27ac832f67ec05ea",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8777
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8722
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ddce2ae456060c8c50cb8717afeaaec5",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8682
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8682
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "53f36985bae076e253d2c796b1f634b9",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.837
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8126
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0e287fe31005455608f4d01357ac90b0",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.882
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.882
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "43eb9b3c1abfd822d6124639a730f170",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8785
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8571
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "805608cc4f35eaedc6c2102960439d5b",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8393
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8308
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2fa9c049db523d40661428880d6f2697",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8314
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8213
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "6f1f931fa94e2739dbae12d9f68cfb6e",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8641
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8628
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3925aef5408046816f7a672693bee88d",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8959
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8959
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9a2fc3b0e7747cbeee0851275c44426c",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8306
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8306
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f3dfc02c84bbadf130a2c2ab006c9344",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9112
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9079
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c0e7884ac9c9a33ee06a42c516e4129e",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.859
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8516
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e518e474d67d6c87141159ad9bb8d92b",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8821
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8506
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "caa2d4ca2a98cc6f57a5628d9e128db9",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9073
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9073
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "26d98d2bf30b3f6b746073a86e92feca",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.9051
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8771
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "23178e836c47051d9cc2be93932f6757",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8553
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8458
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4b3bb867f442586694d2824e9d26ed8b",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.899
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8678
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2fa9c049db523d40661428880d6f2697",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.906
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.906
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d87b04944b11a9a535998c5c0e1b075",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.869
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8638
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9b2d9d43375491f9bb014f0f39673a16",
+      "turn_id": 15,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8394
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8285
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "060bb53cbcd94060ea4adf313756d335",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8878
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8878
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e518e474d67d6c87141159ad9bb8d92b",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9206
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9016
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "1c04ff155c14162cd4bc95a9362de3ac",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8989
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8848
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "53f36985bae076e253d2c796b1f634b9",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.91
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.91
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3d676824006adf83afc5828240e88daf",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8626
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8626
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7807004e05070e8e01c62e0aa5ef5715",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8965
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8965
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4e6e1632ea203212794e8ef260cfb948",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.919
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.919
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2e9623b209161de6e9448f0c0d2b113b",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8445
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8445
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "16175b635a252b68f4dd552698e9e31a",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8978
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8597
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d0e33436423051d41a2c526ce2d15cb",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8221
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8142
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e07fd5a1725ffd8d9d9be8c871d8fbed",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8642
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8642
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e11c83a88987b428c048dd4414aeff9a",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8583
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8583
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "003d4710e450b70dd4e679e3949f2671",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8888
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8888
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9a45905f9c4bb1f095e1039dc0387be0",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8697
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8684
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ad94c0dc42f749c2b0e2349d830b4827",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8301
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8301
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3d676824006adf83afc5828240e88daf",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8555
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8209
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3f3aa224b819953746fd223c1e30eb73",
+      "turn_id": 16,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8779
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8711
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "884e998bdb2b1846449ec1db3f36bcc6",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8617
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8617
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7e49e6b2fce71d19e286bf86807aee0",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8487
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8405
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "47d8822063e3d1b654b289f45d412789",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.833
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.833
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "7a9e89d15f05e4e4d93a1f7d358512e5",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9428
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8929
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9b2d9d43375491f9bb014f0f39673a16",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8609
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.823
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "34d4d09ee67d541aca5b10e16073f6ea",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8962
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.871
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8d816b5204a19ae320ad8ecaee124b10",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.895
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.895
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "060bb53cbcd94060ea4adf313756d335",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9305
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9305
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f99a36c314571dccd76c64aeb834f7f7",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8483
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8307
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f75bbbdf4ff2013b1966ee84c7afc5de",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8909
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8837
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4b3bb867f442586694d2824e9d26ed8b",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8805
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8805
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8990762bd01472e9dcef99f7a0152b9a",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8869
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8869
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4b6d3093e00fd5274167ecd9d45c151c",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.878
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8658
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "1ce115e80931303c840d3e2d4fb470f2",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8937
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8937
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e5533fd78efdf1ebb666455dc19eb012",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8623
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8623
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f3dfc02c84bbadf130a2c2ab006c9344",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8387
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8387
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ce79a72591524ec770ce21f99f92ac7b",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8819
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8728
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3a410477dbe131c029e2d94f2f893cf7",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8503
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8503
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9d4920bea87d4f4cb977483d943c1ef3",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.868
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.868
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "96c540b11f705e6e2317dea2987865e0",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9206
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9206
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4b3bb867f442586694d2824e9d26ed8b",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9394
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8774
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "67c8a54dec3a0c5190e0595a90e2876e",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9236
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9236
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ce79a72591524ec770ce21f99f92ac7b",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8744
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8744
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50f6b766c50164e444b90ef83528ae56",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8855
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8855
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e883da1fe2d8dcf4e0767e52927d68c5",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8742
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8666
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "fff2b0ca622a862ae73b3b94a15e11b7",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8457
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8457
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "723c0ce5d555d9f7a88c12c98f79c364",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9481
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9481
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c372c2bcdcaec1a3975cfaf18ff7c2f6",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9132
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9132
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e5533fd78efdf1ebb666455dc19eb012",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8601
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.852
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6d7e52859f69d32562b06c7cca97e39f",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8662
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8463
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4e6e1632ea203212794e8ef260cfb948",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8526
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8454
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "dfe69859eb7ea18e177951165518bee0",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8266
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8249
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "99bc7f180b2d4c61302f471b3bfc7f29",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8454
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.842
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "d540d7e232a7f7ddb29558d353045661",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.888
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.888
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "1f3d5cbadac2abe0858a9553ba8ccf1c",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8796
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8796
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "8990762bd01472e9dcef99f7a0152b9a",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8641
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8641
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "27792b3995d3965961055a569a5aede1",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9024
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9024
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "403120de58f89888ae4a4a61d2daa5d2",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8649
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8364
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c115500e0159d5e68ee47400d504cbbe",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8578
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8384
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "07e9d1fe776f3431e82683047ee21968",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8859
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8859
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "414ecc05f580e4828fbacaf9d32a52fd",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8818
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8721
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "b906f692960dfc54e5fe197311ce3694",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8694
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8624
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d93e1e2278ac74607bc4cffbc126996",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.918
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.918
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7bcec7013c27d261418177d1b2f6acb2",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9129
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8934
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "479404020480fe8e05fd6bd1d4cdccab",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8942
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8942
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0fc47ca0f574370c5f74fb571101b738",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8684
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8516
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "eef99bfcea6b747ff0ef6adc5f050a06",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8313
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8137
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "7160acaa4f46ecdb4ef92a2a0715a74e",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8259
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8259
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d87b04944b11a9a535998c5c0e1b075",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8614
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8614
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8dfbc6bbc436a7c35b02324a0e242f71",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9426
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9426
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50bada9381510985a1c72dc39dc079fb",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8678
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8648
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2fa9c049db523d40661428880d6f2697",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.827
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8208
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "9b2d9d43375491f9bb014f0f39673a16",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8379
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.825
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "07e9d1fe776f3431e82683047ee21968",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8212
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8057
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0fc47ca0f574370c5f74fb571101b738",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9239
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.9239
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "17b104b5eacd244036f2d3552c394a14",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8717
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8717
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5e581647369af82487b785ae35416a25",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8699
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8513
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09f69dbfbbb5ab0b90ce0faf73e5166b",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9035
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9035
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "630481c93cb85b8daf98b15e61dc1a05",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.875
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.875
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e68a76105466f5d7c54a88d4427de19d",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8601
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8601
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5e581647369af82487b785ae35416a25",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9084
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8534
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09f69dbfbbb5ab0b90ce0faf73e5166b",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9128
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9128
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5e6bb8cf6898f3b27472439e507fbde0",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8554
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8493
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2fab9d4dfaa92281921287f6e5aeafca",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.905
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.905
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c0e7884ac9c9a33ee06a42c516e4129e",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8872
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8872
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6d7e52859f69d32562b06c7cca97e39f",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9172
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.891
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "523116ebc0473a704f3585c68f675b82",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8994
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8994
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "80774a109b7e6e69776d73976c3cffc5",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9095
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9095
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d0e33436423051d41a2c526ce2d15cb",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8711
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8711
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "93aadf11feb6bb1fc54a55a3eecb5cf2",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8884
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8884
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "23178e836c47051d9cc2be93932f6757",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8503
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8503
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "85e8a54606822a0b8172806c3f500430",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8825
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8825
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4ff75b5df4cf8982962d69c0171f500b",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8863
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8863
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9424016f84942499f388d55a7f5134a4",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8945
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8945
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4ff75b5df4cf8982962d69c0171f500b",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8546
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8546
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "83d090a234b905fa4f0cb8ed8f0b5535",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8289
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8289
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "884e998bdb2b1846449ec1db3f36bcc6",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8553
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8553
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "dcd22bdde8f5db763597ee2db6d90e89",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9167
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8922
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5394941f2d884d14df83c54ed0fb57fd",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8636
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8636
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "46c0f3dbe110f020aaf0358ae35d4283",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.894
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8881
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09f69dbfbbb5ab0b90ce0faf73e5166b",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9009
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9009
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "dea7174409afbfe0af0ace21e7f318ae",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8114
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.809
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "3f3aa224b819953746fd223c1e30eb73",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8865
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8774
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e07fd5a1725ffd8d9d9be8c871d8fbed",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8523
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8523
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "43eb9b3c1abfd822d6124639a730f170",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.957
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.957
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f8c1f76e9cbf79b143db7755a0c97fb5",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8857
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8816
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "16175b635a252b68f4dd552698e9e31a",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9023
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8881
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7bcec7013c27d261418177d1b2f6acb2",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.921
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.921
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "2e2054e109ab5ecac197291f1d424538",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9072
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9072
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "eef99bfcea6b747ff0ef6adc5f050a06",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8469
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8382
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "04ce2e13575a2b80eb8051fcce3e54a6",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9233
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9233
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5df2d91b15c2f2759de75832fde8d48e",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8764
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8711
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6e4c4b8e2ef51e5e27ac832f67ec05ea",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.903
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.898
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a0d55e015b45ddf31e0d3f59a312fd14",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.888
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.888
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0e287fe31005455608f4d01357ac90b0",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8823
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8813
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ac3c7b5541da7893b6f28c565e14be95",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8553
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8437
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a1eb6a57d1d820a04dab10bb2391fc66",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8689
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.857
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f99a36c314571dccd76c64aeb834f7f7",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8971
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8971
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8d816b5204a19ae320ad8ecaee124b10",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9108
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9087
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50bada9381510985a1c72dc39dc079fb",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8615
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8599
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "80c04f1ba170142df0bd79fafb5f19b3",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8457
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8457
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "17b104b5eacd244036f2d3552c394a14",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8376
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8277
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8dfbc6bbc436a7c35b02324a0e242f71",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8875
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8875
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7545e6f53bbe7d12b6846061f8dd6ed",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8864
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8864
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c9f74d1d497e0658d6d88797a3884340",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8377
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8212
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "62d721f3440bdf296ea704421b953a0a",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8908
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8908
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "17b104b5eacd244036f2d3552c394a14",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8823
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8539
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9a2fc3b0e7747cbeee0851275c44426c",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.899
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8899
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "79472ef27d72e53bfab6bec245039b05",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8594
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8501
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ce79a72591524ec770ce21f99f92ac7b",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8865
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8863
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ddce2ae456060c8c50cb8717afeaaec5",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9488
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9488
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7998f55ae98200142ab866334148bf8e",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8741
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8741
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9a45905f9c4bb1f095e1039dc0387be0",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8758
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8758
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6384f618136a1d9474b30f6e9ce006db",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8402
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8325
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "d24a6382aba217468d9debf80af1fc43",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8586
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8547
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "cc3a0ee1ef95aa5ed63e74f654269e53",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8691
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8691
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ac3c7b5541da7893b6f28c565e14be95",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8392
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8392
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e7545e6f53bbe7d12b6846061f8dd6ed",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.816
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.816
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "dea7174409afbfe0af0ace21e7f318ae",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8522
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8472
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6ca24debeeed39e9aef5a17d20236efc",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9291
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9291
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "85e8a54606822a0b8172806c3f500430",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8302
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8239
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "38a66de8d36c9215ae1eda39fdc4de3a",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8879
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8798
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3a8b0307c3889e2c51b3ea3a6954bce7",
+      "turn_id": 14,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8634
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8625
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "87f858b77a9c091d9e2fff489ae2d67d",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8837
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8837
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "414ecc05f580e4828fbacaf9d32a52fd",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9128
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9128
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "27792b3995d3965961055a569a5aede1",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9101
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9101
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0982c8b2c4ad57fbd3c6742faee1b15f",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.903
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.903
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ddce2ae456060c8c50cb8717afeaaec5",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8982
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8598
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7a9e89d15f05e4e4d93a1f7d358512e5",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9121
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9121
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7cc5c5ccbdb8ccd3daf03013c9325a61",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8824
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8824
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3f3aa224b819953746fd223c1e30eb73",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8766
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8766
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6d7e52859f69d32562b06c7cca97e39f",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.924
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.924
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "caa2d4ca2a98cc6f57a5628d9e128db9",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8165
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8117
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ad94c0dc42f749c2b0e2349d830b4827",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8525
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8311
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "cc3a0ee1ef95aa5ed63e74f654269e53",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.819
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8069
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ad94c0dc42f749c2b0e2349d830b4827",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8164
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8028
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "a1eb6a57d1d820a04dab10bb2391fc66",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.842
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8301
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "9cd8e929d260d5814b03867fef5f2711",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9104
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9104
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "b906f692960dfc54e5fe197311ce3694",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9231
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9231
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "884e998bdb2b1846449ec1db3f36bcc6",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8628
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8528
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "3925aef5408046816f7a672693bee88d",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.883
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.883
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c9f74d1d497e0658d6d88797a3884340",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8871
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8871
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c9f74d1d497e0658d6d88797a3884340",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8894
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8805
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6f1f931fa94e2739dbae12d9f68cfb6e",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8791
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.873
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "93aadf11feb6bb1fc54a55a3eecb5cf2",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8745
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8745
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e07fd5a1725ffd8d9d9be8c871d8fbed",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8885
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8777
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "82b9f3622c62588b53e8ed6c153bb8da",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9411
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9411
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "26d98d2bf30b3f6b746073a86e92feca",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8654
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8546
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6977cbb3bed8f0e8480018cb3cac6716",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9067
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8921
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "0c3f12ab07250be789dac77b01d629e7",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8595
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8366
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9a45905f9c4bb1f095e1039dc0387be0",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8514
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.829
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5df2d91b15c2f2759de75832fde8d48e",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8527
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8482
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4908fcc5e5b619c8b8bbee80d1d2f625",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8208
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8094
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "1ce115e80931303c840d3e2d4fb470f2",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8477
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8474
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "af261bab358c4713e8973222e20c1c81",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8961
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8908
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09183376ad5319c87d538c0f2481e510",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8497
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8423
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3f3aa224b819953746fd223c1e30eb73",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8891
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8891
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e3425cb157334260b3bd4de94983f887",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.921
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.921
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "27792b3995d3965961055a569a5aede1",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8693
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8565
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "50cef3d6f133e8988f1f3b9984f98be1",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8808
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8808
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e518e474d67d6c87141159ad9bb8d92b",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8495
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8416
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "3a410477dbe131c029e2d94f2f893cf7",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8902
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8902
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "46c0f3dbe110f020aaf0358ae35d4283",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.859
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8552
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5df2d91b15c2f2759de75832fde8d48e",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8585
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8583
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "87f858b77a9c091d9e2fff489ae2d67d",
+      "turn_id": 10,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8657
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8635
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "07e9d1fe776f3431e82683047ee21968",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8642
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8447
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c115500e0159d5e68ee47400d504cbbe",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8697
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8426
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7bcec7013c27d261418177d1b2f6acb2",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8752
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8752
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "43eb9b3c1abfd822d6124639a730f170",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8991
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8991
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "e3425cb157334260b3bd4de94983f887",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9117
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9117
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8252f061c501ac20e7bf589a07dadd76",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8761
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8761
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "9b9ab00f2681da2eb51c5ad2c37e2dc5",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8571
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8571
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "881b658df2c763b66fdc76eddd7803ba",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8706
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8551
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "414ecc05f580e4828fbacaf9d32a52fd",
+      "turn_id": 8,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8688
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8688
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ec9abdf1a9a455030e420a12b32fb693",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9014
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8762
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6f9180a71a8195073fd4fe17e708cee9",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9276
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.9276
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6d7e52859f69d32562b06c7cca97e39f",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8777
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8777
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "80774a109b7e6e69776d73976c3cffc5",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9196
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9196
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ec9abdf1a9a455030e420a12b32fb693",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.891
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.891
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "881b658df2c763b66fdc76eddd7803ba",
+      "turn_id": 11,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8372
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8297
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "5d93e1e2278ac74607bc4cffbc126996",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8291
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8222
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "881b658df2c763b66fdc76eddd7803ba",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8637
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8603
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "10db331606ecf90e67a808d8fb7e411a",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8324
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8274
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "10db331606ecf90e67a808d8fb7e411a",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.915
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.915
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "09f69dbfbbb5ab0b90ce0faf73e5166b",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9031
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9031
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "96c540b11f705e6e2317dea2987865e0",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8472
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": false,
+        "span_in_top5": false,
+        "top_score": 0.8353
+      },
+      "doc_in_candidates": false
+    },
+    {
+      "dial_id": "46c0f3dbe110f020aaf0358ae35d4283",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9257
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9257
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "79472ef27d72e53bfab6bec245039b05",
+      "turn_id": 13,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8502
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8502
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "cc3a0ee1ef95aa5ed63e74f654269e53",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8551
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8551
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "3d676824006adf83afc5828240e88daf",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8777
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8777
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "4e6e1632ea203212794e8ef260cfb948",
+      "turn_id": 5,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.9131
+      },
+      "h2_300_rerank": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8982
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "8990762bd01472e9dcef99f7a0152b9a",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8699
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.858
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "87f858b77a9c091d9e2fff489ae2d67d",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8833
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": false,
+        "top_score": 0.8833
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "7160acaa4f46ecdb4ef92a2a0715a74e",
+      "turn_id": 9,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8673
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8673
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "479404020480fe8e05fd6bd1d4cdccab",
+      "turn_id": 12,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8695
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8546
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "c372c2bcdcaec1a3975cfaf18ff7c2f6",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8838
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8838
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "6e4c4b8e2ef51e5e27ac832f67ec05ea",
+      "turn_id": 4,
+      "h2_300": {
+        "doc_first": false,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8892
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8837
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "96c540b11f705e6e2317dea2987865e0",
+      "turn_id": 3,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8624
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8624
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "ec9abdf1a9a455030e420a12b32fb693",
+      "turn_id": 7,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.886
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8727
+      },
+      "doc_in_candidates": true
+    },
+    {
+      "dial_id": "f75bbbdf4ff2013b1966ee84c7afc5de",
+      "turn_id": 6,
+      "h2_300": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8787
+      },
+      "h2_300_rerank": {
+        "doc_first": true,
+        "doc_in_top5": true,
+        "span_in_top5": true,
+        "top_score": 0.8787
+      },
+      "doc_in_candidates": true
+    }
+  ]
+}

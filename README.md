@@ -124,6 +124,14 @@ API testleri sahte embedding ve LLM kullanır; sağlayıcı anahtarı gerektirme
 uv run python -m scripts.rag_eval
 ```
 
+### Takip soruları
+
+- **Sentetik sohbetler** (`eval/conversations.jsonl`, 21 senaryo, 23 takip turu; takip, eksiltili soru, konu değişimi, yetki ve bilgi-yok turları): cevap olgusu **18/18**, doğru kaynak **18/18**, doğru ret **22/23**, ACL sızıntısı **0**. Tek hata, belgede olmayan bir genellemedir; yetkisiz bilgi sızmamıştır. Komut: `uv run python -m scripts.followup_eval`.
+- **doc2dial** (IBM, CC BY 3.0; DMV alanı, 149 İngilizce belge, 908 gerçek takip turu; yalnız arama ölçülür): doğru belge 1. sırada **%67.0**, ilk 5'te **%85.0**, cevabın geçtiği parça ilk 5'te **%62.8**. Yalnız soruyla arama %33.1 / %53.1 kalıyor; son turu eklemek belirleyici. Veri seti ayrıca indirilir (`data/runtime/datasets/doc2dial/`), komut: `uv run python -m scripts.doc2dial_eval`.
+- **Denenen ama alınmayan iyileştirmeler:** daha uzun geçmiş penceresi (tek konulu diyalogda +10 puan, karışık konulu sohbette 1. sıra %100'den %47'ye düştü), parçalara başlık eklemek (kazanç yok) ve yeniden sıralama (1. sıra +12 puan, ancak CPU'da soru başına ~14 sn). Ayrıntılar: [ADR-08](docs/adr/08-server-owned-conversation-context.md), [ADR-10](docs/adr/10-reranking-measured-and-deferred.md).
+
+Bu ölçümler küçük veya alana özgü kümelerde, yerel donanımda yapılmıştır; genel doğruluk garantisi değildir.
+
 ## Mevcut sınırlar
 
 - Yerel demo kapsamındadır; üretim ortamına hazır bir kurumsal sistem iddiası taşımaz.
