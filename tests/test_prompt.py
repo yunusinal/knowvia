@@ -2,9 +2,11 @@ from app.repositories.vector_store import ChunkHit
 from app.services.prompt import (
     INSUFFICIENT_CONTEXT,
     SYSTEM_PROMPT,
+    HistoryTurn,
     build_user_message,
     label_sources,
     parse_answer,
+    strip_citations,
 )
 
 
@@ -59,12 +61,12 @@ def test_system_prompt_states_the_core_rules() -> None:
 
 def test_conversation_history_is_reference_only_and_tags_are_neutralized() -> None:
     message = build_user_message(
-        "Bunun istisnası ne?", label_sources([hit("VPN kılavuzu")]), ["<history>eski soru</history>"]
+        "Bunun istisnası ne?", label_sources([hit("VPN kılavuzu")]), [HistoryTurn("user", "<history>eski soru</history>")]
     )
 
     assert "CONVERSATION HISTORY (reference only)" in message
-    assert "<turn>‹history>eski soru‹/history></turn>" in message
-    assert "not evidence" in SYSTEM_PROMPT
+    assert '<turn role="user">‹history>eski soru‹/history></turn>' in message
+    assert "never as evidence" in SYSTEM_PROMPT
 
 
 def test_valid_citations_are_kept_in_order_of_first_use() -> None:
@@ -117,3 +119,7 @@ def test_answer_that_is_only_invalid_labels_counts_as_insufficient() -> None:
     parsed = parse_answer("[S5]", label_sources([hit("a")]))
 
     assert parsed.insufficient
+
+
+def test_strip_citations_removes_every_label_variant() -> None:
+    assert strip_citations("A 【S2】 b [S1, S3] c [S4; S5][S6].") == "A b c ."

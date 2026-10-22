@@ -44,18 +44,14 @@ def render_message(message: dict[str, Any]) -> None:
 
 
 def ask(question: str) -> None:
-    history = [
-        message["content"]
-        for message in st.session_state[session.MESSAGES]
-        if message["role"] == "user"
-    ][-4:]
     user_message = {"role": "user", "content": question}
     st.session_state[session.MESSAGES].append(user_message)
     render_message(user_message)
 
     try:
         with st.spinner("Cevap hazırlanıyor…"):
-            result = session.client().chat(question, history)
+            result = session.client().chat(question, st.session_state.get(session.CONVERSATION_ID))
+        st.session_state[session.CONVERSATION_ID] = result["conversation_id"]
         answer = {
             "role": "assistant",
             "content": result["answer"],
@@ -76,7 +72,33 @@ def ask(question: str) -> None:
 
 st.title("Knowvia", icon=":material/menu_book:")
 st.caption("Yalnızca erişim yetkiniz olan belgelerden, kaynak göstererek cevap verilir.")
-st.caption("Takip soruları, bu oturumdaki son dört sorunuzu bağlam olarak kullanır.")
+st.caption("Takip sorularında önceki soru ve cevaplar, mevcut kaynaklara ayrılan yer ölçüsünde kullanılır.")
+
+try:
+    conversations = session.client().list_conversations()
+    choices = {item["id"]: item["title"] for item in conversations}
+    active_id = st.session_state.get(session.CONVERSATION_ID)
+    if active_id is not None and active_id not in choices:
+        active_id = None
+        st.session_state[session.CONVERSATION_ID] = active_id
+    with st.container(horizontal=True, vertical_alignment="bottom"):
+        chosen = st.selectbox(
+            "Sohbet", [None, *choices],
+            index=[None, *choices].index(active_id),
+            format_func=lambda value: "Yeni sohbet" if value is None else choices[value],
+            key=f"conversation_picker_{active_id or 'new'}",
+        )
+        if st.button("Yeni sohbet", icon=":material/add:"):
+            chosen = None
+    if chosen != active_id:
+        st.session_state[session.CONVERSATION_ID] = chosen
+        st.session_state[session.MESSAGES] = []
+    if chosen:
+        st.session_state[session.MESSAGES] = session.client().get_conversation_messages(chosen)
+except SessionExpiredError as error:
+    session.sign_out(error.message)
+except ApiError as error:
+    st.error(error.message)
 
 messages = st.session_state[session.MESSAGES]
 for previous in messages:

@@ -36,6 +36,11 @@ class Settings(BaseSettings):
     llm_timeout_seconds: float = Field(default=60, gt=0)
     llm_max_output_tokens: int = Field(default=1024, gt=0)
     llm_temperature: float = Field(default=0.0, ge=0, le=2)
+    # Varsayılan Groq gpt-oss-120b içindir; model değişirse sağlayıcının sınırına göre güncellenir.
+    llm_context_window_tokens: int = Field(default=131072, gt=0)
+    # Uygulama limiti, sağlayıcının tam penceresinden küçüktür; geçmiş kaynaklara göre yer açar.
+    chat_input_budget_tokens: int = Field(default=8000, gt=0)
+    chat_history_budget_tokens: int = Field(default=2500, gt=0)
 
 
 @lru_cache

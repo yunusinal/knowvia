@@ -1,13 +1,16 @@
-from typing import Annotated, Literal
+from typing import Literal
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class ChatRequest(BaseModel):
-    """Soru ve sınırlı konuşma bağlamı; yetki bilgisi istekten alınmaz."""
+    """Geçmiş sunucudan okunur; istemci yalnızca konuşma kimliğini taşır."""
+
+    model_config = ConfigDict(extra="forbid")
 
     question: str = Field(min_length=1, max_length=1000)
-    history: list[Annotated[str, Field(max_length=1000)]] = Field(default_factory=list, max_length=4)
+    conversation_id: UUID | None = None
 
 
 class SourceOut(BaseModel):
@@ -30,3 +33,4 @@ class ChatResponse(BaseModel):
     retrieval_ms: int
     generation_ms: int
     response_type: Literal["rag", "canned"] = "rag"
+    conversation_id: str

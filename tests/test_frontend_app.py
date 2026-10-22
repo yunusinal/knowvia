@@ -41,7 +41,8 @@ class FakeBackend:
     documents: list[dict[str, Any]] = field(default_factory=lambda: [DOCUMENT.copy()])
     deleted: list[str] = field(default_factory=list)
     uploads: list[tuple[str, str, str]] = field(default_factory=list)
-    chat_requests: list[tuple[str, list[str]]] = field(default_factory=list)
+    chat_requests: list[tuple[str, str | None]] = field(default_factory=list)
+    conversations: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
 
 
 backend = FakeBackend()
@@ -65,11 +66,25 @@ class FakeKnowviaClient:
             raise backend.documents_error
         return backend.documents
 
-    def chat(self, question: str, history: list[str] | None = None) -> dict[str, Any]:
+    def list_conversations(self) -> list[dict[str, Any]]:
+        return [{"id": key, "title": values[0]["content"][:80]} for key, values in backend.conversations.items()]
+
+    def get_conversation_messages(self, conversation_id: str) -> list[dict[str, Any]]:
+        return backend.conversations[conversation_id]
+
+    def chat(self, question: str, conversation_id: str | None = None) -> dict[str, Any]:
         if backend.chat_error is not None:
             raise backend.chat_error
-        backend.chat_requests.append((question, history or []))
-        return backend.chat_result
+        backend.chat_requests.append((question, conversation_id))
+        conversation_id = conversation_id or f"00000000-0000-4000-8000-{len(backend.conversations) + 1:012d}"
+        result = {**backend.chat_result, "conversation_id": conversation_id}
+        backend.conversations.setdefault(conversation_id, []).extend([
+            {"role": "user", "content": question},
+            {"role": "assistant", "content": result["answer"], "sources": result["sources"],
+             "no_evidence": result["no_evidence"], "retrieval_ms": result["retrieval_ms"],
+             "generation_ms": result["generation_ms"], "response_type": result.get("response_type", "rag")},
+        ])
+        return result
 
     def delete_document(self, document_id: str) -> dict[str, Any]:
         backend.deleted.append(document_id)
@@ -186,15 +201,27 @@ def test_answer_shows_response_time() -> None:
     assert "0.0 sn · arama 1 ms · dil modeli 1 ms" in texts(at)
 
 
-def test_follow_up_sends_recent_user_questions_as_context() -> None:
+def test_follow_up_sends_conversation_id_without_history() -> None:
     at = logged_in("it@demo.local")
     at.chat_input[0].set_value("VPN sertifika hatası").run()
     at.chat_input[0].set_value("Peki bunun istisnası ne?").run()
 
     assert backend.chat_requests == [
-        ("VPN sertifika hatası", []),
-        ("Peki bunun istisnası ne?", ["VPN sertifika hatası"]),
+        ("VPN sertifika hatası", None),
+        ("Peki bunun istisnası ne?", "00000000-0000-4000-8000-000000000001"),
     ]
+
+
+def test_new_chat_starts_separate_conversation() -> None:
+    at = logged_in("it@demo.local")
+    at.chat_input[0].set_value("VPN sertifika hatası").run()
+    next(button for button in at.button if button.label == "Yeni sohbet").click().run()
+    assert at.session_state["conversation_id"] is None
+    at.chat_input[0].set_value("Yıllık izin nedir?").run()
+
+    assert backend.chat_requests == [("VPN sertifika hatası", None), ("Yıllık izin nedir?", None)]
+    assert len(backend.conversations) == 2
+    assert at.session_state["conversation_id"] == "00000000-0000-4000-8000-000000000002"
 
 
 def test_canned_reply_has_no_source_card_or_search_timing_even_after_rerun() -> None:

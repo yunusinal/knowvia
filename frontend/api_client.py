@@ -57,10 +57,17 @@ class KnowviaClient:
     def delete_document(self, document_id: str) -> dict[str, Any]:
         return self._request("DELETE", f"/documents/{document_id}")
 
-    def chat(self, question: str, history: list[str] | None = None) -> dict[str, Any]:
-        return self._request(
-            "POST", "/chat", json={"question": question, "history": history or []}
-        )
+    def list_conversations(self) -> list[dict[str, Any]]:
+        return self._request("GET", "/conversations")
+
+    def get_conversation_messages(self, conversation_id: str) -> list[dict[str, Any]]:
+        return self._request("GET", f"/conversations/{conversation_id}/messages")
+
+    def chat(self, question: str, conversation_id: str | None = None) -> dict[str, Any]:
+        payload: dict[str, Any] = {"question": question}
+        if conversation_id:
+            payload["conversation_id"] = conversation_id
+        return self._request("POST", "/chat", json=payload)
 
     def _request(self, method: str, path: str, **kwargs: Any) -> Any:
         headers = {"Authorization": f"Bearer {self._token}"} if self._token else {}

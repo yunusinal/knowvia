@@ -37,10 +37,10 @@ def test_requests_carry_bearer_token_and_chat_sends_json() -> None:
         seen["body"] = json.loads(request.content)
         return httpx2.Response(200, json={"answer": "a", "sources": [], "no_evidence": False})
 
-    client_with(handler).chat("VPN nasıl kurulur?", ["VPN bağlanmıyor"])
+    client_with(handler).chat("VPN nasıl kurulur?", "00000000-0000-4000-8000-000000000001")
 
     assert seen["auth"] == "Bearer tok"
-    assert seen["body"] == {"question": "VPN nasıl kurulur?", "history": ["VPN bağlanmıyor"]}
+    assert seen["body"] == {"question": "VPN nasıl kurulur?", "conversation_id": "00000000-0000-4000-8000-000000000001"}
 
 
 def test_upload_sends_multipart_with_department_and_visibility() -> None:

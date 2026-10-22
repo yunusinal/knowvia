@@ -124,7 +124,7 @@ def test_below_threshold_means_no_llm_call(
     body = ask(client, users["admin"], "tamamen alakasız bir soru").json()
 
     assert fake_llm.calls == []
-    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0, "response_type": "rag"}
+    assert body == {"answer": NO_EVIDENCE_MESSAGE, "sources": [], "no_evidence": True, "retrieval_ms": body["retrieval_ms"], "generation_ms": 0, "response_type": "rag", "conversation_id": body["conversation_id"]}
 
 
 def test_only_chunks_above_threshold_are_sent_to_llm(
@@ -144,28 +144,26 @@ def test_follow_up_uses_previous_user_question_for_retrieval_and_prompt(
 ) -> None:
     fake_llm.answers = ["Cihaz saatini kontrol edin. [S1]"]
 
-    response = ask(
-        client, users["it"], "Peki bunun istisnası ne?", history=["VPN sertifika hatası veriyor"]
-    )
+    first = ask(client, users["it"], "VPN sertifika hatası veriyor")
+    response = ask(client, users["it"], "Peki bunun istisnası ne?", conversation_id=first.json()["conversation_id"])
 
     assert response.status_code == 200
     assert response.json()["sources"][0]["document_id"] == documents["vpn"].id
     assert "VPN sertifika hatası veriyor" in llm_context(fake_llm)
+    history = fake_llm.calls[-1][1].split("</history>")[0]
+    assert "Cihaz saatini kontrol edin." in history and "[S1]" not in history  # eski etiket taşınmaz
     assert "Peki bunun istisnası ne?" in llm_context(fake_llm)
 
 
-def test_history_cannot_expand_current_users_document_access(
+def test_client_history_cannot_expand_current_users_document_access(
     client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM
 ) -> None:
     fake_llm.answers = [INSUFFICIENT_CONTEXT]
 
-    response = ask(
-        client, users["it"], "Peki bunun oranı ne?", history=["2026 bütçe planındaki artış oranı"]
-    )
+    response = ask(client, users["it"], "Peki bunun oranı ne?", history=["2026 bütçe planındaki artış oranı"])
 
-    assert response.status_code == 200
-    assert BUDGET not in llm_sources(fake_llm)
-    assert documents["budget"].id not in response.text
+    assert response.status_code == 422
+    assert not fake_llm.calls
 
 
 def test_no_documents_at_all_returns_the_same_refusal(client: TestClient, users: dict[str, User], fake_llm: FakeLLM) -> None:
@@ -175,15 +173,15 @@ def test_no_documents_at_all_returns_the_same_refusal(client: TestClient, users:
     assert fake_llm.calls == []
 
 
-def test_spoofed_role_and_department_in_request_are_ignored(
+def test_spoofed_role_and_department_in_request_are_rejected(
     client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM
 ) -> None:
     fake_llm.answers = [INSUFFICIENT_CONTEXT]
 
     response = ask(client, users["it"], BUDGET, role="admin", department="FINANCE", is_admin=True)
 
-    assert response.status_code == 200
-    assert BUDGET not in llm_sources(fake_llm)
+    assert response.status_code == 422
+    assert not fake_llm.calls
 
 
 def test_invented_citations_are_removed_and_never_point_outside_context(
@@ -274,7 +272,7 @@ def test_canned_reply_skips_all_rag_resources_without_llm_key(
     assert response.json() == {
         "answer": "Teşekkürler, iyiyim! Size nasıl yardımcı olabilirim? Belgeleriniz hakkında bir soru sorabilirsiniz.",
         "sources": [], "no_evidence": False, "retrieval_ms": 0, "generation_ms": 0,
-        "response_type": "canned",
+        "response_type": "canned", "conversation_id": response.json()["conversation_id"],
     }
 
 

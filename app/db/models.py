@@ -2,7 +2,7 @@ import enum
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, Enum, ForeignKey, String
+from sqlalchemy import JSON, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 # MVP'de tek demo organizasyonu vardır (master plan §6.1).
@@ -36,6 +36,11 @@ class DocumentStatus(enum.StrEnum):
     DELETING = "deleting"
     DELETED = "deleted"
     CLEANUP_PENDING = "cleanup_pending"
+
+
+class ConversationRole(enum.StrEnum):
+    USER = "user"
+    ASSISTANT = "assistant"
 
 
 def _enum_type(enum_class: type[enum.Enum], name: str) -> Enum:
@@ -94,3 +99,31 @@ class Document(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=_utc_now, onupdate=_utc_now
     )
+
+
+class Conversation(Base):
+    __tablename__ = "conversations"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_new_id)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    title: Mapped[str] = mapped_column(String(80))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)
+
+
+class ConversationMessage(Base):
+    __tablename__ = "conversation_messages"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    conversation_id: Mapped[str] = mapped_column(ForeignKey("conversations.id"), index=True)
+    role: Mapped[ConversationRole] = mapped_column(_enum_type(ConversationRole, "conversation_role"))
+    content: Mapped[str] = mapped_column(Text)
+    # Kaynakları saklamak, eski assistant yanıtını sonraki turda güncel ACL ile yeniden kontrol etmeyi sağlar.
+    sources: Mapped[list[dict[str, object]]] = mapped_column(JSON, default=list)
+    # Atıf yapılmasa da modele verilen belgeler; cevap bunlardan bilgi taşıyabilir.
+    context_document_ids: Mapped[list[str]] = mapped_column(JSON, default=list)
+    no_evidence: Mapped[bool] = mapped_column(default=False)
+    response_type: Mapped[str] = mapped_column(String(16), default="rag")
+    retrieval_ms: Mapped[int] = mapped_column(default=0)
+    generation_ms: Mapped[int] = mapped_column(default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utc_now)

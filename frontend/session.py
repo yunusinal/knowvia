@@ -17,6 +17,7 @@ API_URL = os.environ.get("KNOWVIA_API_URL", "http://127.0.0.1:8000")
 TOKEN = "token"
 USER = "user"
 MESSAGES = "messages"
+CONVERSATION_ID = "conversation_id"
 NOTICE = "notice"
 
 
@@ -37,6 +38,7 @@ def sign_in(token: str, user: dict[str, Any]) -> None:
     st.session_state[TOKEN] = token
     st.session_state[USER] = user
     st.session_state[MESSAGES] = []
+    st.session_state[CONVERSATION_ID] = None
 
 
 def sign_out(notice: str | None = None) -> NoReturn:

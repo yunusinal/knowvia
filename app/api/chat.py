@@ -10,6 +10,8 @@ from app.db.session import get_db
 from app.repositories.vector_store import VectorStore, get_vector_store
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services.chat import answer_question
+from app.services.chat import ChatResult
+from app.services.conversations import append_exchange, get_owned, safe_history
 from app.services.embeddings import Embedder, get_embedder
 from app.services.llm import LLMClient, LLMNotConfiguredError, get_llm
 from app.services.smalltalk import canned_reply
@@ -56,22 +58,26 @@ def chat(
     question = request.question.strip()
     if not question:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Soru boş olamaz.")
+    conversation = get_owned(db, user, str(request.conversation_id)) if request.conversation_id else None
+    history = safe_history(db, user, conversation) if conversation else []
     if reply is not None:
-        return ChatResponse(
+        result = ChatResult(
             answer=reply, sources=[], no_evidence=False, retrieval_ms=0, generation_ms=0,
-            response_type="canned",
         )
-    assert store is not None and embedder is not None and llm is not None
-    settings = get_settings()
-    result = answer_question(
-        db,
-        store,
-        embedder,
-        llm,
-        user,
-        question,
-        top_k=settings.retrieval_top_k,
-        min_score=settings.retrieval_min_score,
-        history=request.history,
-    )
-    return ChatResponse.model_validate(result)
+        response_type = "canned"
+    else:
+        assert store is not None and embedder is not None and llm is not None
+        settings = get_settings()
+        result = answer_question(
+            db, store, embedder, llm, user, question,
+            top_k=settings.retrieval_top_k,
+            min_score=settings.retrieval_min_score,
+            history=history,
+        )
+        response_type = "rag"
+    saved = append_exchange(db, user, conversation, question, result, response_type)
+    return ChatResponse.model_validate({
+        "answer": result.answer, "sources": result.sources, "no_evidence": result.no_evidence,
+        "retrieval_ms": result.retrieval_ms, "generation_ms": result.generation_ms,
+        "response_type": response_type, "conversation_id": saved.id,
+    })
