@@ -251,6 +251,7 @@ def test_follow_up_sends_conversation_id_without_history() -> None:
 
 def test_new_chat_starts_separate_conversation() -> None:
     at = logged_in("it@demo.local")
+    assert any("Yeni bir konuya geçerken **Yeni sohbet** açın" in c.value for c in at.caption)  # ipucu görünür
     at.chat_input[0].set_value("VPN sertifika hatası").run()
     next(button for button in at.button if button.label == "Yeni sohbet").click().run()
     assert at.session_state["conversation_id"] is None

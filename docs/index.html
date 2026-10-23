@@ -69,7 +69,9 @@
   /* Hero */
   .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 3rem; align-items: center; padding-block: 3.5rem 4.5rem; }
   .hero h1 { margin: 0; color: var(--text-strong); font-weight: 800; font-size: clamp(2.3rem, 3.9vw, 3.35rem); line-height: 1.08; letter-spacing: -.035em; }
-  @media (min-width: 961px) { .hero h1 .line { white-space: nowrap; } }
+  /* Kısa Türkçe ikinci satır tek satırda kalır; uzun İngilizce cümle sütuna sığacak şekilde dengeli kırılır. */
+  .hero h1 { text-wrap: balance; }
+  @media (min-width: 961px) { html[lang="tr"] .hero h1 .line { white-space: nowrap; } }
   .hero h1 em { font-style: normal; color: var(--green); }
   .lede { margin: 1.4rem 0 0; color: #CBD5E1; font-size: 1.12rem; max-width: 50ch; }
   .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.9rem; }
@@ -345,7 +347,7 @@
     navHow: "How it works",
     navArch: "Architecture",
     navDemo: "Open demo",
-    heroTitle: 'Same question.<br><span class="line">Your <em>own</em> answer.</span>',
+    heroTitle: 'Anyone can ask.<br><span class="line">Only the <em>right ones</em> get the answer.</span>',
     heroLede: "Knowvia answers questions about your team’s or organization’s documents using only the documents the person asking is allowed to see, and shows the source. Information they aren’t authorized for never enters the answer; if the information isn’t there, it doesn’t make anything up.",
     heroDemo: "Try the live demo",
     heroSource: "Source code",

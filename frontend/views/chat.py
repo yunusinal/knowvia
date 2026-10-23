@@ -115,7 +115,11 @@ st.title("Sohbet")
 if created := st.session_state.pop(TICKET_CREATED, None):
     st.success(f"Destek talebi oluşturuldu: {created}", icon=":material/check_circle:")
 st.caption("Yalnızca erişim yetkiniz olan belgelerden, kaynak göstererek cevap verilir.")
-st.caption("Takip sorularında önceki soru ve cevaplar, mevcut kaynaklara ayrılan yer ölçüsünde kullanılır.")
+# Arama konu değişimine dayanıklı (ADR-08) ama geçmiş yine de aramaya katılır; temiz sohbet en isabetlisi.
+st.caption(
+    ":material/lightbulb: Takip soruları önceki soru ve cevabı dikkate alır. Yeni bir konuya geçerken "
+    "**Yeni sohbet** açın; önceki konu aramayı etkilemez, aradığınızı daha kolay bulursunuz."
+)
 
 try:
     conversations = session.client().list_conversations()
