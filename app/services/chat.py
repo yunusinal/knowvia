@@ -21,6 +21,7 @@ from app.services.tickets import PROPOSAL_MESSAGE, SUPPORT_TICKET_TOOL, TicketPr
 
 NO_EVIDENCE_MESSAGE = "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım."
 _SNIPPET_CHARS = 300
+_RRF_K = 60  # RRF'in yaygın sabiti; ölçüm (ADR-08) bu değerle yapıldı
 
 
 @dataclass(frozen=True)
@@ -63,8 +64,11 @@ def answer_question(
     previous_turns = history or []
     query = retrieval_query(question, previous_turns)
     # Yeniden sıralama varsa daha geniş aday havuzu alınır; sonra en iyi `top_k` seçilir.
-    candidates = get_settings().rerank_candidates if reranker is not None else top_k
-    hits = retrieve(db, store, embedder, user, query, max(candidates, top_k))
+    limit = max(get_settings().rerank_candidates if reranker is not None else top_k, top_k)
+    hits = retrieve(db, store, embedder, user, query, limit)
+    if query != question:
+        # Geçmiş eklenmiş sorgu takip sorusunu, yalın soru konu değişimini bulur (ADR-08).
+        hits = fuse_ranked([hits, retrieve(db, store, embedder, user, question, limit)], limit)
     # Birinci çekimserlik katmanı: eşiğin altındaki chunk'lar LLM'e (ve sıralayıcıya) hiç gitmez.
     evidence = [hit for hit in hits if hit.score >= min_score]
     if reranker is not None and evidence:
@@ -134,6 +138,23 @@ def retrieval_query(question: str, history: list[HistoryTurn]) -> str:
     """Takip sorusundaki göndermeyi çözmek için son turu (soru + cevabın başı) aramaya ekler."""
     context = "\n".join(turn.content[:300] for turn in history[-2:])
     return f"{question}\n{context}" if context else question
+
+
+def fuse_ranked(rankings: list[list[ChunkHit]], limit: int) -> list[ChunkHit]:
+    """Sıralı listeleri Reciprocal Rank Fusion ile birleştirir; skor değil sıra kullanılır.
+
+    Aynı chunk birden çok listede varsa ilk listedeki kaydı (ve dense skoru) korunur; eşitlikte
+    ilk listedeki önde kalır. Eşik her chunk'a, onu bulan sorgunun dense skoruyla uygulanır.
+    """
+    scores: dict[tuple[str, int], float] = {}
+    first_seen: dict[tuple[str, int], ChunkHit] = {}
+    for hits in rankings:
+        for rank, hit in enumerate(hits, start=1):
+            key = (hit.document_id, hit.chunk_index)
+            scores[key] = scores.get(key, 0.0) + 1 / (_RRF_K + rank)
+            first_seen.setdefault(key, hit)
+    ordered = sorted(scores, key=lambda key: -scores[key])  # sorted kararlı: eşitlikte ekleme sırası kalır
+    return [first_seen[key] for key in ordered[:limit]]
 
 
 def _no_evidence(retrieval_ms: int, generation_ms: int) -> ChatResult:

@@ -8,11 +8,11 @@ from app.api.chat import llm_dependency
 from app.core.config import get_settings
 from app.db.models import Department, Document, User, Visibility
 from app.main import app
-from app.repositories.vector_store import VectorStore
-from app.services.chat import NO_EVIDENCE_MESSAGE
+from app.repositories.vector_store import ChunkHit, VectorStore
+from app.services.chat import NO_EVIDENCE_MESSAGE, fuse_ranked, retrieval_query
 from app.services.ingest import ingest_document
 from app.services.llm import LLMUnavailableError
-from app.services.prompt import INSUFFICIENT_CONTEXT
+from app.services.prompt import INSUFFICIENT_CONTEXT, HistoryTurn
 from tests.fakes import FakeEmbedder, FakeLLM
 from tests.helpers import auth_header
 
@@ -153,6 +153,64 @@ def test_follow_up_uses_previous_user_question_for_retrieval_and_prompt(
     history = fake_llm.calls[-1][1].split("</history>")[0]
     assert "Cihaz saatini kontrol edin." in history and "[S1]" not in history  # eski etiket taşınmaz
     assert "Peki bunun istisnası ne?" in llm_context(fake_llm)
+
+
+def test_topic_switch_in_the_same_conversation_still_finds_the_new_topic(
+    client: TestClient, session: Session, vector_store: VectorStore, fake_embedder: FakeEmbedder,
+    users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Geçmiş eklenmiş sorgu iki VPN belgesini öne çeker; yalın soru araması mesai belgesini geri getirir.
+    monkeypatch.setattr(get_settings(), "retrieval_top_k", 2)
+    for name, text, department, visibility in [
+        ("vpn-setup", "VPN kurulumu: sertifika hatası olursa cihaz saatini ve VPN istemcisini kontrol edin.",
+         Department.IT, Visibility.DEPARTMENT),
+        ("flex", "Esnek mesai: mesai saatleri ekip yöneticisiyle planlanır.", Department.HR, Visibility.COMPANY),
+    ]:
+        ingest_document(
+            session, vector_store, fake_embedder, filename=f"{name}.md", content=text.encode(),
+            department=department, visibility=visibility, uploaded_by=users["admin"].id, max_mb=10,
+        )
+    fake_llm.answers = ["Cihaz saatini kontrol edin, VPN sertifika hatası düzelir. [S1]", "Dokuz ile on sekiz. [S1]"]
+
+    first = ask(client, users["it"], "VPN sertifika hatası veriyor, cihaz saati mi?")
+    ask(client, users["it"], "Mesai saatleri nedir?", conversation_id=first.json()["conversation_id"])
+
+    sources = fake_llm.calls[-1][1].split("QUESTION:")[0]
+    assert "Esnek mesai" in sources  # yalnız geçmişli arama bu belgeyi ilk ikiye almazdı
+
+
+def test_follow_up_searches_with_and_without_history_both_inside_the_acl(
+    client: TestClient, users: dict[str, User], documents: dict[str, Document], fake_llm: FakeLLM,
+    fake_embedder: FakeEmbedder, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    queries: list[str] = []
+    embed_query = fake_embedder.embed_query
+    monkeypatch.setattr(fake_embedder, "embed_query", lambda text: queries.append(text) or embed_query(text))
+    fake_llm.answers = ["Cihaz saatini kontrol edin. [S1]", INSUFFICIENT_CONTEXT]
+
+    first = ask(client, users["it"], "VPN sertifika hatası veriyor")
+    assert queries == ["VPN sertifika hatası veriyor"]  # geçmiş yoksa tek arama
+
+    ask(client, users["it"], BUDGET, conversation_id=first.json()["conversation_id"])
+
+    assert queries[1:] == [retrieval_query(BUDGET, [
+        HistoryTurn("user", "VPN sertifika hatası veriyor"), HistoryTurn("assistant", "Cihaz saatini kontrol edin. [S1]"),
+    ]), BUDGET]
+    assert BUDGET not in llm_sources(fake_llm)  # yalın soru araması da yetki filtresinden geçer
+
+
+def test_fuse_ranked_adds_hits_from_the_second_list_and_keeps_the_first_record() -> None:
+    def hit(document_id: str, score: float) -> ChunkHit:
+        return ChunkHit(document_id=document_id, chunk_index=0, page_number=None, filename=f"{document_id}.md", text="", score=score)
+
+    with_history = [hit("vpn", 0.9), hit("vpn-setup", 0.8), hit("handbook", 0.5)]
+    bare = [hit("handbook", 0.7), hit("vpn", 0.4)]
+
+    fused = fuse_ranked([with_history, bare], limit=2)
+
+    assert [h.document_id for h in fused] == ["vpn", "handbook"]  # iki listede de olanlar öne çıkar
+    assert fused[0].score == 0.9 and fused[1].score == 0.5  # skor, ilk listedeki kayıttan gelir
+    assert [h.document_id for h in fuse_ranked([with_history, []], limit=5)] == ["vpn", "vpn-setup", "handbook"]
 
 
 def test_client_history_cannot_expand_current_users_document_access(
