@@ -30,6 +30,9 @@ ENV PATH="/app/.venv/bin:$PATH" \
     QDRANT_PATH=/data/qdrant \
     MODEL_CACHE_DIR=/data/models \
     KNOWVIA_API_URL=http://127.0.0.1:8000
+# huggingface_hub'ın ortak blob deposu (Linux'ta symlink ile) model.onnx ile model.onnx_data'yı farklı
+# klasörlere koyar; onnxruntime dış veri dosyası modelin klasörü dışındaysa modeli yüklemeyi reddeder.
+ENV HF_HUB_DISABLE_SHARED_BLOBS=1
 
 RUN useradd --create-home --uid 10001 knowvia \
     && mkdir /data && chown knowvia:knowvia /data \
