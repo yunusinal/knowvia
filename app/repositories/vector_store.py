@@ -210,8 +210,14 @@ def get_vector_store() -> VectorStore:
     settings = get_settings()
     path = Path(settings.qdrant_path)
     path.mkdir(parents=True, exist_ok=True)
-    store = VectorStore(
-        QdrantClient(path=str(path)), settings.qdrant_collection, get_embedder().dimension, get_sparse_encoder(),
-    )
-    store.ensure_collection()
+    # Klasörü kilitleyen istemci en son açılır; hata olursa kapatılır ki sonraki istek asıl hatayı
+    # görsün, yanıltıcı "already accessed" kilit hatasını değil (lru_cache hatayı önbelleğe almaz).
+    dimension, sparse = get_embedder().dimension, get_sparse_encoder()
+    client = QdrantClient(path=str(path))
+    store = VectorStore(client, settings.qdrant_collection, dimension, sparse)
+    try:
+        store.ensure_collection()
+    except Exception:
+        client.close()
+        raise
     return store

@@ -16,6 +16,7 @@ Feng et al., "doc2dial: A Goal-Oriented Document-Grounded Dialogue Dataset", EMN
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import re
@@ -360,7 +361,11 @@ def open_hybrid_corpus(
     store.close()
     folder = CACHE_DIR / f"doc2dial-{domain}-{corpus}-hybrid"
     ready = folder / "ready.json"
-    if folder.exists() and not ready.exists():
+    # Korpus yeniden kurulursa belge kimlikleri değişir; eski kopyada hiçbir sonuç eşleşmez (her metrik %0).
+    corpus_key = hashlib.sha256(",".join(sorted(mapping)).encode()).hexdigest()[:16]
+    if folder.exists() and (
+        not ready.exists() or json.loads(ready.read_text(encoding="utf-8")).get("corpus") != corpus_key
+    ):
         shutil.rmtree(folder)
     client = QdrantClient(path=str(folder / "qdrant"))
     if not ready.exists():
@@ -386,7 +391,7 @@ def open_hybrid_corpus(
             if offset is None:
                 break
         source.close()
-        ready.write_text("{}", encoding="utf-8")
+        ready.write_text(json.dumps({"corpus": corpus_key}), encoding="utf-8")
     return client, mapping
 
 

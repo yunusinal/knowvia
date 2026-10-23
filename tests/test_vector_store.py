@@ -4,7 +4,9 @@ from pathlib import Path
 import pytest
 from qdrant_client import QdrantClient, models
 
-from app.repositories.vector_store import ChunkHit, VectorStore, point_id
+from app.core.config import get_settings
+from app.repositories import vector_store
+from app.repositories.vector_store import ChunkHit, VectorStore, get_vector_store, point_id
 from app.services.chunking import Chunk
 from tests.fakes import FakeEmbedder, FakeSparseEncoder
 
@@ -68,6 +70,26 @@ def test_old_dense_only_collection_is_rejected_with_migration_hint(client: Qdran
 
     with pytest.raises(RuntimeError, match="reindex_hybrid"):
         VectorStore(client, COLLECTION, 32, FakeSparseEncoder()).ensure_collection()
+
+
+def test_rejected_collection_releases_the_folder_lock_so_the_real_error_repeats(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    old = QdrantClient(path=str(tmp_path))
+    old.create_collection(COLLECTION, vectors_config=models.VectorParams(size=32, distance=models.Distance.COSINE))
+    old.close()
+    monkeypatch.setattr(get_settings(), "qdrant_path", str(tmp_path))
+    monkeypatch.setattr(get_settings(), "qdrant_collection", COLLECTION)
+    monkeypatch.setattr(vector_store, "get_sparse_encoder", FakeSparseEncoder)
+    get_vector_store.cache_clear()
+
+    # Sunucu ilk hatanın kaydını (traceback) tutar; kayıt canlıyken istemci çöp toplamayla kapanmaz.
+    with pytest.raises(RuntimeError, match="uyumsuz") as first_error:
+        get_vector_store()
+    # İkinci istek de "uyumsuz" görmeli; istemci kapanmasaydı "already accessed" kilit hatası çıkardı.
+    with pytest.raises(RuntimeError, match="uyumsuz"):
+        get_vector_store()
+    assert first_error.traceback  # kayıt bu satıra kadar canlı kalır
 
 
 def test_search_returns_chunk_fields_and_ranks_best_match_first(store: VectorStore, embedder: FakeEmbedder) -> None:
