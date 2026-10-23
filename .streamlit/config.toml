@@ -1,4 +1,4 @@
-# Knowvia arayüz teması: docs/index.html tanıtım sayfasıyla aynı palet (kâğıt, mürekkep, petrol yeşili) ve yazı tipi.
+# Knowvia arayüz teması: docs/index.html tanıtım sayfasıyla aynı koyu palet (lacivert zemin, yeşil onay, sarı vurgu) ve yazı tipi.
 # `uv run streamlit run frontend/streamlit_app.py` repo kökünden çalıştırıldığında okunur.
 
 [browser]
@@ -13,32 +13,34 @@ maxUploadSize = 10
 toolbarMode = "minimal"
 
 [theme]
-base = "light"
-primaryColor = "#0E6B6B"
-backgroundColor = "#F7F8FA"
-secondaryBackgroundColor = "#EEF1F5"
-codeBackgroundColor = "#F1F5F9"
-textColor = "#16202E"
-linkColor = "#0E6B6B"
-borderColor = "#D5DBE2"
+base = "dark"
+# Birincil düğmelerde beyaz yazı okunsun diye sayfadaki yeşilin bir ton koyusu.
+primaryColor = "#059669"
+backgroundColor = "#0B1220"
+secondaryBackgroundColor = "#162033"
+codeBackgroundColor = "#0F172A"
+textColor = "#E2E8F0"
+linkColor = "#34D399"
+borderColor = "#2A3650"
 showWidgetBorder = true
 showSidebarBorder = true
-baseRadius = "6px"
-buttonRadius = "6px"
-font = "'Schibsted Grotesk':https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap"
+baseRadius = "10px"
+buttonRadius = "10px"
+font = "'Plus Jakarta Sans':https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
 codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
 baseFontSize = 14
 headingFontWeights = [800, 700, 700, 600, 600, 600]
-grayColor = "#5B6878"
-blueColor = "#2563EB"
-greenColor = "#0E6B6B"
-redColor = "#DC2626"
-orangeColor = "#EA580C"
-violetColor = "#7C3AED"
-dataframeBorderColor = "#D5DBE2"
-dataframeHeaderBackgroundColor = "#EEF1F5"
+grayColor = "#94A3B8"
+blueColor = "#60A5FA"
+greenColor = "#10B981"
+redColor = "#F87171"
+orangeColor = "#FB923C"
+yellowColor = "#FACC15"
+violetColor = "#A78BFA"
+dataframeBorderColor = "#2A3650"
+dataframeHeaderBackgroundColor = "#162033"
 
 [theme.sidebar]
-backgroundColor = "#EEF1F5"
-secondaryBackgroundColor = "#E3E8EE"
-borderColor = "#D5DBE2"
+backgroundColor = "#0F172A"
+secondaryBackgroundColor = "#162033"
+borderColor = "#2A3650"

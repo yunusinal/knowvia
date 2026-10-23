@@ -144,8 +144,8 @@ def test_landing_page_with_login_is_shown_first() -> None:
     assert at.title[0].value == "Knowvia"
     assert [t.label for t in at.text_input] == ["E-posta", "Parola"]
     assert len(at.chat_input) == 0  # giriş yapmadan sohbet yok
-    assert [h.value for h in at.header] == ["Aynı soru, farklı cevap", "Sızdırmamak için yapılanlar"]
-    assert "Tek tip ret" in texts(at)
+    assert [h.value for h in at.header] == []  # ayrıntılı tanıtım statik sayfada; burada yalnız giriş
+    assert "Aynı soru." in texts(at)
     github = at.get("link_button")[0]
     assert github.proto.url == "https://github.com/yunusinal/knowvia"  # pyright: ignore[reportAttributeAccessIssue]
 
@@ -434,3 +434,33 @@ def test_public_demo_lists_member_accounts_with_password_but_never_admin(monkeyp
     hint = next(c.value for c in at.caption if "Demo hesapları" in c.value)
     assert "acik-demo" in hint and "finance@demo.local" in hint
     assert "admin" not in hint
+
+
+def test_corner_logo_is_shown_only_after_sign_in(monkeypatch: pytest.MonkeyPatch) -> None:
+    import streamlit as st
+
+    calls: list[object] = []
+    monkeypatch.setattr(st, "logo", lambda image, **_: calls.append(image))
+
+    at = app()
+    assert not at.exception and calls == []  # giriş ekranında logo yalnız ortada
+
+    at.text_input[0].set_value("it@demo.local")
+    at.text_input[1].set_value(PASSWORD)
+    at.button[0].click().run()
+    assert not at.exception and len(calls) == 1
+
+
+def test_theme_css_draws_the_landing_page_grid_without_taking_space() -> None:
+    css = (Path(__file__).resolve().parents[1] / "frontend" / "assets" / "theme.css").read_text(encoding="utf-8")
+    assert "background-size: 56px 56px" in css and "radial-gradient" in css  # docs/index.html ile aynı ızgara ve ışık
+    assert "<" not in css  # st.html dosyayı <style> içine sarar; düz CSS sayfada yer kaplamaz
+    assert not app().exception
+
+
+def test_app_uses_the_project_logo_on_landing_and_as_assistant_avatar() -> None:
+    assert not app().exception  # logo ve sekme simgesi dosyaları yüklenebiliyor
+    assets = Path(__file__).resolve().parents[1] / "frontend" / "assets"
+    for name in ("logo.svg", "logo-mark.svg", "favicon.svg"):
+        svg = (assets / name).read_text(encoding="utf-8")
+        assert svg.startswith("<svg") and "#10B981" in svg  # tanıtım sayfasıyla aynı yeşil onay işareti

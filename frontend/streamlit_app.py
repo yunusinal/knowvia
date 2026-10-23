@@ -14,6 +14,14 @@ from frontend import labels, session  # noqa: E402
 from frontend.api_client import ApiError, SessionExpiredError  # noqa: E402
 
 VIEWS = Path(__file__).resolve().parent / "views"
+# Tanıtım sayfasıyla (docs/index.html) aynı logo ve koyu tema.
+ASSETS = Path(__file__).resolve().parent / "assets"
+LOGO = str(ASSETS / "logo.svg")
+LOGO_MARK = str(ASSETS / "logo-mark.svg")
+# Sekme simgesi: lacivert zeminli sürüm, açık ve koyu tarayıcı sekmesinde aynı netlikte görünür.
+FAVICON = str(ASSETS / "favicon.svg")
+# Tanıtım sayfasındaki kareli, geçişli zemin ve küçük stil düzeltmeleri; yalnız <style> olduğu için sayfada yer kaplamaz.
+THEME_CSS = ASSETS / "theme.css"
 
 
 def sidebar() -> None:
@@ -21,7 +29,6 @@ def sidebar() -> None:
     role: str = user["role"]
     is_admin = role == "admin"
     with st.sidebar:
-        st.markdown("### :material/menu_book: Knowvia")
         st.caption("Belgelere sorun, kaynaklarıyla öğrenin.")
         with st.container(border=True):
             # Kod biçimi: düz e-posta Markdown'da mailto bağlantısına dönüşür.
@@ -49,14 +56,18 @@ def sidebar() -> None:
 
 signed_in = session.TOKEN in st.session_state
 st.set_page_config(
-    page_title="Knowvia", page_icon=":material/menu_book:",
+    page_title="Knowvia", page_icon=FAVICON,
     layout="centered" if signed_in else "wide",
 )
+st.html(THEME_CSS)
+# Giriş ekranında logo zaten ortada; sol üstteki logo yalnız giriş yapınca görünür (yan panel kapanınca simge kalır).
+if signed_in:
+    st.logo(LOGO, icon_image=LOGO_MARK, size="large")
 
 if session.TOKEN not in st.session_state:
     # Giriş yapılmamışken yalnızca landing page (giriş formu dahil) erişilebilir.
     navigation = st.navigation(
-        [st.Page(VIEWS / "landing.py", title="Knowvia", icon=":material/menu_book:", default=True)],
+        [st.Page(VIEWS / "landing.py", title="Knowvia", default=True)],
         position="hidden",
     )
 else:

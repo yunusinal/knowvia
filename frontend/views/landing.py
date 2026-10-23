@@ -1,10 +1,11 @@
-"""Landing page: projeyi kısaca tanıtır ve giriş formunu sunar (giriş yapılmamışken görünen tek sayfa).
+"""Giriş ekranı: kısa tanıtım ve giriş formu (giriş yapılmamışken görünen tek sayfa).
 
-Tasarım `docs/index.html` tanıtım sayfasıyla aynı dili konuşur: aynı soruya iki kullanıcının aldığı
-farklı cevap. Ayrıntılı hikâye o sayfada; burada giriş öne çıkar.
+Projenin ayrıntılı, etkileşimli tanıtımı `docs/index.html`'dedir; sunucuda ana adreste yayınlanır ve
+uygulama /app altında çalışır (ADR-12). Burada yalnızca giriş öne çıkar.
 """
 
 import os
+from pathlib import Path
 
 import streamlit as st
 
@@ -14,15 +15,7 @@ from frontend.api_client import ApiError
 REPO_URL = "https://github.com/yunusinal/knowvia"
 # Herkese açık demoda ziyaretçilere gösterilen üye parolası; admin hiçbir zaman listelenmez (ADR-12).
 PUBLIC_DEMO_PASSWORD = os.environ.get("KNOWVIA_PUBLIC_DEMO_PASSWORD", "")
-QUESTION = "2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?"
-
-GUARDS = [
-    ("Tek tip ret", "\"Bilgi yok\" ve \"yetkiniz yok\" aynı mesajı alır; gizli bir belgenin varlığı ele verilmez."),
-    ("Kaynaklı cevap", "Cevaplar yalnızca yetkili belgelerden gelir; dosya adı ve alıntıyla gösterilir."),
-    ("Silince erişim anında kesilir", "Silinen belge bir sonraki sorudan itibaren hiçbir aramada çıkmaz."),
-    ("Destek talebi onayla açılır", "Model yalnızca taslak önerir; kayıt siz onaylayınca oluşur."),
-]
-
+LOGO_MARK = str(Path(__file__).resolve().parents[1] / "assets" / "logo-mark.svg")
 
 def login_form() -> None:
     with st.container(border=True):
@@ -56,35 +49,18 @@ def login_form() -> None:
 
 hero, login = st.columns([3, 2], gap="large", vertical_alignment="center")
 with hero:
-    st.title("Knowvia")
-    st.markdown("# Aynı soru. :gray[Kimin sorduğuna göre farklı cevap.]")
+    with st.container(horizontal=True, vertical_alignment="center", gap="small"):
+        st.image(LOGO_MARK, width=56)
+        st.title("Knowvia")
+    # Tanıtım sayfasındaki başlıkla aynı söz.
+    st.markdown("# Aynı soru. :green[Herkese _kendi_ cevabı.]")
     st.markdown(
-        "Şirket belgelerine doğal dille sorun. Her kullanıcı yalnızca **erişebildiği** belgelerden, "
+        "Ekibinizin ya da kurumunuzun belgelerine doğal dille sorun. Her kullanıcı yalnızca **görmeye yetkili olduğu** belgelerden, "
         "**kaynak gösterilerek** cevap alır; yetkisi olmadığı bilgi cevaba hiç girmez."
     )
     st.link_button("Kaynak kodunu incele", REPO_URL, icon=":material/code:")
 with login:
     login_form()
 
-st.space("medium")
-st.header("Aynı soru, farklı cevap")
-st.caption(QUESTION)
-finance, it = st.columns(2)
-with finance, st.container(border=True, height="stretch"):
-    st.markdown("`finance@demo.local` :green-badge[Finans]")
-    st.markdown("Bulut altyapı harcamalarına %20 artış ayrıldı. :yellow-background[**S1**]")
-    st.caption("Kaynak: budget-plan-2026-confidential.md")
-with it, st.container(border=True, height="stretch"):
-    st.markdown("`it@demo.local` :gray-badge[IT]")
-    st.markdown("Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.")
-    st.caption("Bütçe belgesi bu kullanıcının aramasına hiç girmez.")
-
-st.space("medium")
-st.header("Sızdırmamak için yapılanlar")
-for column, (title, text) in zip(st.columns(len(GUARDS)), GUARDS):
-    with column:
-        st.markdown(f"**{title}**")
-        st.caption(text)
-
 st.space("small")
-st.caption("Sentetik demo belgeleriyle çalışan yerel bir portföy projesi; gerçek şirket verisi içermez.")
+st.caption("Demo, hayali bir şirketin sentetik belgeleriyle çalışır; gerçek kurum verisi içermez.")

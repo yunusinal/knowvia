@@ -1,0 +1,38 @@
+/* Uygulama geneli stil. Tanıtım sayfasıyla (docs/index.html) aynı zemin: sağ üstte tek yeşil ışık + aşağı doğru silikleşen ince ızgara.
+   `isolation` uygulamayı ayrı bir katman yığını yapar; ızgara (z-index: -1) zeminin üstünde, içeriğin altında kalır. */
+.stApp {
+  isolation: isolate;
+  background:
+    radial-gradient(600px 420px at 78% 12%, rgba(16, 185, 129, .13), transparent 70%),
+    linear-gradient(#0B1220, #0F172A);
+  background-attachment: fixed;
+}
+.stApp::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .35;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, .16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, .16) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black, transparent 60%);
+}
+/* Üst şerit düz renk çizmesin; ızgara en üstten başlasın. */
+[data-testid="stHeader"] {
+  background: transparent;
+}
+/* Sohbet giriş çubuğu kayan mesajları örtmeli; zeminin alt ucundaki renkle aynı, ek görünmez. */
+[data-testid="stBottom"] > div {
+  background: #0F172A;
+}
+/* Yan paneldeki e-posta: mailto bağlantısına dönmesin diye kod biçiminde yazılır; burada düz, beyaz metin gibi görünür. */
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] strong code {
+  color: #F8FAFC;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 1rem;
+}

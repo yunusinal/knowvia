@@ -1,5 +1,6 @@
 """Sohbet sayfası: soru → yetkili belgelerden kaynaklı cevap veya açık "kanıt yok" mesajı."""
 
+from pathlib import Path
 from typing import Any
 
 import streamlit as st
@@ -7,7 +8,8 @@ import streamlit as st
 from frontend import session
 from frontend.api_client import ApiError, SessionExpiredError
 
-AVATARS = {"user": ":material/person:", "assistant": ":material/menu_book:"}
+# Asistan avatarı uygulamanın logosu; tanıtım sayfası ve giriş ekranıyla aynı.
+AVATARS = {"user": ":material/person:", "assistant": str(Path(__file__).resolve().parents[1] / "assets" / "logo-mark.svg")}
 # Boş sohbette gösterilen örnek sorular; cevap yetkiye göre değişir (ör. bütçe yalnız Finans ve admin için).
 SUGGESTIONS = {
     ":violet[:material/vpn_key:] VPN hatası": "VPN 'sertifika doğrulanamadı' hatası veriyor, ne yapmalıyım?",
@@ -109,7 +111,7 @@ def render_ticket_proposal() -> None:
 
 TICKET_CREATED = "ticket_created"
 
-st.title("Knowvia", icon=":material/menu_book:")
+st.title("Sohbet")
 if created := st.session_state.pop(TICKET_CREATED, None):
     st.success(f"Destek talebi oluşturuldu: {created}", icon=":material/check_circle:")
 st.caption("Yalnızca erişim yetkiniz olan belgelerden, kaynak göstererek cevap verilir.")
