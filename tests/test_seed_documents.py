@@ -53,6 +53,8 @@ def test_seeded_confidential_documents_follow_department_acl(
 
     assert "budget-plan-2026-confidential.md" not in visible_to("it")
     assert "hiring-guide-confidential.md" not in visible_to("finance")
-    assert "vpn-troubleshooting.md" in visible_to("it")
-    assert "vpn-troubleshooting.md" not in visible_to("hr")
+    assert "incident-response-internal.md" in visible_to("it")
+    assert "incident-response-internal.md" not in visible_to("hr")
+    # VPN sorunları herkesi ilgilendirir: sorun giderme belgesi şirket geneline açıktır.
+    assert "vpn-troubleshooting.md" in visible_to("hr")
     assert visible_to("admin") == set(filenames.values())
