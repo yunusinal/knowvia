@@ -1,8 +1,8 @@
 # Knowvia
 
-![Knowvia: aynı soruya Finans kullanıcısı kaynaklı cevap, IT kullanıcısı sabit ret alıyor](docs/assets/landing.png)
+![Knowvia tanıtım sayfası: rol seçilerek aynı soru deneniyor; Finans kullanıcısı kaynaklı cevap alıyor](docs/assets/landing.png)
 
-Erişim yetkisine duyarlı bir RAG bilgi asistanı. Kullanıcılar şirket belgelerine doğal dille soru sorar; cevaplar yalnızca erişebildikleri belgelerden hazırlanır ve kaynaklarıyla gösterilir.
+Erişim yetkisine duyarlı bir RAG bilgi asistanı. Ekip ve kurumlarda kullanıcılar ortak belgelere doğal dille soru sorar; cevaplar yalnızca erişebildikleri belgelerden hazırlanır ve kaynaklarıyla gösterilir.
 
 Sentetik belgeler ve demo hesaplarıyla çalışan, geliştirme aşamasındaki yerel bir portföy projesidir.
 
@@ -139,7 +139,7 @@ NVIDIA ekran kartı varsa arama adayları bir çapraz kodlayıcıyla (`BAAI/bge-
 
 ## Canlıya alma (Docker)
 
-Uygulama tek bir konteynerde (API + arayüz) ve önünde otomatik HTTPS sağlayan Caddy ile çalışır; ARM (Oracle Ampere) ve x86_64 için derlenir. Sunucuda `.env` doldurulduktan sonra:
+Uygulama tek bir konteynerde (API + arayüz) ve önünde otomatik HTTPS sağlayan Caddy ile çalışır; ARM (Oracle Ampere) ve x86_64 için derlenir. Ana adreste etkileşimli tanıtım sayfası, `/app/` altında uygulama yayınlanır. Sunucuda `.env` doldurulduktan sonra:
 
 ```bash
 docker compose up -d --build

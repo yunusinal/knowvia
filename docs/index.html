@@ -4,266 +4,835 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Knowvia · Erişim yetkisine duyarlı bilgi asistanı</title>
-<meta name="description" content="Knowvia, şirket belgelerine sorulan soruları yalnızca soran kişinin erişebildiği belgelerden, kaynak göstererek cevaplayan açık kaynaklı bir RAG asistanıdır.">
+<meta name="description" content="Knowvia, ekip ve kurum belgelerine sorulan soruları yalnızca soranın görmeye yetkili olduğu belgelerden, kaynak göstererek cevaplayan açık kaynaklı bir RAG asistanıdır.">
+<meta name="theme-color" content="#0B1220">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #F3F5F7;
-    --sheet: #FFFFFF;
-    --ink: #16202E;
-    --slate: #5B6878;
-    --rule: #D5DBE2;
-    --teal: #0E6B6B;
-    --teal-dark: #0A5252;
-    --marker: #F6E05E;
-    --redact: #16202E;
-    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --bg: #0B1220;
+    --bg-2: #0F172A;
+    --card: #162033;
+    --card-2: #1C2940;
+    --line: rgba(148, 163, 184, .16);
+    --line-strong: rgba(148, 163, 184, .32);
+    --text: #E2E8F0;
+    --text-strong: #F8FAFC;
+    --muted: #94A3B8;
+    --green: #10B981;
+    --green-soft: rgba(16, 185, 129, .14);
+    --marker: #FACC15;
+    --redact: #020617;
+    --sans: "Plus Jakarta Sans", system-ui, sans-serif;
     --serif: "Source Serif 4", Georgia, serif;
-    --measure: 64ch;
   }
-
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font: 400 1.0625rem/1.6 var(--sans);
-    -webkit-font-smoothing: antialiased;
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--green); }
+  :focus-visible { outline: 2px solid var(--marker); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--marker); color: #111; padding: .5rem .8rem; border-radius: 8px; z-index: 10; }
+  .skip:focus { left: 8px; }
+  .wrap { width: min(1180px, 100% - 2.5rem); margin-inline: auto; }
+
+  /* Arka plan: ince ızgara + tek bir yeşil ışık; "kasa" hissini veren tek yüzey. */
+  .backdrop { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(600px 420px at 78% 12%, rgba(16, 185, 129, .13), transparent 70%),
+      linear-gradient(var(--bg), var(--bg-2));
   }
-  a { color: var(--teal); }
-  a:focus-visible, button:focus-visible { outline: 3px solid var(--marker); outline-offset: 3px; border-radius: 4px; }
+  .backdrop::after { content: ""; position: absolute; inset: 0; opacity: .35;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 60%); }
 
-  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
-
-  /* Üst çubuk */
-  .top { display: flex; align-items: center; justify-content: space-between; padding-block: 1.5rem; }
-  .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
-  .brand svg { width: 28px; height: 28px; }
-  .top nav { display: flex; gap: 1.75rem; }
-  .top nav a { color: var(--slate); text-decoration: none; font-weight: 500; font-size: .975rem; }
-  .top nav a:hover { color: var(--ink); }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding-block: 1.4rem; }
+  .brand { display: flex; align-items: center; gap: .6rem; color: var(--text-strong); text-decoration: none; font-weight: 800; font-size: 1.2rem; }
+  .brand svg { width: 30px; height: 30px; }
+  nav.links { display: flex; align-items: center; gap: 1.6rem; }
+  nav.links a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem; }
+  nav.links a:hover { color: var(--text-strong); }
+  .btn { display: inline-flex; align-items: center; gap: .55rem; padding: .78rem 1.2rem; border-radius: 10px; font: 600 .98rem var(--sans); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background-color .2s, border-color .2s, transform .2s; }
+  .btn svg { width: 18px; height: 18px; }
+  nav.links a.btn.primary, .btn.primary { background: var(--green); color: #04130D; }
+  .btn.primary:hover { background: #34D399; transform: translateY(-1px); }
+  .btn.ghost { color: var(--text); border-color: var(--line-strong); background: rgba(15, 23, 42, .6); }
+  .btn.ghost:hover { border-color: var(--text); }
+  .btn.small { padding: .55rem .9rem; font-size: .9rem; }
+  /* Dil seçici: iki düğmeli küçük anahtar; seçili dil dolu görünür. */
+  .lang { display: inline-flex; gap: .15rem; padding: .2rem; border: 1px solid var(--line-strong); border-radius: 9px; background: rgba(2, 6, 23, .35); }
+  .lang button { border: 0; background: transparent; color: var(--muted); border-radius: 6px; padding: .3rem .55rem; min-height: 32px; font: 700 .8rem var(--sans); letter-spacing: .04em; cursor: pointer; }
+  .lang button:hover { color: var(--text-strong); }
+  .lang button[aria-pressed="true"] { background: var(--card-2); color: var(--text-strong); }
 
   /* Hero */
-  .hero { padding-block: 2.5rem 1rem; }
-  .hero h1 {
-    margin: 0;
-    font-weight: 800;
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    line-height: 1.04;
-    letter-spacing: -.035em;
-    max-width: 22ch;
-  }
-  .hero h1 span { display: block; color: var(--slate); font-weight: 600; text-wrap: balance; }
-  .lede { margin: 1.25rem 0 0; max-width: 56ch; font-size: 1.2rem; line-height: 1.55; color: #2E3A4A; }
-  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
-  .btn {
-    display: inline-flex; align-items: center; gap: .55rem;
-    padding: .8rem 1.25rem; border-radius: 6px;
-    font: 600 1rem var(--sans); text-decoration: none;
-    border: 1.5px solid var(--teal);
-  }
-  .btn svg { width: 18px; height: 18px; }
-  .btn.primary { background: var(--teal); color: #fff; }
-  .btn.primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
-  .btn.ghost { color: var(--teal); background: transparent; }
-  .btn.ghost:hover { background: #E3EEEE; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 3rem; align-items: center; padding-block: 3.5rem 4.5rem; }
+  .hero h1 { margin: 0; color: var(--text-strong); font-weight: 800; font-size: clamp(2.3rem, 3.9vw, 3.35rem); line-height: 1.08; letter-spacing: -.035em; }
+  @media (min-width: 961px) { .hero h1 .line { white-space: nowrap; } }
+  .hero h1 em { font-style: normal; color: var(--green); }
+  .lede { margin: 1.4rem 0 0; color: #CBD5E1; font-size: 1.12rem; max-width: 50ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.9rem; }
+  .accounts { margin-top: 1.3rem; color: var(--muted); font-size: .9rem; max-width: 52ch; }
+  .solo { margin-top: .6rem; color: var(--muted); font-size: .88rem; max-width: 52ch; }
+  .console-foot { margin: 0; padding: .85rem 1.1rem; border-top: 1px solid var(--line); color: #A7F3D0; font-size: .9rem; font-weight: 500; }
+  .accounts code { color: var(--text); background: var(--card); padding: .1rem .4rem; border-radius: 6px; font-size: .85rem; }
 
-  /* Canlı karşılaştırma */
-  .stage { margin: 2.5rem 0 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
-  .ask { display: flex; align-items: center; gap: .9rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--rule); font-weight: 600; font-size: 1.08rem; }
-  .ask svg { flex: none; width: 22px; height: 22px; color: var(--slate); }
-  .lanes { display: grid; grid-template-columns: 1fr 1fr; }
-  .lane { padding: 1.5rem 1.5rem 1.75rem; }
-  .lane + .lane { border-left: 1px solid var(--rule); }
-  .who { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.1rem; color: var(--slate); font-size: .95rem; }
-  .who strong { color: var(--ink); font-weight: 600; }
-  .dept { padding: .12rem .55rem; border-radius: 999px; font-size: .8rem; font-weight: 600; background: #E8ECF1; color: var(--ink); }
-  .dept.finance { background: #DDEFEA; color: var(--teal-dark); }
-  .answer { margin: 0; font-size: 1.12rem; line-height: 1.5; font-weight: 500; }
-  .cite { background: var(--marker); padding: 0 .25em; border-radius: 3px; font-weight: 600; font-size: .9em; }
-  .refusal { margin: 0; font-size: 1.12rem; line-height: 1.5; color: #2E3A4A; }
-
-  .excerpt { margin: 1.25rem 0 0; padding: 1rem 1.1rem; border-left: 3px solid var(--marker); background: #FAFBFC; }
-  .excerpt .file { display: flex; align-items: center; gap: .5rem; font: 600 .82rem var(--sans); color: var(--slate); margin-bottom: .45rem; }
-  .excerpt p { margin: 0; font: 400 1.02rem/1.65 var(--serif); }
-  .excerpt mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: inherit; }
-
-  .hidden-doc { margin-top: 1.25rem; padding: 1rem 1.1rem; border: 1px dashed var(--rule); border-radius: 6px; }
-  .hidden-doc .file { display: block; font: 600 .82rem var(--sans); color: var(--slate); margin-bottom: .6rem; }
-  .bar { display: block; height: .8rem; margin: .45rem 0; background: var(--redact); border-radius: 2px; }
-  .bar:nth-child(3) { width: 92%; } .bar:nth-child(4) { width: 76%; } .bar:nth-child(5) { width: 54%; }
-  .note { margin: .9rem 0 0; font-size: .92rem; color: var(--slate); }
-
-  /* Sayfadaki tek animasyon: Finans tarafında karartma kalkar, cevap görünür. */
-  .reveal { position: relative; display: block; }
-  .reveal::after {
-    content: ""; position: absolute; inset: -2px -4px;
-    background: var(--redact); border-radius: 2px;
-    transform-origin: right center;
-    animation: lift 900ms cubic-bezier(.7, 0, .2, 1) 700ms forwards;
-  }
-  @keyframes lift { to { transform: scaleX(0); } }
-  @media (prefers-reduced-motion: reduce) { .reveal::after { animation: none; transform: scaleX(0); } }
+  /* Canlı konsol */
+  .console { background: linear-gradient(180deg, var(--card-2), var(--card)); border: 1px solid var(--line-strong); border-radius: 20px; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .7); overflow: hidden; }
+  .console-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--line); }
+  .console-head .title { display: flex; align-items: center; gap: .55rem; color: var(--muted); font-size: .88rem; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
+  .replay { background: none; border: 1px solid var(--line-strong); color: var(--muted); border-radius: 8px; padding: .3rem .6rem; font: 500 .8rem var(--sans); cursor: pointer; min-height: 32px; }
+  .replay:hover { color: var(--text); }
+  .roles { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; padding: .9rem 1.1rem .4rem; }
+  .role { display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; padding: .6rem .7rem; border-radius: 10px; border: 1px solid var(--line); background: rgba(2, 6, 23, .35); color: var(--muted); cursor: pointer; text-align: left; font: inherit; min-height: 44px; transition: border-color .2s, background-color .2s, color .2s; }
+  .role b { color: var(--text); font-size: .95rem; font-weight: 700; }
+  .role span { font-size: .76rem; }
+  .role[aria-selected="true"] { border-color: var(--green); background: var(--green-soft); }
+  .role[aria-selected="true"] span { color: #A7F3D0; }
+  .questions { display: flex; flex-wrap: wrap; gap: .4rem; padding: .5rem 1.1rem 1rem; }
+  .q { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: .42rem .8rem; font: 500 .84rem var(--sans); cursor: pointer; min-height: 36px; transition: color .2s, border-color .2s, background-color .2s; }
+  .q:hover { color: var(--text); border-color: var(--line-strong); }
+  .q[aria-pressed="true"] { color: var(--text-strong); border-color: var(--text); background: rgba(248, 250, 252, .06); }
+  .chat { padding: 1.1rem; border-top: 1px solid var(--line); background: rgba(2, 6, 23, .3); min-height: 340px; }
+  .bubble-q { margin-left: auto; max-width: 85%; width: fit-content; background: var(--card-2); border: 1px solid var(--line); padding: .6rem .85rem; border-radius: 12px 12px 4px 12px; color: var(--text-strong); font-weight: 500; }
+  .answer { margin-top: .9rem; display: grid; grid-template-columns: 32px 1fr; gap: .7rem; align-items: start; }
+  .avatar { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--green-soft); color: var(--green); }
+  .avatar svg { width: 18px; height: 18px; }
+  .answer-text { color: var(--text); min-height: 1.6em; }
+  .answer-text.refusal { color: #FCA5A5; }
+  .caret { display: inline-block; width: 2px; height: 1.05em; background: var(--green); vertical-align: -2px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .cite { background: var(--marker); color: #1C1917; border-radius: 4px; padding: 0 .3em; font-weight: 700; font-size: .82em; margin-left: .2em; }
+  .source { margin-top: .8rem; border-left: 3px solid var(--marker); background: rgba(250, 204, 21, .06); border-radius: 0 10px 10px 0; padding: .7rem .9rem; opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
+  .source.show { opacity: 1; transform: none; }
+  .source .file { display: flex; align-items: center; gap: .5rem; color: var(--muted); font-size: .8rem; font-weight: 600; margin-bottom: .3rem; }
+  .source .file .cite { margin-left: 0; }
+  .source p { margin: 0; font: 400 .98rem/1.6 var(--serif); color: #E2E8F0; }
+  .source mark { background: linear-gradient(transparent 58%, rgba(250, 204, 21, .45) 58%); color: inherit; }
+  .hidden-doc { margin-top: .8rem; border: 1px dashed var(--line-strong); border-radius: 10px; padding: .7rem .9rem; opacity: 0; transition: opacity .35s; }
+  .hidden-doc.show { opacity: 1; }
+  .hidden-doc .file { color: var(--muted); font-size: .8rem; font-weight: 600; margin-bottom: .45rem; }
+  .bar { display: block; height: .62rem; margin: .38rem 0; border-radius: 3px; background: var(--redact); border: 1px solid rgba(148, 163, 184, .14); transform-origin: left; animation: redact .5s ease-out both; }
+  .bar:nth-child(3) { width: 88%; animation-delay: .08s; }
+  .bar:nth-child(4) { width: 64%; animation-delay: .16s; }
+  @keyframes redact { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .meta { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-top: .8rem; color: var(--muted); font-size: .8rem; }
+  .meta b { color: var(--text); font-weight: 600; }
+  .note { margin: .7rem 0 0; color: var(--muted); font-size: .84rem; }
 
   /* Bölümler */
-  section.block { padding-block: 5rem 0; }
-  .block h2 { margin: 0 0 .6rem; font-size: clamp(1.8rem, 3.6vw, 2.5rem); line-height: 1.1; letter-spacing: -.025em; font-weight: 800; }
-  .block .intro { margin: 0 0 2.25rem; max-width: var(--measure); color: #2E3A4A; }
+  section.block { padding-block: 5.5rem 0; }
+  .block h2 { margin: 0; color: var(--text-strong); font-weight: 800; font-size: clamp(1.9rem, 3.4vw, 2.6rem); letter-spacing: -.025em; line-height: 1.1; }
+  .block .intro { margin: .8rem 0 2.4rem; color: #CBD5E1; max-width: 62ch; font-size: 1.05rem; }
 
-  ol.path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); counter-reset: step; border-top: 2px solid var(--ink); }
-  ol.path li { counter-increment: step; padding: 1.1rem 1.1rem 0 0; }
-  ol.path li::before { content: counter(step); display: block; font-weight: 800; font-size: 1.6rem; color: var(--teal); margin-bottom: .35rem; }
-  ol.path b { display: block; font-size: 1.02rem; margin-bottom: .3rem; }
-  ol.path p { margin: 0; color: var(--slate); font-size: .95rem; line-height: 1.5; }
+  /* Bir sorunun yolu: solda adımlar, sağda sabit görsel */
+  .path { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; align-items: start; }
+  .scenario { display: inline-flex; gap: .3rem; padding: .3rem; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 1.6rem; background: rgba(2, 6, 23, .35); }
+  .scenario button { border: 0; background: transparent; color: var(--muted); padding: .5rem .85rem; border-radius: 9px; font: 600 .88rem var(--sans); cursor: pointer; min-height: 40px; }
+  .scenario button[aria-pressed="true"] { background: var(--card-2); color: var(--text-strong); }
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  ol.steps li { counter-increment: step; position: relative; padding: 0 0 0 3.2rem; min-height: 26vh; display: flex; flex-direction: column; justify-content: center; opacity: .38; transition: opacity .3s; cursor: pointer; border-radius: 12px; }
+  ol.steps li:hover { opacity: .75; }
+  ol.steps li:focus-visible { outline-offset: 6px; }
+  ol.steps li::before { content: counter(step); position: absolute; left: 0; top: 50%; translate: 0 -50%; width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-strong); color: var(--muted); font-weight: 700; }
+  ol.steps li.active { opacity: 1; }
+  ol.steps li.active::before { border-color: var(--green); color: var(--green); background: var(--green-soft); }
+  ol.steps h3 { margin: 0 0 .35rem; color: var(--text-strong); font-size: 1.2rem; }
+  ol.steps p { margin: 0; color: #CBD5E1; max-width: 46ch; }
+  .stage { position: sticky; top: 12vh; background: var(--card); border: 1px solid var(--line-strong); border-radius: 20px; padding: 1.3rem; min-height: 470px; }
+  .stage-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
+  .stage-head b { color: var(--text-strong); }
+  .stage-head span { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+  .progress { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: 1.1rem; }
+  .progress i { display: block; height: 100%; width: 20%; background: var(--green); transition: width .4s; }
+  .docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: .45rem; }
+  .doc { border: 1px solid var(--line); border-radius: 9px; padding: .5rem .55rem; font-size: .74rem; color: var(--text); background: rgba(2, 6, 23, .4); transition: opacity .4s, filter .4s, border-color .3s, background-color .3s; min-height: 54px; overflow-wrap: anywhere; }
+  .doc small { display: block; color: var(--muted); font-size: .68rem; margin-top: .15rem; }
+  .doc.denied { opacity: .3; filter: grayscale(1); background: repeating-linear-gradient(-45deg, rgba(2,6,23,.9) 0 6px, rgba(30,41,59,.9) 6px 12px); }
+  .doc.hit { border-color: var(--green); background: var(--green-soft); }
+  .stage-panel { margin-top: 1rem; min-height: 150px; }
+  .scores { display: grid; gap: .45rem; }
+  .score { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: .6rem; align-items: center; font-size: .8rem; }
+  .score .name { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .score .track { position: relative; height: 8px; background: var(--line); border-radius: 4px; }
+  .score .fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--green); }
+  .score.below .fill { background: #64748B; }
+  .score-legend { display: flex; justify-content: flex-end; align-items: center; gap: .45rem; margin-top: .2rem; color: var(--muted); font-size: .76rem; }
+  .score-legend i { display: inline-block; width: 2px; height: 12px; background: var(--marker); }
+  .threshold { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--marker); }
+  .panel-note { margin: .8rem 0 0; color: var(--muted); font-size: .84rem; }
+  .final { background: rgba(2, 6, 23, .45); border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem; }
+  .final b { color: var(--text-strong); }
+  .final.refusal { color: #FCA5A5; }
 
-  dl.guards { margin: 0; display: grid; grid-template-columns: minmax(12rem, 18rem) 1fr; border-top: 1px solid var(--rule); }
-  dl.guards dt, dl.guards dd { margin: 0; padding: 1.15rem 0; border-bottom: 1px solid var(--rule); }
-  dl.guards dt { font-weight: 700; padding-right: 2rem; }
-  dl.guards dd { color: #2E3A4A; max-width: var(--measure); }
+  /* Ekran görüntüleri, korumalar, ölçümler */
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .shots figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .shots img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 1000; object-fit: cover; object-position: top; }
+  .shots figcaption { padding: .75rem 1rem; color: var(--muted); font-size: .88rem; }
+  .shots figure.wide { grid-column: 1 / -1; }
+  .shots figure.wide img { aspect-ratio: 1440 / 760; object-position: center 70%; }
+  .guards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .guards div { background: var(--bg-2); padding: 1.3rem 1.2rem; }
+  .guards b { display: block; color: var(--text-strong); margin-bottom: .35rem; }
+  .guards p { margin: 0; color: var(--muted); font-size: .93rem; }
+  .cta { margin-top: 5.5rem; padding: 2.6rem; border-radius: 22px; border: 1px solid var(--line-strong); background: radial-gradient(500px 220px at 85% 0%, rgba(16,185,129,.18), transparent 70%), var(--card); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .cta h2 { margin: 0; color: var(--text-strong); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -.02em; }
+  .cta p { margin: .4rem 0 0; color: #CBD5E1; }
+  footer { margin-top: 4rem; padding-block: 2rem 3rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
 
-  table.metrics { width: 100%; border-collapse: collapse; font-size: 1rem; }
-  table.metrics th, table.metrics td { text-align: left; padding: .95rem 1rem .95rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  table.metrics th { font-size: .88rem; font-weight: 600; color: var(--slate); border-bottom: 2px solid var(--ink); }
-  table.metrics td.value { font-weight: 800; font-size: 1.15rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  table.metrics td.scope { color: var(--slate); font-size: .95rem; }
-  .caveat { margin: 1.25rem 0 0; max-width: var(--measure); color: var(--slate); font-size: .95rem; }
-
-  .stack { margin-top: 5rem; padding-block: 2.5rem; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; color: var(--slate); font-size: .95rem; }
-  .stack strong { color: var(--ink); }
-  footer { padding-block: 2rem 3rem; border-top: 1px solid var(--rule); color: var(--slate); font-size: .92rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-
-  @media (max-width: 860px) {
-    ol.path { grid-template-columns: 1fr 1fr; row-gap: 1.5rem; }
+  @media (max-width: 960px) {
+    .hero, .path { grid-template-columns: 1fr; }
+    .stage { position: relative; top: 0; }
+    ol.steps li { min-height: auto; padding-block: 1.2rem; opacity: 1; }
+    .guards { grid-template-columns: 1fr; }
   }
-  @media (max-width: 760px) {
-    .top nav { gap: 1rem; }
-    .top nav a:not(.gh) { display: none; }
-    .hero { padding-block: 2.5rem 2rem; }
-    .lanes { grid-template-columns: 1fr; }
-    .lane + .lane { border-left: 0; border-top: 1px solid var(--rule); }
-    ol.path { grid-template-columns: 1fr; }
-    dl.guards { grid-template-columns: 1fr; }
-    dl.guards dt { padding-bottom: .2rem; border-bottom: 0; }
-    dl.guards dd { padding-top: 0; }
-    table.metrics thead { display: none; }
-    table.metrics, table.metrics tbody, table.metrics tr, table.metrics td { display: block; }
-    table.metrics tr { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
-    table.metrics td { border: 0; padding: 0; }
-    table.metrics td.value { margin: .2rem 0; font-size: 1.4rem; }
+  @media (max-width: 640px) {
+    nav.links { gap: .8rem; }
+    nav.links a:not(.btn) { display: none; }
+    .roles { grid-template-columns: repeat(2, 1fr); }
+    .shots { grid-template-columns: 1fr; }
+            .score { grid-template-columns: minmax(0, 1fr) 110px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#main" data-i18n="skip">Ana içeriğe geç</a>
+<div class="backdrop" aria-hidden="true"></div>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#">
-      <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="3" width="16" height="22" rx="2" fill="none" stroke="#16202E" stroke-width="2.2"/><rect x="7" y="9" width="8" height="2.4" fill="#16202E"/><rect x="7" y="14" width="8" height="2.4" fill="#F6E05E"/><circle cx="20" cy="19" r="5" fill="#0E6B6B"/><path d="M18 19.2l1.4 1.4 2.8-2.8" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="3" width="17" height="23" rx="3" fill="none" stroke="#E2E8F0" stroke-width="2.2"/><rect x="7" y="9" width="9" height="2.6" rx="1" fill="#E2E8F0"/><rect x="7" y="14.5" width="9" height="2.6" rx="1" fill="#FACC15"/><circle cx="21.5" cy="20.5" r="6" fill="#10B981"/><path d="M19 20.7l1.7 1.7 3.4-3.4" stroke="#04130D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Knowvia
     </a>
-    <nav aria-label="Sayfa içi">
-      <a href="#yol">Nasıl çalışır</a>
-      <a href="#olcumler">Ölçümler</a>
-      <a class="gh" href="https://github.com/yunusinal/knowvia">GitHub</a>
+    <nav class="links" aria-label="Sayfa içi" data-i18n-aria="navAria">
+      <a href="#yol" data-i18n="navHow">Nasıl çalışır</a>
+      <a href="https://github.com/yunusinal/knowvia#mimari" data-i18n="navArch">Mimari</a>
+      <a href="https://github.com/yunusinal/knowvia">GitHub</a>
+      <div class="lang" role="group" aria-label="Dil / Language">
+        <button type="button" data-lang="tr" lang="tr" aria-pressed="true" title="Türkçe">TR</button>
+        <button type="button" data-lang="en" lang="en" aria-pressed="false" title="English">EN</button>
+      </div>
+      <a class="btn primary small demo-link" href="/app/" data-i18n="navDemo">Demoyu aç</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>Aynı soru. <span>Kimin sorduğuna göre farklı cevap.</span></h1>
-      <p class="lede">Knowvia, şirket belgelerine doğal dille sorulan soruları yalnızca soran kişinin erişebildiği belgelerden, kaynak göstererek cevaplar. Yetkisi olmadığı bilgi cevaba hiç girmez; bilgi yoksa uydurmaz.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://github.com/yunusinal/knowvia">
-          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          Kaynak kodunu incele
-        </a>
-        <a class="btn ghost" href="https://github.com/yunusinal/knowvia#yerel-kurulum">Yerelde çalıştır</a>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title" data-i18n="heroTitle">Aynı soru.<br><span class="line">Herkese <em>kendi</em> cevabı.</span></h1>
+        <p class="lede" data-i18n="heroLede">Knowvia, ekibinizin ya da kurumunuzun belgelerine sorulan soruları yalnızca soranın görmeye yetkili olduğu belgelerden, kaynağını göstererek cevaplar. Yetkisi olmadığı bilgi cevaba hiç girmez; bilgi yoksa uydurmaz.</p>
+        <div class="actions">
+          <a class="btn primary demo-link" href="/app/">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span data-i18n="heroDemo">Canlı demoyu dene</span>
+          </a>
+          <a class="btn ghost" href="https://github.com/yunusinal/knowvia">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span data-i18n="heroSource">Kaynak kod</span>
+          </a>
+        </div>
+        <p class="accounts" data-i18n="heroAccounts">Demo, hayali bir şirketin İK, IT ve Finans belgeleriyle çalışır; <code>it@demo.local</code>, <code>hr@demo.local</code> ve <code>finance@demo.local</code> hesaplarıyla aynı soruyu sorup farkı görün.</p>
+        <p class="solo" data-i18n="heroSolo">Açık kaynak: kendi bilgisayarınıza kurup kendi belgelerinizle tek başınıza da kullanabilirsiniz. <a href="https://github.com/yunusinal/knowvia#yerel-kurulum">Kurulum</a></p>
       </div>
 
-      <figure class="stage" aria-label="Aynı sorunun iki farklı kullanıcıya verilen cevabı">
-        <div class="ask">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a8 8 0 01-11.7 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg>
-          2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?
+      <div class="console" aria-label="Rol değiştirerek aynı soruyu deneyin" data-i18n-aria="consoleAria">
+        <div class="console-head">
+          <span class="title"><span class="live-dot" aria-hidden="true"></span><span data-i18n="consoleTitle">Rol seçin, soru seçin</span></span>
+          <button class="replay" type="button" id="autoplay-toggle" aria-pressed="true" aria-label="Otomatik turu durdur">Turu durdur</button>
         </div>
-        <div class="lanes">
-          <div class="lane">
-            <div class="who"><strong>finance@demo.local</strong><span class="dept finance">Finans</span></div>
-            <p class="answer"><span class="reveal">Bulut altyapı harcamalarına %20 artış ayrıldı. <span class="cite">S1</span></span></p>
-            <blockquote class="excerpt">
-              <span class="file"><span class="cite">S1</span>budget-plan-2026-confidential.md</span>
-              <p>Pazarlama bütçesi %12 azaltılırken <mark>bulut altyapı harcamalarına %20 artış ayrılmıştır.</mark></p>
-            </blockquote>
-            <p class="note">Cevap yalnızca bu kullanıcının erişebildiği belgeden gelir ve hangi cümleye dayandığı gösterilir.</p>
-          </div>
-          <div class="lane">
-            <div class="who"><strong>it@demo.local</strong><span class="dept">IT</span></div>
-            <p class="refusal">Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.</p>
-            <div class="hidden-doc" aria-label="Erişilemeyen belge">
-              <span class="file">Finans departmanına özel belge</span>
-              <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        <div class="roles" role="tablist" aria-label="Kullanıcı rolü" data-i18n-aria="rolesAria">
+          <button class="role" role="tab" type="button" data-role="it"><b>IT</b><span data-i18n="docs10">10 / 13 belge</span></button>
+          <button class="role" role="tab" type="button" data-role="hr"><b data-i18n="roleHr">İK</b><span data-i18n="docs10">10 / 13 belge</span></button>
+          <button class="role" role="tab" type="button" data-role="finance"><b data-i18n="roleFinance">Finans</b><span data-i18n="docs11">11 / 13 belge</span></button>
+          <button class="role" role="tab" type="button" data-role="admin"><b>Admin</b><span data-i18n="docs13">13 / 13 belge</span></button>
+        </div>
+        <div class="questions" role="group" aria-label="Hazır sorular" data-i18n-aria="questionsAria">
+          <button class="q" type="button" data-q="budget" data-i18n="qBudget">Bulut bütçesi</button>
+          <button class="q" type="button" data-q="incident" data-i18n="qIncident">P1 olayı</button>
+          <button class="q" type="button" data-q="vpn" data-i18n="qVpn">VPN hatası</button>
+          <button class="q" type="button" data-q="hiring" data-i18n="qHiring">İşe alım süreci</button>
+        </div>
+        <div class="chat" role="tabpanel" aria-live="polite">
+          <div class="bubble-q" id="chat-question"></div>
+          <div class="answer">
+            <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg></span>
+            <div>
+              <div class="answer-text" id="chat-answer"></div>
+              <div id="chat-evidence"></div>
+              <div class="meta" id="chat-meta"></div>
             </div>
-            <p class="note">Bütçe belgesi bu kullanıcının aramasına hiç girmez. Ret mesajı, bilgi hiç olmasaydı vereceği mesajla birebir aynıdır; gizli belgenin varlığını ele vermez.</p>
           </div>
         </div>
-      </figure>
+        <p class="console-foot" data-i18n="consoleFoot">Her belgeyi kimin göreceğine siz karar verirsiniz: herkes mi, yalnızca ilgili ekip mi.</p>
+      </div>
     </section>
 
-    <section class="block" id="yol">
-      <h2>Bir sorunun yolu</h2>
-      <p class="intro">Her soru aynı beş adımdan geçer. Yetki kararı dil modeline bırakılmaz; model, kullanıcının görmeye yetkili olmadığı hiçbir metni görmez.</p>
-      <ol class="path">
-        <li><b>Kim sorduğu okunur</b><p>Rol ve departman token'dan değil, her istekte veritabanından alınır.</p></li>
-        <li><b>İzinli belgeler listelenir</b><p>Liste boşsa arama hiç yapılmaz.</p></li>
-        <li><b>Yalnız bu listede aranır</b><p>Anlam ve kelime araması ayrı ayrı bu listeyle sınırlanır, sonuçlar yeniden denetlenir.</p></li>
-        <li><b>Zayıf eşleşme elenir</b><p>Benzerliği ölçülmüş eşiğin altındaki parçalar modele gitmez.</p></li>
-        <li><b>Cevap kaynağıyla döner</b><p>Uydurulmuş kaynak etiketleri silinir; dayanak yoksa sabit ret verilir.</p></li>
-      </ol>
+    <section class="block" id="yol" aria-labelledby="yol-title">
+      <h2 id="yol-title" data-i18n="pathTitle">Bir sorunun yolu</h2>
+      <p class="intro" data-i18n="pathIntro">Yetki kararı dil modeline bırakılmaz. Aşağı kaydırdıkça IT çalışanının sorusunun her adımı, demo belgeleri üzerindeki gerçek sayılar ve benzerlik skorlarıyla canlanır.</p>
+      <div class="scenario" role="group" aria-label="Senaryo" data-i18n-aria="scenarioAria">
+        <button type="button" data-scenario="vpn" aria-pressed="true" data-i18n="scenVpn">VPN sorusu</button>
+        <button type="button" data-scenario="budget" aria-pressed="false" data-i18n="scenBudget">Gizli bütçe sorusu</button>
+      </div>
+      <div class="path">
+        <ol class="steps">
+          <li data-step="1"><h3 data-i18n="step1Title">Kim sorduğu okunur</h3><p data-i18n="step1Text">Rol ve departman token'dan ya da istekten değil, her istekte veritabanından alınır. İstemci "ben adminim" diyemez.</p></li>
+          <li data-step="2"><h3 data-i18n="step2Title">İzinli belgeler listelenir</h3><p data-i18n="step2Text">Departmana özel belgelerden yetkisiz olanlar listeden düşer. Liste boşsa arama hiç yapılmaz.</p></li>
+          <li data-step="3"><h3 data-i18n="step3Title">Yalnız bu listede, iki yoldan aranır</h3><p data-i18n="step3Text">Anlam araması ve kelime araması (BM25) aynı izin listesiyle ayrı ayrı sınırlanır, sonuçlar birleştirilir ve veritabanında yeniden denetlenir.</p></li>
+          <li data-step="4"><h3 data-i18n="step4Title">Zayıf eşleşme elenir</h3><p data-i18n="step4Text">Soruya yeterince benzemeyen parçalar, ölçülerek belirlenmiş bir eşiğin altında kalır ve modele hiç gitmez. Eşiği geçen ama soruyu karşılamayan parçayı ikinci katmanda model reddeder.</p></li>
+          <li data-step="5"><h3 data-i18n="step5Title">Cevap kaynağıyla döner</h3><p data-i18n="step5Text">Model yalnız yetkili parçaları görür; uydurulmuş kaynak etiketleri silinir. Dayanak yoksa herkes aynı ret mesajını alır.</p></li>
+        </ol>
+        <div class="stage" aria-live="polite">
+          <div class="stage-head"><b id="stage-title"></b><span id="stage-step">Adım 1 / 5</span></div>
+          <div class="progress" aria-hidden="true"><i id="stage-progress"></i></div>
+          <div class="docs" id="stage-docs"></div>
+          <div class="stage-panel" id="stage-panel"></div>
+        </div>
+      </div>
     </section>
 
-    <section class="block">
-      <h2>Sızdırmamak için yapılanlar</h2>
-      <p class="intro">Bir bilgi asistanının en zor işi, bilmediğini ya da gösteremeyeceğini dürüstçe söylemektir.</p>
-      <dl class="guards">
-        <dt>Tek tip ret</dt>
-        <dd>"Bilgi yok" ve "yetkiniz yok" aynı mesajı, aynı kaynak listesini ve aynı durum kodunu alır.</dd>
-        <dt>Silince erişim anında kesilir</dt>
-        <dd>Belge önce aramadan çıkarılır, vektörleri sonra temizlenir. Temizlik yarım kalsa bile belge geri gelmez.</dd>
-        <dt>Sohbet geçmişi yeniden denetlenir</dt>
-        <dd>Takip sorularında eski cevaplar kullanılır, ama dayandıkları belgeye erişim kalktıysa ne ekranda görünürler ne de modele gönderilirler.</dd>
-        <dt>Belge metni talimat sayılmaz</dt>
-        <dd>Kaynaklar modele alıntı olarak verilir; belgenin içine yazılmış komutlar uygulanmaz.</dd>
-        <dt>Destek talebi onayla açılır</dt>
-        <dd>Belgedeki adımlar sorunu çözmezse model bir talep taslağı önerir. Kayıt, siz taslağı görüp onayladığınızda oluşur.</dd>
-      </dl>
+    <section class="block" aria-labelledby="ekran-title">
+      <h2 id="ekran-title" data-i18n="shotsTitle">Uygulamadan</h2>
+      <p class="intro" data-i18n="shotsIntro">Gerçek modellerle (multilingual-e5, hibrit arama, Groq) çalışan uygulamadan alınmış ekranlar.</p>
+      <div class="shots">
+        <figure><img src="assets/finance-answer.png" alt="Finans kullanıcısı bütçe sorusuna kaynak kartıyla cevap alıyor" data-i18n-alt="shot1Alt" loading="lazy" width="1440" height="1000"><figcaption data-i18n="shot1Cap">Finans çalışanı: kaynaklı cevap</figcaption></figure>
+        <figure><img src="assets/it-refusal.png" alt="IT kullanıcısı aynı soruda sabit ret mesajı alıyor" data-i18n-alt="shot2Alt" loading="lazy" width="1440" height="1000"><figcaption data-i18n="shot2Cap">IT çalışanı, aynı soru: tek tip ret</figcaption></figure>
+        <figure class="wide"><img src="assets/ticket-draft.png" alt="Model destek talebi taslağı öneriyor, kayıt kullanıcı onayıyla açılıyor" data-i18n-alt="shot3Alt" loading="lazy" width="1440" height="1000"><figcaption data-i18n="shot3Cap">Belgedeki adımlar yetmezse model taslak önerir; talep yalnızca onayla açılır</figcaption></figure>
+      </div>
     </section>
 
-    <section class="block" id="olcumler">
-      <h2>Ölçtüklerimiz</h2>
-      <p class="intro">Kararlar tahminle değil ölçümle alındı; ölçülen ama işe yaramayan fikirler de kayıtlı.</p>
-      <table class="metrics">
-        <thead><tr><th scope="col">Ne ölçüldü</th><th scope="col">Sonuç</th><th scope="col">Nerede</th></tr></thead>
-        <tbody>
-          <tr><td>Yetkisiz bilginin cevaba sızması</td><td class="value">0</td><td class="scope">22 tek soru ve 23 takip turu, sentetik şirket belgeleri</td></tr>
-          <tr><td>Bilgi yokken doğru ret</td><td class="value">22 / 22</td><td class="scope">Tek sorular; takip sorularında 22 / 23</td></tr>
-          <tr><td>Takip sorusunda doğru belge ilk 5 sonuçta</td><td class="value">%85</td><td class="scope">doc2dial, 908 gerçek diyalog turu (İngilizce)</td></tr>
-          <tr><td>Hibrit arama ve yeniden sıralamayla doğru belge ilk sırada</td><td class="value">%66 → %79</td><td class="scope">doc2dial, 908 tur; yeniden sıralama GPU'da soru başına ~0.3 sn</td></tr>
-        </tbody>
-      </table>
-      <p class="caveat">Sonuçlar küçük veya alana özgü test kümelerinde, yerel donanımda alınmıştır; genel bir doğruluk garantisi değildir. Ayrıntılar ve denenen alternatifler mimari karar kayıtlarındadır.</p>
+    <section class="block" aria-labelledby="koruma-title">
+      <h2 id="koruma-title" data-i18n="guardsTitle">Sızdırmamak için</h2>
+      <p class="intro" data-i18n="guardsIntro">Belge kimin içinse, cevap da yalnızca onun için. Bir bilgi asistanının en zor işi de bilmediğini ya da gösteremeyeceğini dürüstçe söylemektir.</p>
+      <div class="guards">
+        <div><b data-i18n="g1Title">Tek tip ret</b><p data-i18n="g1Text">"Bilgi yok" ve "yetkiniz yok" aynı mesajı, aynı kaynak listesini ve aynı durum kodunu alır.</p></div>
+        <div><b data-i18n="g2Title">Silince anında kesilir</b><p data-i18n="g2Text">Belge önce aramadan çıkarılır, vektörleri sonra temizlenir; temizlik yarım kalsa bile geri gelmez.</p></div>
+        <div><b data-i18n="g3Title">Geçmiş yeniden denetlenir</b><p data-i18n="g3Text">Eski cevabın dayandığı belgeye erişim kalktıysa cevap ne ekranda görünür ne modele gider.</p></div>
+        <div><b data-i18n="g4Title">Belge metni talimat değildir</b><p data-i18n="g4Text">Kaynaklar modele alıntı olarak verilir; belgeye gömülü komutlar uygulanmaz.</p></div>
+        <div><b data-i18n="g5Title">Veri yazan araç onaysız çalışmaz</b><p data-i18n="g5Text">Model destek talebini yalnızca önerir; kayıt kullanıcı onaylayınca açılır.</p></div>
+        <div><b data-i18n="g6Title">Herkese açık demoya hazır</b><p data-i18n="g6Text">Gizli admin parolası, istek sınırları ve her gece ziyaretçi verisinin temizlenmesi.</p></div>
+      </div>
     </section>
 
-    <div class="stack">
-      <span><strong>Altyapı</strong></span>
-      <span>FastAPI</span><span>SQLite</span><span>Qdrant (hibrit arama)</span><span>multilingual-e5-large</span><span>Streamlit</span><span>OpenAI uyumlu LLM (Groq)</span>
-    </div>
+    <section class="cta" aria-labelledby="cta-title">
+      <div>
+        <h2 id="cta-title" data-i18n="ctaTitle">Kendiniz deneyin</h2>
+        <p data-i18n="ctaText">Farklı hesaplarla giriş yapın, aynı soruyu sorun, cevabın nasıl değiştiğini görün.</p>
+      </div>
+      <a class="btn primary demo-link" href="/app/" data-i18n="ctaButton">Canlı demoyu aç</a>
+    </section>
   </main>
 
   <footer>
-    <span>Sentetik demo belgeleriyle çalışan yerel bir portföy projesi; gerçek şirket verisi içermez.</span>
+    <span data-i18n="footer">Sentetik demo belgeleriyle çalışan açık kaynaklı bir portföy projesi; gerçek kurum verisi içermez.</span>
     <a href="https://github.com/yunusinal/knowvia">github.com/yunusinal/knowvia</a>
   </footer>
 </div>
+
+<script>
+(() => {
+  // Dil: varsayılan Türkçe. ?lang=en bağlantısı veya üstteki seçici İngilizceye geçirir; seçim bu tarayıcıda hatırlanır.
+  // Türkçe sabit metinler HTML'de durur (JS'siz de çalışır); İngilizceleri data-i18n anahtarlarıyla buradan gelir.
+  const EN_STATIC = {
+    skip: "Skip to main content",
+    navAria: "On this page",
+    navHow: "How it works",
+    navArch: "Architecture",
+    navDemo: "Open demo",
+    heroTitle: 'Same question.<br><span class="line">Your <em>own</em> answer.</span>',
+    heroLede: "Knowvia answers questions about your team’s or organization’s documents using only the documents the person asking is allowed to see, and shows the source. Information they aren’t authorized for never enters the answer; if the information isn’t there, it doesn’t make anything up.",
+    heroDemo: "Try the live demo",
+    heroSource: "Source code",
+    heroAccounts: "The demo runs on a fictional company’s HR, IT and Finance documents (written in Turkish, like the app interface). Ask the same question as <code>it@demo.local</code>, <code>hr@demo.local</code> and <code>finance@demo.local</code> and see the difference.",
+    heroSolo: 'Open source: install it on your own machine and use it on your own with your own documents. <a href="https://github.com/yunusinal/knowvia#yerel-kurulum">Setup</a>',
+    consoleAria: "Try the same question with different roles",
+    consoleTitle: "Pick a role, pick a question",
+    rolesAria: "User role",
+    roleHr: "HR",
+    roleFinance: "Finance",
+    docs10: "10 / 13 docs",
+    docs11: "11 / 13 docs",
+    docs13: "13 / 13 docs",
+    questionsAria: "Sample questions",
+    qBudget: "Cloud budget",
+    qIncident: "P1 incident",
+    qVpn: "VPN error",
+    qHiring: "Hiring process",
+    consoleFoot: "You decide who sees each document: everyone, or only the relevant team.",
+    pathTitle: "The path of a question",
+    pathIntro: "The access decision is never left to the language model. As you scroll, each step of an IT employee’s question comes alive with real counts and similarity scores from the demo documents.",
+    scenarioAria: "Scenario",
+    scenVpn: "VPN question",
+    scenBudget: "Confidential budget question",
+    step1Title: "Identify who is asking",
+    step1Text: "Role and department are read from the database on every request, not from the token or the request. The client can’t claim “I’m an admin”.",
+    step2Title: "List the permitted documents",
+    step2Text: "Department-only documents the user isn’t authorized for drop off the list. If the list is empty, no search runs at all.",
+    step3Title: "Search only this list, two ways",
+    step3Text: "Semantic search and keyword search (BM25) are each limited by the same permission list; results are merged and checked again against the database.",
+    step4Title: "Drop weak matches",
+    step4Text: "Chunks that aren’t similar enough to the question fall below a measured threshold and never reach the model. A chunk that passes the threshold but doesn’t answer the question is rejected by the model as a second layer.",
+    step5Title: "Answer with its source",
+    step5Text: "The model sees only authorized chunks; made-up source labels are removed. Without supporting evidence, everyone gets the same refusal message.",
+    shotsTitle: "From the app",
+    shotsIntro: "Screens from the app running with real models (multilingual-e5, hybrid search, Groq).",
+    shot1Alt: "A Finance user gets an answer to the budget question with a source card",
+    shot1Cap: "Finance employee: answer with source",
+    shot2Alt: "An IT user gets the fixed refusal message for the same question",
+    shot2Cap: "IT employee, same question: uniform refusal",
+    shot3Alt: "The model proposes a support ticket draft; the ticket is created only after the user approves",
+    shot3Cap: "When the steps in the document aren’t enough, the model suggests a draft; the ticket is opened only with approval",
+    guardsTitle: "Built not to leak",
+    guardsIntro: "An answer is only for the people the document is for. The hardest job of a knowledge assistant is to say honestly what it doesn’t know or can’t show.",
+    g1Title: "Uniform refusal",
+    g1Text: "“No information” and “not authorized” get the same message, the same source list and the same status code.",
+    g2Title: "Deletion takes effect instantly",
+    g2Text: "A document is removed from search first and its vectors are cleaned up afterwards; even if cleanup is interrupted, it doesn’t come back.",
+    g3Title: "History is rechecked",
+    g3Text: "If access to the document behind an earlier answer is revoked, that answer is neither shown nor sent to the model.",
+    g4Title: "Document text is not an instruction",
+    g4Text: "Sources are given to the model as quotes; commands embedded in a document are not followed.",
+    g5Title: "No data-writing tool without approval",
+    g5Text: "The model only proposes a support ticket; it is created when the user approves.",
+    g6Title: "Ready for a public demo",
+    g6Text: "A secret admin password, rate limits and nightly cleanup of visitor data.",
+    ctaTitle: "Try it yourself",
+    ctaText: "Sign in with different accounts, ask the same question and see how the answer changes.",
+    ctaButton: "Open the live demo",
+    footer: "An open-source portfolio project running on synthetic demo documents; it contains no real company data.",
+  };
+
+  // Dile bağlı dinamik metinler. Türkçe cümleler demo belgelerinden alınmıştır; İngilizceleri bunların çevirisidir.
+  const TEXT = {
+    tr: {
+      // Belge adları arayüzde Türkçe gösterilir; sistemdeki dosya adları İngilizce kalır.
+      titles: {
+        "employee-handbook.md": "Çalışan El Kitabı",
+        "remote-work-policy-2026.md": "Uzaktan Çalışma Politikası 2026",
+        "remote-work-policy-2024-archived.md": "Uzaktan Çalışma Politikası 2024 (arşiv)",
+        "annual-leave-policy.md": "Yıllık İzin Politikası",
+        "hiring-guide-confidential.md": "İşe Alım Rehberi (gizli)",
+        "vpn-setup.md": "VPN Kurulumu",
+        "vpn-troubleshooting.md": "VPN Sorun Giderme",
+        "password-reset.md": "Parola Sıfırlama",
+        "incident-response-internal.md": "Olay Müdahale Planı",
+        "office-and-it-guidelines-en.md": "Ofis ve IT Kuralları (EN)",
+        "expense-policy.md": "Harcama Politikası",
+        "budget-plan-2026-confidential.md": "2026 Bütçe Planı (gizli)",
+        "vendor-contract-terms-internal.md": "Tedarikçi Sözleşme Şartları",
+      },
+      questions: {
+        budget: {
+          text: "2026'da bulut altyapı harcamalarına yüzde kaç artış ayrıldı?",
+          answer: "2026'da bulut altyapı harcamalarına %20 artış ayrıldı.",
+          excerpt: ["Pazarlama bütçesi %12 azaltılırken ", "bulut altyapı harcamalarına %20 artış ayrılmıştır."],
+          hiddenLabel: "Finans departmanına özel bütçe belgesi",
+        },
+        incident: {
+          text: "Bir P1 olayında kriz ekibi kaç dakika içinde toplanmalı?",
+          answer: "P1 olaylarında kriz ekibi 30 dakika içinde toplanır.",
+          excerpt: ["P1: müşteri verisinin sızdığı veya üretim sistemlerinin durduğu olaylar; ", "30 dakika içinde kriz ekibi toplanır."],
+          hiddenLabel: "IT departmanına özel olay müdahale planı",
+        },
+        vpn: {
+          text: "VPN 'sertifika doğrulanamadı' hatası veriyor, ne yapmalıyım?",
+          answer: "Önce cihaz saatini kontrol edin, ardından istemci önbelleğini temizleyin. Sorun sürerse sertifika MDM konsolundan yeniden dağıtılır.",
+          excerpt: ["", "'Sertifika doğrulanamadı' hatasında önce cihaz saatinin doğru olduğunu kontrol edin, ardından istemci önbelleğini temizleyin."],
+          hiddenLabel: "",
+        },
+        hiring: {
+          text: "Yazılım mühendisi işe alım süreci kaç aşamalı?",
+          answer: "Süreç dört aşamalıdır: ön görüşme, teknik ödev, ekip mülakatı ve referans kontrolü.",
+          excerpt: ["Yazılım mühendisi pozisyonlarında ", "süreç dört aşamalıdır: ön görüşme, teknik ödev, ekip mülakatı ve referans kontrolü."],
+          hiddenLabel: "İK departmanına özel işe alım rehberi",
+        },
+      },
+      refusal: "Yetkiniz dahilindeki belgelerde bu soruya yeterli bilgi bulamadım.",
+      hiddenSuffix: ": bu kullanıcının aramasına hiç girmez",
+      hiddenNote: "Bilgi hiç olmasaydı da aynı mesaj dönerdi; ret, gizli belgenin varlığını ele vermez.",
+      account: "Hesap",
+      searched: "Aramaya giren belge",
+      tourStop: "Turu durdur",
+      tourStart: "Turu başlat",
+      tourStopAria: "Otomatik turu durdur",
+      tourStartAria: "Rolleri ve soruları otomatik gezen turu başlat",
+      depts: { hr: "İK", it: "IT", finance: "Finans" },
+      scopes: { company: "şirket geneli", department: "yalnız departman" },
+      scenarios: {
+        vpn: {
+          title: "IT çalışanı: VPN sertifika hatası",
+          final: "Önce cihaz saatini kontrol edin, ardından istemci önbelleğini temizleyin; sorun sürerse sertifika MDM konsolundan yeniden dağıtılır.",
+          source: "Kaynak: VPN Sorun Giderme",
+          stepFour: "Beş parçanın hepsi eşiği geçer ve modele gider.",
+        },
+        budget: {
+          title: "IT çalışanı: gizli bütçe sorusu",
+          final: null,
+          source: "Aynı mesaj, bilgi hiç olmasaydı da dönerdi.",
+          stepFour: "Bütçe belgesi hiç aranmadı. İlgisiz bir parça eşiği kıl payı geçer; model kaynakların soruyu karşılamadığını görür ve reddeder.",
+        },
+      },
+      panel1: "Hesap <b>it@demo.local</b>, rol üye, departman IT. Bu bilgiler her istekte veritabanından okunur.",
+      panel2: "<b>13 → 10 belge.</b> İK ve Finans'ın departmana özel üç belgesi listeden çıkar; arama bunları hiç görmez.",
+      panel3: "<b>45 parça içinde</b> anlam ve kelime araması 20'şer aday getirir; sıralar birleştirilir ve yeşil belgelerden ilk beş parça seçilir.",
+      step: n => `Adım ${n} / 5`,
+      stepAria: (n, name) => `Adım ${n}: ${name}`,
+      threshold: "eşik",
+    },
+    en: {
+      titles: {
+        "employee-handbook.md": "Employee Handbook",
+        "remote-work-policy-2026.md": "Remote Work Policy 2026",
+        "remote-work-policy-2024-archived.md": "Remote Work Policy 2024 (archived)",
+        "annual-leave-policy.md": "Annual Leave Policy",
+        "hiring-guide-confidential.md": "Hiring Guide (confidential)",
+        "vpn-setup.md": "VPN Setup",
+        "vpn-troubleshooting.md": "VPN Troubleshooting",
+        "password-reset.md": "Password Reset",
+        "incident-response-internal.md": "Incident Response Plan",
+        "office-and-it-guidelines-en.md": "Office and IT Guidelines (EN)",
+        "expense-policy.md": "Expense Policy",
+        "budget-plan-2026-confidential.md": "2026 Budget Plan (confidential)",
+        "vendor-contract-terms-internal.md": "Vendor Contract Terms",
+      },
+      questions: {
+        budget: {
+          text: "What percentage increase was allocated to cloud infrastructure spending in 2026?",
+          answer: "A 20% increase was allocated to cloud infrastructure spending in 2026.",
+          excerpt: ["While the marketing budget is cut by 12%, ", "cloud infrastructure spending is allocated a 20% increase."],
+          hiddenLabel: "Finance-only budget document",
+        },
+        incident: {
+          text: "Within how many minutes must the crisis team assemble in a P1 incident?",
+          answer: "In P1 incidents, the crisis team assembles within 30 minutes.",
+          excerpt: ["P1: incidents where customer data has leaked or production systems are down; ", "the crisis team assembles within 30 minutes."],
+          hiddenLabel: "IT-only incident response plan",
+        },
+        vpn: {
+          text: "The VPN says 'certificate could not be verified'. What should I do?",
+          answer: "First check the device clock, then clear the client cache. If the problem persists, the certificate is redeployed from the MDM console.",
+          excerpt: ["", "For the 'certificate could not be verified' error, first make sure the device clock is correct, then clear the client cache."],
+          hiddenLabel: "",
+        },
+        hiring: {
+          text: "How many stages does the software engineer hiring process have?",
+          answer: "The process has four stages: screening call, technical assignment, team interview and reference check.",
+          excerpt: ["For software engineer positions, ", "the process has four stages: screening call, technical assignment, team interview and reference check."],
+          hiddenLabel: "HR-only hiring guide",
+        },
+      },
+      refusal: "I couldn’t find enough information in the documents you’re authorized to see to answer this question.",
+      hiddenSuffix: ": never enters this user’s search",
+      hiddenNote: "The same message would come back if the information didn’t exist at all; the refusal doesn’t reveal that the confidential document exists.",
+      account: "Account",
+      searched: "Documents searched",
+      tourStop: "Stop tour",
+      tourStart: "Start tour",
+      tourStopAria: "Stop the automatic tour",
+      tourStartAria: "Start the tour that cycles through roles and questions",
+      depts: { hr: "HR", it: "IT", finance: "Finance" },
+      scopes: { company: "company-wide", department: "department only" },
+      scenarios: {
+        vpn: {
+          title: "IT employee: VPN certificate error",
+          final: "First check the device clock, then clear the client cache; if the problem persists, the certificate is redeployed from the MDM console.",
+          source: "Source: VPN Troubleshooting",
+          stepFour: "All five chunks pass the threshold and go to the model.",
+        },
+        budget: {
+          title: "IT employee: confidential budget question",
+          final: null,
+          source: "The same message would come back if the information didn’t exist at all.",
+          stepFour: "The budget document was never searched. An unrelated chunk barely passes the threshold; the model sees that the sources don’t answer the question and refuses.",
+        },
+      },
+      panel1: "Account <b>it@demo.local</b>, role member, department IT. These are read from the database on every request.",
+      panel2: "<b>13 → 10 documents.</b> Three department-only HR and Finance documents drop off the list; search never sees them.",
+      panel3: "<b>Within 45 chunks</b>, semantic and keyword search bring 20 candidates each; the rankings are merged and the top five chunks are picked from the green documents.",
+      step: n => `Step ${n} / 5`,
+      stepAria: (n, name) => `Step ${n}: ${name}`,
+      threshold: "threshold",
+    },
+  };
+  const META = {
+    en: {
+      title: "Knowvia · Access-aware knowledge assistant",
+      description: "Knowvia is an open-source RAG assistant that answers questions about team and company documents using only the documents the asker is allowed to see, with sources.",
+    },
+  };
+  const LANG_KEY = "knowvia-lang";
+  const metaDescription = document.querySelector('meta[name="description"]');
+  META.tr = { title: document.title, description: metaDescription.content };
+  // Türkçe sabit metinler sayfadan bir kez okunur; dil geri değişince bunlar yazılır.
+  const i18nEls = [...document.querySelectorAll("[data-i18n]")];
+  const ariaEls = [...document.querySelectorAll("[data-i18n-aria]")];
+  const altEls = [...document.querySelectorAll("[data-i18n-alt]")];
+  const trHtml = new Map(i18nEls.map(el => [el, el.innerHTML]));
+  const trAria = new Map(ariaEls.map(el => [el, el.getAttribute("aria-label")]));
+  const trAlt = new Map(altEls.map(el => [el, el.alt]));
+  function initialLang() {
+    const fromUrl = new URLSearchParams(location.search).get("lang");
+    if (fromUrl === "tr" || fromUrl === "en") return fromUrl;
+    try { return localStorage.getItem(LANG_KEY) === "en" ? "en" : "tr"; } catch { return "tr"; }
+  }
+  let lang = initialLang();
+  const T = () => TEXT[lang];
+
+  // Rol başına gerçek sistemdeki erişim sayıları (13 belge, 54 parça).
+  const ROLES = {
+    it: { email: "it@demo.local", docs: 10 },
+    hr: { email: "hr@demo.local", docs: 10 },
+    finance: { email: "finance@demo.local", docs: 11 },
+    admin: { email: "admin@demo.local", docs: 13 },
+  };
+  const title = file => T().titles[file] || file;
+  const QUESTIONS = {
+    budget: { allowed: ["finance", "admin"], file: "budget-plan-2026-confidential.md" },
+    incident: { allowed: ["it", "admin"], file: "incident-response-internal.md" },
+    vpn: { allowed: ["it", "hr", "finance", "admin"], file: "vpn-troubleshooting.md" },
+    hiring: { allowed: ["hr", "admin"], file: "hiring-guide-confidential.md" },
+  };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Demo bağlantısı ortama göre: sunucuda (Caddy, standart port) /app/; yerel önizlemede (dosya, Live Server gibi
+  // port numaralı adres) yerelde çalışan Streamlit; GitHub Pages'te README'deki kurulum bölümü.
+  const demoHref = location.hostname.endsWith("github.io")
+    ? "https://github.com/yunusinal/knowvia#canl%C4%B1ya-alma-docker"
+    : (location.protocol === "file:" || location.port !== "") ? "http://localhost:8501/" : "/app/";
+  document.querySelectorAll(".demo-link").forEach(a => { a.href = demoHref; });
+
+  const escapeHtml = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const roleTabs = [...document.querySelectorAll(".role")];
+  const qButtons = [...document.querySelectorAll(".q")];
+  const qEl = document.getElementById("chat-question");
+  const aEl = document.getElementById("chat-answer");
+  const evEl = document.getElementById("chat-evidence");
+  const metaEl = document.getElementById("chat-meta");
+  const toggle = document.getElementById("autoplay-toggle");
+  let state = { role: "finance", q: "budget" };
+  let typingTimer = null;
+  let autoplay = !reduce;
+  let autoTimer = null;
+
+  function sourceHtml(key) {
+    const q = T().questions[key];
+    return `<div class="source"><span class="file"><span class="cite">S1</span>${title(QUESTIONS[key].file)}</span><p>${escapeHtml(q.excerpt[0])}<mark>${escapeHtml(q.excerpt[1])}</mark></p></div>`;
+  }
+  function hiddenHtml(key) {
+    return `<div class="hidden-doc"><div class="file">${T().questions[key].hiddenLabel}${T().hiddenSuffix}</div><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>`
+      + `<p class="note">${T().hiddenNote}</p>`;
+  }
+  function render() {
+    const q = T().questions[state.q];
+    const role = ROLES[state.role];
+    const ok = QUESTIONS[state.q].allowed.includes(state.role);
+    roleTabs.forEach(t => { const on = t.dataset.role === state.role; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; });
+    qButtons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.q === state.q)));
+    qEl.textContent = q.text;
+    evEl.innerHTML = "";
+    metaEl.innerHTML = `<span>${T().account} <b>${role.email}</b></span><span>${T().searched} <b>${role.docs} / 13</b></span>`;
+    const full = ok ? q.answer : T().refusal;
+    aEl.className = "answer-text" + (ok ? "" : " refusal");
+    clearInterval(typingTimer);
+    const finish = () => {
+      aEl.innerHTML = escapeHtml(full) + (ok ? '<span class="cite">S1</span>' : "");
+      evEl.innerHTML = ok ? sourceHtml(state.q) : hiddenHtml(state.q);
+      requestAnimationFrame(() => evEl.firstElementChild && evEl.firstElementChild.classList.add("show"));
+    };
+    if (reduce) { finish(); return; }
+    let i = 0;
+    aEl.innerHTML = '<span class="caret"></span>';
+    typingTimer = setInterval(() => {
+      i += 2;
+      aEl.innerHTML = escapeHtml(full.slice(0, i)) + '<span class="caret"></span>';
+      if (i >= full.length) { clearInterval(typingTimer); finish(); }
+    }, 18);
+  }
+  function select(role, q, fromUser) {
+    if (fromUser) stopAutoplay();
+    state = { role: role ?? state.role, q: q ?? state.q };
+    render();
+  }
+  roleTabs.forEach((t, i) => {
+    t.addEventListener("click", () => select(t.dataset.role, null, true));
+    t.addEventListener("keydown", e => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!step) return;
+      e.preventDefault();
+      const next = roleTabs[(i + step + roleTabs.length) % roleTabs.length];
+      next.focus();
+      select(next.dataset.role, null, true);
+    });
+  });
+  qButtons.forEach(b => b.addEventListener("click", () => select(null, b.dataset.q, true)));
+
+  // Otomatik gösterim: aynı soruyu rollerde gezdirir; kullanıcı dokunduğunda veya düğmeyle durur.
+  const TOUR = [["finance", "budget"], ["it", "budget"], ["it", "incident"], ["hr", "incident"], ["hr", "vpn"], ["hr", "hiring"], ["finance", "hiring"]];
+  let tourIndex = 0;
+  function syncToggle() {
+    toggle.textContent = autoplay ? T().tourStop : T().tourStart;
+    toggle.setAttribute("aria-label", autoplay ? T().tourStopAria : T().tourStartAria);
+    toggle.setAttribute("aria-pressed", String(autoplay));
+  }
+  function stopAutoplay() {
+    autoplay = false;
+    clearInterval(autoTimer);
+    syncToggle();
+  }
+  function startAutoplay() {
+    autoplay = true;
+    syncToggle();
+    clearInterval(autoTimer);
+    autoTimer = setInterval(nextTourStep, 3000);
+  }
+  function nextTourStep() {
+    tourIndex = (tourIndex + 1) % TOUR.length;
+    select(TOUR[tourIndex][0], TOUR[tourIndex][1], false);
+  }
+  // Başlatınca hemen bir sonraki örneğe geçer; kullanıcı düğmenin işe yaradığını anında görür.
+  toggle.addEventListener("click", () => {
+    if (autoplay) { stopAutoplay(); return; }
+    startAutoplay();
+    nextTourStep();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) clearInterval(autoTimer);
+    else if (autoplay) startAutoplay();
+  });
+
+  // Bir sorunun yolu: kaydırınca adım değişir. Skorlar demo korpusundaki gerçek hibrit arama çıktısıdır.
+  const DOCS = [
+    ["employee-handbook.md", "hr", "company"], ["remote-work-policy-2026.md", "hr", "company"],
+    ["remote-work-policy-2024-archived.md", "hr", "company"], ["annual-leave-policy.md", "hr", "company"],
+    ["hiring-guide-confidential.md", "hr", "department"], ["vpn-setup.md", "it", "company"],
+    ["vpn-troubleshooting.md", "it", "company"], ["password-reset.md", "it", "company"],
+    ["incident-response-internal.md", "it", "department"], ["office-and-it-guidelines-en.md", "it", "company"],
+    ["expense-policy.md", "finance", "company"], ["budget-plan-2026-confidential.md", "finance", "department"],
+    ["vendor-contract-terms-internal.md", "finance", "department"],
+  ];
+  const HITS = {
+    vpn: [["vpn-troubleshooting.md", .904], ["vpn-troubleshooting.md", .853], ["vpn-setup.md", .848], ["vpn-troubleshooting.md", .847], ["vpn-setup.md", .838]],
+    budget: [["remote-work-policy-2026.md", .800], ["remote-work-policy-2026.md", .795], ["remote-work-policy-2026.md", .769], ["remote-work-policy-2026.md", .766], ["expense-policy.md", .759]],
+  };
+  const visibleToIt = d => d[1] === "it" || d[2] === "company";
+  const steps = [...document.querySelectorAll("ol.steps li")];
+  const docsEl = document.getElementById("stage-docs");
+  const panel = document.getElementById("stage-panel");
+  const stepLabel = document.getElementById("stage-step");
+  const progress = document.getElementById("stage-progress");
+  const titleEl = document.getElementById("stage-title");
+  let scenario = "vpn";
+  let current = 1;
+  docsEl.innerHTML = DOCS.map(() => '<div class="doc"></div>').join("");
+  const docEls = [...docsEl.children];
+  function drawDocNames() {
+    docEls.forEach((el, i) => {
+      const [file, dept, scope] = DOCS[i];
+      el.innerHTML = `${title(file)}<small>${T().depts[dept]}, ${T().scopes[scope]}</small>`;
+    });
+  }
+
+  function scoreBars(hits) {
+    const min = .7, max = .95;
+    const pos = v => `${Math.max(0, Math.min(1, (v - min) / (max - min))) * 100}%`;
+    return `<div class="scores">${hits.map(([f, v]) => `<div class="score${v < .8 ? " below" : ""}"><span class="name">${title(f)}</span><span class="track"><span class="fill" style="width:${pos(v)}"></span><span class="threshold" style="left:${pos(.8)}"></span></span></div>`).join("")}</div><div class="score-legend"><i aria-hidden="true"></i>${T().threshold}</div>`;
+  }
+  function drawStage() {
+    const sc = T().scenarios[scenario];
+    const hits = HITS[scenario];
+    const ok = sc.final !== null;
+    titleEl.textContent = sc.title;
+    stepLabel.textContent = T().step(current);
+    progress.style.width = `${current * 20}%`;
+    steps.forEach(li => {
+      const on = Number(li.dataset.step) === current;
+      li.classList.toggle("active", on);
+      li.setAttribute("aria-current", on ? "step" : "false");
+    });
+    const hitFiles = new Set(hits.map(h => h[0]));
+    docEls.forEach((el, i) => {
+      el.classList.toggle("denied", current >= 2 && !visibleToIt(DOCS[i]));
+      el.classList.toggle("hit", current >= 3 && hitFiles.has(DOCS[i][0]));
+    });
+    if (current === 1) panel.innerHTML = `<div class="final">${T().panel1}</div>`;
+    else if (current === 2) panel.innerHTML = `<div class="final">${T().panel2}</div>`;
+    else if (current === 3) panel.innerHTML = `<div class="final">${T().panel3}</div>`;
+    else if (current === 4) panel.innerHTML = scoreBars(hits) + `<p class="panel-note">${sc.stepFour}</p>`;
+    else panel.innerHTML = `<div class="final${ok ? "" : " refusal"}">${escapeHtml(ok ? sc.final : T().refusal)}${ok ? '<span class="cite">S1</span>' : ""}</div><p class="panel-note">${sc.source}</p>`;
+  }
+  // Etkin adım: ekranın ortasındaki çizgiyi en son geçen adım. Sırayla ilerler, küçük kaydırmada adım atlamaz.
+  let lockUntil = 0;
+  function stepFromScroll() {
+    if (performance.now() < lockUntil) return;
+    const line = innerHeight * 0.5;
+    let next = 1;
+    steps.forEach(li => { if (li.getBoundingClientRect().top <= line) next = Number(li.dataset.step); });
+    if (next !== current) { current = next; drawStage(); }
+  }
+  let ticking = false;
+  addEventListener("scroll", () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; stepFromScroll(); }); }
+  }, { passive: true });
+  // Tıklama veya Enter/Boşluk ile doğrudan bir adıma geçilir; kaydırma bitene kadar ara adımlar çizilmez.
+  function goTo(li) {
+    current = Number(li.dataset.step);
+    drawStage();
+    lockUntil = performance.now() + (reduce ? 0 : 900);
+    const top = li.getBoundingClientRect().top + scrollY - innerHeight * 0.5 + 8;
+    if (matchMedia("(min-width: 961px)").matches) scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+  }
+  function labelSteps() {
+    steps.forEach(li => li.setAttribute("aria-label", T().stepAria(li.dataset.step, li.querySelector("h3").textContent)));
+  }
+  steps.forEach(li => {
+    li.tabIndex = 0;
+    li.setAttribute("role", "button");
+    li.addEventListener("click", () => goTo(li));
+    li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goTo(li); } });
+  });
+  document.querySelectorAll(".scenario button").forEach(b => b.addEventListener("click", () => {
+    scenario = b.dataset.scenario;
+    document.querySelectorAll(".scenario button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    drawStage();
+  }));
+
+  // Dili uygular: sabit metinler, sayfa başlığı, konsol ve adım görseli aynı anda değişir.
+  const langButtons = [...document.querySelectorAll(".lang button")];
+  function applyLang() {
+    const en = lang === "en";
+    document.documentElement.lang = lang;
+    document.title = META[lang].title;
+    metaDescription.content = META[lang].description;
+    i18nEls.forEach(el => { el.innerHTML = en ? EN_STATIC[el.dataset.i18n] : trHtml.get(el); });
+    ariaEls.forEach(el => el.setAttribute("aria-label", en ? EN_STATIC[el.dataset.i18nAria] : trAria.get(el)));
+    altEls.forEach(el => { el.alt = en ? EN_STATIC[el.dataset.i18nAlt] : trAlt.get(el); });
+    langButtons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    syncToggle();
+    labelSteps();
+    drawDocNames();
+    drawStage();
+    render();
+  }
+  langButtons.forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.lang === lang) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem(LANG_KEY, lang); } catch { /* gizli pencere vb.: seçim yalnız bu sayfada kalır */ }
+    // Adres paylaşılınca aynı dil açılsın: İngilizcede ?lang=en, Türkçede (varsayılan) parametresiz.
+    const url = new URL(location.href);
+    if (lang === "en") url.searchParams.set("lang", "en"); else url.searchParams.delete("lang");
+    history.replaceState(null, "", url);
+    applyLang();
+  }));
+
+  applyLang();
+  if (autoplay) startAutoplay(); else stopAutoplay();
+})();
+</script>
 </body>
 </html>

@@ -30,6 +30,8 @@ services:
       KNOWVIA_DOMAIN: ${KNOWVIA_DOMAIN:?KNOWVIA_DOMAIN .env içinde tanımlanmalı}
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./docs/index.html:/srv/site/index.html:ro  # tanıtım sayfası ana adreste, uygulama /app altında
+      - ./docs/assets:/srv/site/assets:ro
       - caddy-data:/data
       - caddy-config:/config
 

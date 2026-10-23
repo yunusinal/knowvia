@@ -10,8 +10,12 @@ python -m scripts.seed_demo_documents
 # Tek worker: Qdrant local kilidi ve bellekteki istek sınırları tek süreç varsayar.
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 &
 api=$!
+# Uygulama /app altında yayınlanır (Caddy ana adreste tanıtım sayfasını sunar). Sunucuda kod değişmediği
+# için dosya izleme kapalı; izleme boşuna CPU harcar.
 streamlit run frontend/streamlit_app.py \
-    --server.address 0.0.0.0 --server.port 8501 --server.headless true \n    --server.fileWatcherType none --server.runOnSave false &  # sunucuda kod değişmez; izleme CPU harcar
+    --server.address 0.0.0.0 --server.port 8501 --server.headless true \
+    --server.baseUrlPath app \
+    --server.fileWatcherType none --server.runOnSave false &
 ui=$!
 
 trap 'kill -TERM "$api" "$ui" 2>/dev/null' TERM INT

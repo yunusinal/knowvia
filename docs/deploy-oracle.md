@@ -1,6 +1,6 @@
 # Oracle Cloud Always Free üzerinde canlı demo
 
-Bu rehber Knowvia'yı Oracle'ın ücretsiz ARM sunucusunda, kendi alan adınızla ve HTTPS ile yayına alır. Mimari: tek bir uygulama konteyneri (API + Streamlit) ve önünde otomatik HTTPS sağlayan Caddy. Kararların gerekçesi: [ADR-12](adr/12-public-demo-deployment.md).
+Bu rehber Knowvia'yı Oracle'ın ücretsiz ARM sunucusunda, kendi alan adınızla ve HTTPS ile yayına alır. Mimari: tek bir uygulama konteyneri (API + Streamlit) ve önünde otomatik HTTPS sağlayan Caddy. Ana adreste (`/`) etkileşimli tanıtım sayfası (`docs/index.html`), `/app/` altında uygulamanın kendisi yayınlanır. Kararların gerekçesi: [ADR-12](adr/12-public-demo-deployment.md).
 
 > Bu bir portföy demosudur: yalnızca sentetik belgelerle çalışır, belge parçaları yapılandırılan LLM sağlayıcısına gönderilir. Gerçek şirket verisi yüklemeyin.
 
@@ -101,7 +101,7 @@ docker compose logs -f app
 2. Demo kullanıcıları ve 13 sentetik belge yüklenir; embedding modeli (~2.3 GB) indirilir.
 3. API modelleri belleğe yükler (`WARMUP_ON_START`), ardından arayüz hazır olur.
 
-`docker compose ps` çıktısında `app` için **healthy** görünce `https://<KNOWVIA_DOMAIN>` adresini açın. Caddy sertifikayı ilk istekte alır; birkaç saniye sürebilir.
+`docker compose ps` çıktısında `app` için **healthy** görünce `https://<KNOWVIA_DOMAIN>` adresini açın: tanıtım sayfası gelir, "Canlı demoyu dene" uygulamaya (`https://<KNOWVIA_DOMAIN>/app/`) geçer. Caddy sertifikayı ilk istekte alır; birkaç saniye sürebilir.
 
 **ARM doğrulaması** (imaj yalnızca x86_64'te çalıştırılarak denendi; ARM'da ilk kez burada çalışır):
 
