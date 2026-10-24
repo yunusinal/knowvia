@@ -214,7 +214,7 @@
     </a>
     <nav class="links" aria-label="Sayfa içi" data-i18n-aria="navAria">
       <a href="#yol" data-i18n="navHow">Nasıl çalışır</a>
-      <a href="https://github.com/yunusinal/knowvia#how-a-question-is-answered" data-i18n="navArch">Mimari</a>
+      <a href="https://github.com/yunusinal/knowvia#bir-soru-nas%C4%B1l-cevaplan%C4%B1yor" data-i18n="navArch">Mimari</a>
       <a href="https://github.com/yunusinal/knowvia">GitHub</a>
       <div class="lang" role="group" aria-label="Dil / Language">
         <button type="button" data-lang="tr" lang="tr" aria-pressed="true" title="Türkçe">TR</button>
@@ -240,7 +240,7 @@
           </a>
         </div>
         <p class="accounts" data-i18n="heroAccounts">Demo, hayali bir şirketin İK, IT ve Finans belgeleriyle çalışır; <code>it@demo.local</code>, <code>hr@demo.local</code> ve <code>finance@demo.local</code> hesaplarıyla aynı soruyu sorup farkı görün.</p>
-        <p class="solo" data-i18n="heroSolo">Açık kaynak: kendi bilgisayarınıza kurup kendi belgelerinizle tek başınıza da kullanabilirsiniz. <a href="https://github.com/yunusinal/knowvia#run-it-locally">Kurulum</a></p>
+        <p class="solo" data-i18n="heroSolo">Açık kaynak: kendi bilgisayarınıza kurup kendi belgelerinizle tek başınıza da kullanabilirsiniz. <a href="https://github.com/yunusinal/knowvia#yerelde-%C3%A7al%C4%B1%C5%9Ft%C4%B1rma">Kurulum</a></p>
       </div>
 
       <div class="console" aria-label="Rol değiştirerek aynı soruyu deneyin" data-i18n-aria="consoleAria">
@@ -352,7 +352,7 @@
     heroDemo: "Try the live demo",
     heroSource: "Source code",
     heroAccounts: "The demo runs on a fictional company’s HR, IT and Finance documents (written in Turkish, like the app interface). Ask the same question as <code>it@demo.local</code>, <code>hr@demo.local</code> and <code>finance@demo.local</code> and see the difference.",
-    heroSolo: 'Open source: install it on your own machine and use it on your own with your own documents. <a href="https://github.com/yunusinal/knowvia#run-it-locally">Setup</a>',
+    heroSolo: 'Open source: install it on your own machine and use it on your own with your own documents. <a href="https://github.com/yunusinal/knowvia#yerelde-%C3%A7al%C4%B1%C5%9Ft%C4%B1rma">Setup</a>',
     consoleAria: "Try the same question with different roles",
     consoleTitle: "Pick a role, pick a question",
     rolesAria: "User role",
@@ -605,7 +605,7 @@
   // Demo bağlantısı ortama göre: sunucuda (Caddy, standart port) /app/; yerel önizlemede (dosya, Live Server gibi
   // port numaralı adres) yerelde çalışan Streamlit; GitHub Pages'te README'deki kurulum bölümü.
   const demoHref = location.hostname.endsWith("github.io")
-    ? "https://github.com/yunusinal/knowvia#deploy"
+    ? "https://github.com/yunusinal/knowvia#sunucuya-kurulum"
     : (location.protocol === "file:" || location.port !== "") ? "http://localhost:8501/" : "/app/";
   document.querySelectorAll(".demo-link").forEach(a => { a.href = demoHref; });
 
