@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+<title id="title">Knowvia architecture</title>
+<desc id="desc">A question passes Caddy, Streamlit and FastAPI, then six access-checked steps: identify the user, list permitted documents, hybrid search in Qdrant, re-check in SQLite with a similarity threshold, a grounded LLM call with authorized chunks only, and citation checks. Admin uploads are extracted, chunked, embedded and stored in Qdrant and SQLite.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#94A3B8"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#10B981"/></marker></defs>
+<rect width="1200" height="800" fill="#0B1220"/>
+<text x="30" y="28" font-size="12" font-weight="700" fill="#94A3B8" text-anchor="start">Edge</text>
+<rect x="30" y="40" width="170" height="64" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="44" y="64" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Browser</text>
+<text x="44" y="84" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">visitor or team member</text>
+<rect x="224" y="40" width="170" height="64" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="238" y="64" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Caddy</text>
+<text x="238" y="84" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">HTTPS, ports 80/443 only</text>
+<rect x="418" y="40" width="170" height="64" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="432" y="64" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Project page  /</text>
+<text x="432" y="84" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">static HTML, TR / EN</text>
+<rect x="612" y="40" width="364" height="64" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="626" y="64" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Streamlit  /app/</text>
+<text x="626" y="84" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">chat, documents, tickets; holds only the JWT</text>
+<rect x="1000" y="40" width="170" height="64" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="1014" y="64" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Rate limits</text>
+<text x="1014" y="84" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">chat, login per minute</text>
+<line x1="200" y1="72" x2="220" y2="72" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<line x1="394" y1="64" x2="414" y2="64" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M394 82 H406 Q412 82 412 92 V118 H672 V108" fill="none" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<line x1="794" y1="104" x2="794" y2="166" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="802.0" y="139.0" font-size="11" font-weight="400" fill="#94A3B8" text-anchor="start">REST + JWT</text>
+<rect x="18" y="150" width="1164" height="214" rx="14" fill="#0F172A" stroke="#2A3650" stroke-width="1.2"/>
+<text x="30" y="176" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">FastAPI  ·  question path (every step fails closed)</text>
+<rect x="30" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="44" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">1  Identify</text>
+<text x="44" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">JWT checked; role and</text>
+<text x="44" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">department read from</text>
+<text x="44" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">SQLite on every request</text>
+<text x="44" y="332" font-size="11.5" font-weight="600" fill="#FACC15" text-anchor="start">client claims ignored</text>
+<line x1="202" y1="271" x2="220" y2="271" stroke="#10B981" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<rect x="224" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="238" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">2  Allowlist</text>
+<text x="238" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">permitted document IDs</text>
+<text x="238" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">for this user</text>
+<text x="238" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">(company or department)</text>
+<text x="238" y="332" font-size="11.5" font-weight="600" fill="#FACC15" text-anchor="start">empty → no search</text>
+<line x1="396" y1="271" x2="414" y2="271" stroke="#10B981" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<rect x="418" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="432" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">3  Hybrid search</text>
+<text x="432" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">Qdrant: e5-large dense</text>
+<text x="432" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">+ BM25 (Turkish stem),</text>
+<text x="432" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">RRF; ACL filter on both</text>
+<line x1="590" y1="271" x2="608" y2="271" stroke="#10B981" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<rect x="612" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="626" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">4  Re-check</text>
+<text x="626" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">every chunk checked</text>
+<text x="626" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">again in SQLite;</text>
+<text x="626" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">cosine ≥ threshold</text>
+<text x="626" y="332" font-size="11.5" font-weight="600" fill="#FACC15" text-anchor="start">nothing left → refusal</text>
+<line x1="784" y1="271" x2="802" y2="271" stroke="#10B981" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<rect x="806" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="820" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">5  Grounded LLM</text>
+<text x="820" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">only authorized chunks,</text>
+<text x="820" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">sources as [S1]…[S5],</text>
+<text x="820" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">documents are data</text>
+<line x1="978" y1="271" x2="996" y2="271" stroke="#10B981" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<rect x="1000" y="196" width="170" height="150" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="1014" y="220" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">6  Verify citations</text>
+<text x="1014" y="240" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">unknown [S#] removed;</text>
+<text x="1014" y="257" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">answer + source cards,</text>
+<text x="1014" y="274" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">or the same refusal</text>
+<text x="1014" y="332" font-size="11.5" font-weight="600" fill="#FACC15" text-anchor="start">one refusal for both cases</text>
+<rect x="30" y="468" width="364" height="92" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="44" y="492" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">SQLite  (SQLAlchemy)</text>
+<text x="44" y="512" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">users (Argon2 hashes), documents and visibility,</text>
+<text x="44" y="529" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">conversations, support tickets</text>
+<text x="44" y="546" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">the only source of permissions</text>
+<rect x="418" y="468" width="170" height="92" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="432" y="492" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Qdrant local</text>
+<text x="432" y="512" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">named vectors:</text>
+<text x="432" y="529" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">dense 1024-d + bm25</text>
+<text x="432" y="546" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">no permissions stored</text>
+<rect x="612" y="468" width="170" height="92" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2" stroke-dasharray="6 5"/>
+<text x="626" y="492" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Re-ranker (GPU)</text>
+<text x="626" y="512" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">bge-reranker-v2-m3</text>
+<text x="626" y="529" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">ONNX CUDA, 20 → 5</text>
+<text x="626" y="546" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">GPU_ENABLED only</text>
+<rect x="806" y="468" width="364" height="92" rx="10" fill="#162033" stroke="#FACC15" stroke-width="1.2"/>
+<text x="820" y="492" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">LLM provider  (external)</text>
+<text x="820" y="512" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">OpenAI-compatible API, e.g. Groq gpt-oss-120b</text>
+<text x="820" y="529" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">receives only the chunks this user may see</text>
+<text x="820" y="546" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">missing key → 503 with setup help</text>
+<line x1="115" y1="346" x2="115" y2="464" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<line x1="309" y1="346" x2="309" y2="464" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<line x1="503" y1="346" x2="503" y2="464" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<line x1="697" y1="346" x2="697" y2="464" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<text x="705.0" y="409.0" font-size="11" font-weight="400" fill="#94A3B8" text-anchor="start">optional</text>
+<line x1="891" y1="346" x2="891" y2="464" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<text x="30" y="610" font-size="12" font-weight="700" fill="#94A3B8" text-anchor="start">Ingest  (admin only)</text>
+<rect x="30" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="44" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Upload</text>
+<text x="44" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">PDF, TXT, Markdown</text>
+<text x="44" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">up to 10 MB</text>
+<line x1="202" y1="661" x2="220" y2="661" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="224" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="238" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Extract</text>
+<text x="238" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">text with page numbers</text>
+<text x="238" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">duplicates by checksum</text>
+<line x1="396" y1="661" x2="414" y2="661" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="418" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="432" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Chunk</text>
+<text x="432" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">one paragraph per chunk</text>
+<text x="432" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">≤ 350 tokens, overlap</text>
+<line x1="590" y1="661" x2="608" y2="661" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="612" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="626" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Embed</text>
+<text x="626" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">e5-large dense vectors</text>
+<text x="626" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">+ BM25 sparse vectors</text>
+<line x1="784" y1="661" x2="802" y2="661" stroke="#94A3B8" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="806" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#2A3650" stroke-width="1.2"/>
+<text x="820" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Store</text>
+<text x="820" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">vectors → Qdrant</text>
+<text x="820" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">metadata, ACL → SQLite</text>
+<rect x="1000" y="622" width="170" height="78" rx="10" fill="#162033" stroke="#10B981" stroke-width="1.2"/>
+<text x="1014" y="646" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="start">Delete</text>
+<text x="1014" y="666" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">access revoked first,</text>
+<text x="1014" y="683" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">vectors cleaned after</text>
+<text x="30" y="742" font-size="12" font-weight="400" fill="#94A3B8" text-anchor="start">Deployed as one container (API on 127.0.0.1 + Streamlit) behind Caddy with a persistent volume; demo data is synthetic and reset nightly.</text>
+<rect x="30" y="760" width="22" height="12" rx="3" fill="none" stroke="#10B981" stroke-width="1.6"/>
+<text x="60" y="770" font-size="11.5" font-weight="400" fill="#94A3B8" text-anchor="start">access-control gate</text>
+<rect x="200" y="760" width="22" height="12" rx="3" fill="none" stroke="#2A3650" stroke-width="1.6" stroke-dasharray="5 4"/>
+<text x="230" y="770" font-size="11.5" font-weight="400" fill="#94A3B8" text-anchor="start">optional or protective</text>
+<rect x="390" y="760" width="22" height="12" rx="3" fill="none" stroke="#FACC15" stroke-width="1.6"/>
+<text x="420" y="770" font-size="11.5" font-weight="400" fill="#94A3B8" text-anchor="start">leaves the server</text>
+</svg>
